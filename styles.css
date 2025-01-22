@@ -1,0 +1,389 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Enhanced gradient background with animated colors */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body {
+    background: linear-gradient(135deg, #FF0080, #7928CA, #1A1AFF, #00D4FF);
+    background-size: 300% 300%;
+    animation: gradientBG 15s ease infinite;
+    color: rgb(255, 255, 255);
+    min-height: 100vh;
+    padding: 1rem;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 0, 128, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.4) 0%, transparent 40%);
+    z-index: -1;
+    animation: pulseGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0.8;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Enhanced Hero Section with 3D effects */
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 1s ease-out forwards;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    animation: rotateGlow 12s infinite linear;
+}
+
+@keyframes shine {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.profile-img {
+    width: 250px;
+    height: 250px;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    transform-style: perspective(1000px) rotateY(0deg);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img:hover {
+    transform: perspective(1000px) rotateY(15deg) rotateX(5deg) translateZ(20px);
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-img:hover img {
+    transform: scale(1.1) translateZ(20px);
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #fff, #FF0080, #00D4FF);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGradient 5s linear infinite;
+}
+
+@keyframes textGradient {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #fff, #9cf134, #f3cf05);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGradient 5s linear infinite;
+}
+
+.resume-btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    background: linear-gradient(45deg, #daf58f, #8adcea);
+    color: rgb(3, 3, 3);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.resume-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.resume-btn:hover::before {
+    left: 100%;
+}
+
+.resume-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(1, 247, 198, 0.3);
+}
+
+/* Enhanced Cards */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.4s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: 0.5s;
+}
+
+.card i {
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Enhanced Circular Menu */
+.circular-menu {
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+    z-index: 1000;
+}
+
+.menu-button {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #f80303, #42f4e5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    position: relative;
+    z-index: 2;
+}
+
+.menu-button:hover {
+    transform: scale(1.1);
+}
+
+.menu-items {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    bottom: -115px;
+    right: -115px;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.menu-item {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+    pointer-events: auto;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.circular-menu:hover .menu-item {
+    opacity: 1;
+    transform: scale(1) rotate(360deg) translate(var(--translateX), var(--translateY));
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2), 0 0 25px rgba(255, 255, 255, 0.4);
+}
+
+.menu-item:hover {
+    transform: scale(1.2) rotate(720deg) translate(var(--translateX), var(--translateY));
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5), 0 0 30px rgba(0, 255, 200, 0.4);
+}
+
+.menu-item:nth-child(1) {
+    --translateX: 160px;
+    --translateY: 60px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.menu-item:nth-child(2) {
+    --translateX: 100px;
+    --translateY: 50px;
+    background: linear-gradient(135deg, #4ECDC4, #45B7AF);
+}
+
+.menu-item:nth-child(3) {
+    --translateX: 55px;
+    --translateY: 90px;
+    background: linear-gradient(135deg, #FFD93D, #FFC107);
+}
+
+.menu-item:nth-child(4) {
+    --translateX: 60px;
+    --translateY: 155px;
+    background: linear-gradient(135deg, #6C5CE7, #5B4BC0);
+}
+
+.menu-item:hover {
+    transform: scale(1.15) translate(var(--translateX), var(--translateY));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .profile-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .menu-item {
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+}

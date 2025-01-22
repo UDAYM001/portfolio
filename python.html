@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #1a1a1a, #306998, #000000, #1a1a1a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .python-logo {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+            animation: floatLogo 4s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .title {
+            font-size: 4em;
+            text-align: center;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #FFD43B, #306998);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 212, 59, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(48, 105, 152, 0.7); }
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            animation: cardFloat 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        @keyframes cardFloat {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            color: #FFD43B;
+            margin-bottom: 15px;
+        }
+
+        .floating-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .icon {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: floatIcon 10s linear infinite;
+        }
+
+        @keyframes floatIcon {
+            0% {
+                transform: translateY(100vh) translateX(-50px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% {
+                transform: translateY(-100px) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .learn-section {
+            text-align: center;
+            margin: 60px 0;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .learn-section h2 {
+            font-size: 2.5em;
+            color: #FFD43B;
+            text-shadow: 0 0 10px rgba(255, 212, 59, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .learn-button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #306998, #FFD43B);
+            border: none;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .learn-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 212, 59, 0.5);
+        }
+
+        .learn-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .learn-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #FFD43B;
+            color: #FFD43B;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #FFD43B;
+            color: #1a1a1a;
+            transform: scale(1.05);
+        }
+
+        .code-snippet {
+            font-family: 'Fira Code', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-snippet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #FFD43B;
+            animation: codePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes codePulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-icons" id="floatingIcons"></div>
+    
+    <div class="container">
+        <div class="python-logo">
+            <svg viewBox="0 0 256 255" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient x1="12.959%" y1="12.039%" x2="79.639%" y2="78.201%" id="a">
+                        <stop stop-color="#387EB8" offset="0%"/>
+                        <stop stop-color="#366994" offset="100%"/>
+                    </linearGradient>
+                    <linearGradient x1="19.128%" y1="20.579%" x2="90.742%" y2="88.429%" id="b">
+                        <stop stop-color="#FFE052" offset="0%"/>
+                        <stop stop-color="#FFC331" offset="100%"/>
+                    </linearGradient>
+                </defs>
+                <path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072zM92.802 19.66a11.12 11.12 0 0 1 11.13 11.13 11.12 11.12 0 0 1-11.13 11.13 11.12 11.12 0 0 1-11.13-11.13 11.12 11.12 0 0 1 11.13-11.13z" fill="url(#a)"/>
+                <path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897zm34.114-19.586a11.12 11.12 0 0 1-11.13-11.13 11.12 11.12 0 0 1 11.13-11.131 11.12 11.12 0 0 1 11.13 11.13 11.12 11.12 0 0 1-11.13 11.13z" fill="url(#b)"/>
+            </svg>
+        </div>
+        
+        <h1 class="title">Python Development</h1>
+
+        <div class="feature-grid">
+            <div class="feature-card" style="animation-delay: 0.2s">
+                <h3>Python Programming</h3>
+                <p>Proficient in core Python concepts such as data types, loops, conditionals, and functions.
+                    Skilled in object-oriented programming (OOP) principles like classes, inheritance, and polymorphism.</p>
+                <div class="code-snippet">
+                    Pandas and NumPy <br>for data analysis and manipulation.<br><br>
+                    Matplotlib and Seaborn <br>for data visualization.<br><br>
+                    Scikit-learn<br> for machine learning.<br><br>
+                    TensorFlow and PyTorch<br> for deep learning projects.
+                </div>
+            </div>
+
+            <div class="feature-card" style="animation-delay: 0.4s">
+                <h3>AI & Machine Learning</h3>
+                <p>Good Knowledge in developing machine learning models for classification, regression, and clustering.<br><br></p>
+                <div class="code-snippet">
+                    Supervised Learning: <br>Linear regression, logistic regression, decision trees, etc.<br><br>
+                    Unsupervised Learning: <br>K-means clustering, PCA.<br><br>
+                    Neural Networks: <br>Building deep learning models for computer vision and NLP.
+                    <br><br>Developed and deployed predictive models using AI
+                </div>
+            </div>
+
+            <div class="feature-card" style="animation-delay: 0.6s">
+                <h3>HTML & Web Integration </h3>
+                <p>Proficient in creating responsive web pages using HTML. <br>
+                  Experienced in integrating Python scripts with web frontends for dynamic content.</p>
+                <div class="code-snippet">
+                    CSS for styling web pages.<br><br>
+                    JavaScript for interactive functionality.
+                </div>
+            </div>
+        </div>
+
+        <div class="learn-section">
+            <h2>Ready to Learn Python?</h2>
+            <button class="learn-button" onclick="window.location.href = 'https://www.w3schools.com/python/'">Start Learning</button>
+        </div>
+
+        <button class="back-button" onclick="window.location.href ='index.html'">← Back to Portfolio</button>
+    </div>
+
+    <script>
+        const pythonIcons = ['🐍', '⚡', '🔷', '🔵', '⭐', '🚀', '{...}', '< / >', '[ ]', '# ', '>>>', '```'];
+        
+        function createFloatingIcon() {
+            const icon = document.createElement('div');
+            icon.className = 'icon';
+            icon.textContent = pythonIcons[Math.floor(Math.random() * pythonIcons.length)];
+            icon.style.left = Math.random() * 100 + 'vw';
+            icon.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            
+            document.getElementById('floatingIcons').appendChild(icon);
+            
+            icon.addEventListener('animationend', () => {
+                icon.remove();
+            });
+        }
+
+        setInterval(createFloatingIcon, 300);
+
+        // Initial set of icons
+        for(let i = 0; i < 15; i++) {
+            createFloatingIcon();
+        }
+
+        document.querySelector('.copy-button').addEventListener('click', function () {
+      const textToCopy = document.querySelector('.card-text').innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('Text copied to clipboard!');
+      });
+    });
+
+    
+    </script>
+</body>
+</html>

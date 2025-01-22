@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Portfolio - Prompt Engineer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="profile-img">
+                <img src="images/uday.jpg" alt="Your Profile">
+            </div>
+            <div class="hero-content">
+                <h1>Manchu UdayKiran</h1>
+                <h2>Prompt Engineer</h2>
+                <button class="resume-btn">
+                    <a href="pdfs/UDAY.pdf" download style="text-decoration: none; color: inherit;">
+                        Download Resume
+                    </a>
+                </button>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <a href="web.html" target="_blank">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Development</h3>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="app.html" target="_blank">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>App Development</h3>
+                    </a>   
+                </div>
+                <div class="card">
+                    <a href="python.html" target="_blank">
+                    <i class="fas fa-code"></i>
+                    <h3>Python</h3>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="sql.html" target="_blank">
+                    <i class="fas fa-database"></i>
+                    <h3>SQL</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <h2 class="section-title">Projects</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <a href="card.html" target="_blank">
+                    <h3>Stress Detection Using IT Industries</h3>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="card.html" target="_blank">
+                    <h3>Chat_Room</h3>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="card.html" target="_blank">
+                    <h3>PDF Data Extraction with Python</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="cards-container">
+                <a href="https://vignandegreecollege.ac.in/" target="_blank">
+                <div class="card">
+                    <h3>Vignan Degree & PG College</h3>
+                    <p>Bachelor's in Computer Applications</p>
+                    <p>2024</p>
+                </div>
+                </a>
+                <a href="https://school.careers360.com/schools/narayana-junior-college-tenali" target="_blank">
+                <div class="card">
+                    <h3>Narayana Junior College</h3>
+                    <p>MPC</p>
+                    <p>2021</p>
+                </div>
+              </a>
+                <a href="http://sacredheartsemschool.com" target="_blank">
+                    <div class="card">
+                        <h3>Sacred Hearts English Medium School</h3>
+                        <p>10th</p>
+                        <p>2019</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Enhanced Circular Menu -->
+        <div class="circular-menu">
+            <div class="menu-button">Contact</div>
+            <div class="menu-items">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/manchu.uday?igsh=MXhkdmd2MjRvc3I3cA==" target="_blank" class="menu-item">
+                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/instagram-new--v1.png" alt="Instagram">
+                </a>
+                <!-- WhatsApp -->
+                <a href="https://wa.me/qr/W3EJD35INIWRE1" target="_blank" class="menu-item">
+                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/whatsapp--v1.png" alt="WhatsApp">
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/manchu-uday-kiran-73532523a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="menu-item">
+                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/linkedin-circled--v1.png" alt="LinkedIn">
+                </a>
+                <!-- GitHub -->
+                <a href="https://github.com/UDAYM001" target="_blank" class="menu-item">
+                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/github.png" alt="GitHub">
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('.copy-button').addEventListener('click', function () {
+      const textToCopy = document.querySelector('.card-text').innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('Text copied to clipboard!');
+      });
+    });
+    </script>
+</body>
+
+</html>

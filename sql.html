@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Circuit pattern background */
+    .circuit-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 20% 80%, rgba(2, 132, 199, 0.15) 0%, transparent 30%);
+      filter: blur(1px);
+    }
+
+    .circuit-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.2), transparent);
+      height: 1px;
+      width: 100%;
+      animation: circuit-pulse 3s infinite;
+    }
+
+    /* Digital rain effect */
+    .digital-rain {
+      position: absolute;
+      color: rgba(56, 189, 248, 0.15);
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* Back Button Style */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #38bdf8;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(56, 189, 248, 0.3);
+      transform: scale(1.05);
+    }
+
+    @keyframes circuit-pulse {
+      0% { transform: translateX(-100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Hexagon grid */
+    .hexagon-grid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(
+        circle at center,
+        rgba(56, 189, 248, 0.1) 2px,
+        transparent 2px
+      );
+      background-size: 30px 30px;
+      animation: grid-float 20s linear infinite;
+    }
+
+    @keyframes grid-float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-20px) rotate(1deg); }
+    }
+
+    .floating-heading {
+      color: #38bdf8;
+      font-size: 3em;
+      margin-top: 100px;
+      position: relative;
+      z-index: 1;
+      animation: float 3s ease-in-out infinite;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    .typing-text {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #38bdf8;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #38bdf8 }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 50px;
+      max-width: 600px;
+      color: #fff;
+      box-shadow: 0 8px 32px 0 rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      z-index: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+      animation: border-glow 2s linear infinite;
+    }
+
+    @keyframes border-glow {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .card h2 {
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    .card p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .highlight {
+      color: #fbbf24;
+      font-weight: bold;
+    }
+
+    h3 {
+        color: #3dac27;
+    }
+
+    button {
+      background-color:rgba(56, 189, 248, 0.2); /* Green background */
+      color: white; /* White text */
+      border: none; /* No border */
+      padding: 12px 20px; /* Button padding */
+      text-align: center; /* Centered text */
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #38bdf8;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: rgba(56, 189, 248, 0.3);
+      transform: scale(1.05);
+    }
+
+    button:active {
+      background-color: #1ec3ec5b; /* Even darker green when clicked */
+    }
+
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="window.location.href ='index.html'">← Back</button>
+
+  <div class="background">
+    <div class="circuit-container">
+      <div class="hexagon-grid"></div>
+    </div>
+    <script>
+      // Create circuit lines
+      function createCircuitLines() {
+        const container = document.querySelector('.circuit-container');
+        for (let i = 0; i < 10; i++) {
+          const line = document.createElement('div');
+          line.className = 'circuit-line';
+          line.style.top = `${Math.random() * 100}%`;
+          line.style.animationDelay = `${Math.random() * 3}s`;
+          container.appendChild(line);
+        }
+      }
+
+      // Create digital rain
+      function createDigitalRain() {
+        const container = document.querySelector('.circuit-container');
+        const chars = '01';
+        for (let i = 0; i < 20; i++) {
+          const rain = document.createElement('div');
+          rain.className = 'digital-rain';
+          rain.style.left = `${Math.random() * 100}%`;
+          rain.style.animationDelay = `${Math.random() * 2}s`;
+          rain.textContent = Array.from({length: 20}, () => 
+            chars[Math.floor(Math.random() * chars.length)]
+          ).join('');
+          container.appendChild(rain);
+        }
+      }
+
+      createCircuitLines();
+      createDigitalRain();
+
+      document.querySelector('.copy-button').addEventListener('click', function () {
+      const textToCopy = document.querySelector('.card-text').innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('Text copied to clipboard!');
+      });
+    });
+    
+    </script>
+  </div>
+
+  <h1 class="floating-heading typing-text">SQL Database Expert</h1>
+
+  <div class="card">
+    <h2>SQL Expertise</h2>
+    <p>I have a strong command of <span class="highlight">SQL (Structured Query Language),</span> enabling me to effectively interact with and manage relational databases. </p>
+    <p>• I have a strong command of SQL (Structured Query Language), which allows me to effectively interact with and manage relational databases. My expertise includes writing complex queries for data retrieval and analysis, designing and optimizing database schemas, and using advanced techniques such as joins, subqueries, and indexing to improve query performance. I have hands-on experience with popular database systems like MySQL, PostgreSQL, and SQL Server, and I am skilled in implementing stored procedures, views, and triggers to streamline database operations. Additionally, I have worked on ETL (Extract, Transform, Load) processes to integrate and transform data from various sources while ensuring data integrity through the use of constraints, keys, and normalization. My passion lies in leveraging SQL to analyze large datasets, build scalable databases, and extract meaningful insights to support informed decision-making.</p>
+    <p>Expert in working with various SQL databases including <span class="highlight">MySQL</span>, <span class="highlight">Firebase</span>, and <span class="highlight">Microsoft SQL Server</span>.</p>
+    <br><br>
+    <h3>Click here to learn SQL</h3>
+    <button class="learn-button" onclick="window.location.href = 'https://www.w3schools.com/sql/'">Click here</button>
+  </div>
+</body>
+</html>
