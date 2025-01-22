@@ -297,6 +297,10 @@ a {
     transform: scale(1.1);
 }
 
+a {
+    text-decoration: none; 
+}
+
 .menu-items {
     position: absolute;
     width: 300px;
