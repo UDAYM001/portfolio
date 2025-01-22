@@ -150,6 +150,7 @@ body::before {
     background: linear-gradient(45deg, #fff, #FF0080, #00D4FF);
     background-size: 200% auto;
     -webkit-background-clip: text;
+    user-select: none; /* Disable text selection */
     -webkit-text-fill-color: transparent;
     animation: textGradient 5s linear infinite;
 }
@@ -167,6 +168,7 @@ body::before {
     background: linear-gradient(45deg, #fff, #9cf134, #f3cf05);
     background-size: 200% auto;
     -webkit-background-clip: text;
+    user-select: none; /* Disable text selection */
     -webkit-text-fill-color: transparent;
     animation: textGradient 5s linear infinite;
 }
@@ -288,6 +290,7 @@ a {
     transition: all 0.3s;
     position: relative;
     z-index: 2;
+    user-select: none; /* Disable text selection */
 }
 
 .menu-button:hover {
@@ -302,6 +305,7 @@ a {
     right: -115px;
     transition: all 0.3s;
     pointer-events: none;
+    user-select: none; /* Disable text selection */
 }
 
 .menu-item {
@@ -320,6 +324,7 @@ a {
     pointer-events: auto;
     font-size: 1.5rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+    user-select: none; /* Disable text selection */
 }
 
 .circular-menu:hover .menu-item {
