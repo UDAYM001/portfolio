@@ -297,8 +297,9 @@ a {
     transform: scale(1.1);
 }
 
-a {
-    text-decoration: none; 
+.no-underline {
+    text-decoration: none;
+    color: #00000000; /* Or your desired color */ 
 }
 
 .menu-items {
