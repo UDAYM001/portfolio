@@ -297,11 +297,6 @@ a {
     transform: scale(1.1);
 }
 
-.no-underline {
-    text-decoration: none;
-    color: #00000000; /* Or your desired color */ 
-}
-
 .menu-items {
     position: absolute;
     width: 300px;
