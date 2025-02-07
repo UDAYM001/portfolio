@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 /* Enhanced gradient background with animated colors */
@@ -21,7 +21,7 @@
 }
 
 body {
-    background: #000000;
+    background: #fee264;
     background-size: 300% 300%;
     animation: gradientBG 15s ease infinite;
     color: rgb(0, 0, 0);
@@ -37,8 +37,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 20%, rgb(0, 0, 0) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgb(0, 0, 0) 0%, transparent 40%);
+    background: radial-gradient(circle at 20% 20%, rgb(248, 242, 69) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgb(255, 237, 78) 0%, transparent 40%);
     z-index: -1;
     animation: pulseGlow 8s ease-in-out infinite alternate;
 }
@@ -103,15 +103,6 @@ body::before {
     animation: rotateGlow 12s infinite linear;
 }
 
-@keyframes shine {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
 
 .profile-img {
     width: 250px;
@@ -141,44 +132,41 @@ body::before {
 
 .hero-content {
     flex: 1;
-    color: #ffffff;
+    color: #030e12;
 }
 
 .hero-content h1 {
     font-size: 3.5rem;
     font-weight: 700;
+    font-family: 'Segoe UI', sans-serif;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, #000000, #FF0080, #00D4FF);
+    background: linear-gradient(45deg, #030e12, #030e12);
     background-size: 200% auto;
     -webkit-background-clip: text;
     user-select: none; /* Disable text selection */
     -webkit-text-fill-color: transparent;
-    animation: textGradient 5s linear infinite;
-}
-
-@keyframes textGradient {
-    to {
-        background-position: 200% center;
-    }
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #030e12; /* Cursor effect */
+    width: fit-content;
 }
 
 .hero-content h2 {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, #141414, #6d3d86, #95516b);
+    background: linear-gradient(45deg, #030e12, #030e12);
     background-size: 200% auto;
     -webkit-background-clip: text;
     user-select: none; /* Disable text selection */
     -webkit-text-fill-color: transparent;
-    animation: textGradient 5s linear infinite;
 }
 
 .resume-btn {
     padding: 1rem 2rem;
     font-size: 1.1rem;
-    background: linear-gradient(45deg, #daf58f, #8adcea);
-    color: rgb(3, 3, 3);
+    background: #5bccf6;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 15px;
     cursor: pointer;
@@ -246,34 +234,34 @@ body::before {
 .card i {
     font-size: 2rem;
     margin-right: 1rem;
-    color: #ffffff;
+    color: #030e12;
 }
 
 a {
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: #030e12;
 }
 
 .card h3 {
     font-size: 1.5rem;
     margin-top: 0.5rem;
-    color: #ffffff;
+    color: #030e12;
 }
 
 h2 {
     font-size: 1.5rem;
     margin-top: 0.5rem;
-    color: #ffffff;
+    color: #030e12;
 }
 
 p {
-    color: #ffffff;
+    color: #030e12;
 }
 
 .card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.15);
+    background: #5bcdf62b;
 }
 
 .section-title {
@@ -292,7 +280,7 @@ p {
 .menu-button {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, #f80303, #42f4e5);
+    background:  #5bccf6;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -358,25 +346,25 @@ a {
 .menu-item:nth-child(1) {
     --translateX: 160px;
     --translateY: 60px;
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: linear-gradient(45deg, #000000 0%, #000000 25%, #000000 50%, #000000 75%, #000000 100%);
 }
 
 .menu-item:nth-child(2) {
     --translateX: 100px;
     --translateY: 50px;
-    background: linear-gradient(135deg, #4ECDC4, #45B7AF);
+    background: linear-gradient(135deg, #000000, #000000);
 }
 
 .menu-item:nth-child(3) {
     --translateX: 55px;
     --translateY: 90px;
-    background: linear-gradient(135deg, #FFD93D, #FFC107);
+    background: linear-gradient(135deg, #000000, #000000);
 }
 
 .menu-item:nth-child(4) {
     --translateX: 60px;
     --translateY: 155px;
-    background: linear-gradient(135deg, #6C5CE7, #5B4BC0);
+    background: linear-gradient(135deg, #000000, #000000);
 }
 
 .menu-item:hover {

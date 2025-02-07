@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Portfolio - Prompt Engineer</title>
+    <title>Enhanced Portfolio - Developer</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -20,8 +20,8 @@
                 <img src="images/uday.jpg" alt="Your Profile">
             </div>
             <div class="hero-content">
-                <h1>Manchu UdayKiran</h1>
-                <h2>Developer</h2>
+                <h1 id="typing-text"></h1>
+                <h2>D E V E L O P E R</h2>
                 <button class="resume-btn">
                     <a href="pdfs/UDAY.pdf" download style="text-decoration: none; color: inherit;">
                         Download Resume
@@ -110,7 +110,7 @@
                 </a>
             </div>
             <div>
-                <button class="button" onclick="window.location.href='https://internship.aicte-india.org/'">Click here to get salesforce internship</button>
+                <button class="button" onclick="window.location.href='https://internship.aicte-india.org/'">Internships</button>
             </div>
         </section>
 
@@ -138,12 +138,32 @@
         </div>
     </div>
     <script>
+            const text = "U D A Y K I R A N"; // Change this to your desired text
+        let index = 0;
+        const speed = 100; // Speed of typing in milliseconds
+        const typingText = document.getElementById("typing-text");
+
+        function typeEffect() {
+            if (index < text.length) {
+                typingText.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, speed);
+            } else {
+                typingText.style.borderRight = "none"; // Remove cursor effect after typing
+            }
+        }
+
+        window.onload = () => {
+            setTimeout(typeEffect, 500); // Delay before typing starts
+        };
+
         document.querySelector('.copy-button').addEventListener('click', function () {
       const textToCopy = document.querySelector('.card-text').innerText;
       navigator.clipboard.writeText(textToCopy).then(() => {
         alert('Text copied to clipboard!');
       });
     });
+
     </script>
 </body>
 
