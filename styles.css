@@ -199,6 +199,8 @@ body::before {
 
 /* Enhanced Cards */
 .cards-container {
+    text-decoration: none; /* Removes underline */
+    color: inherit;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2.5rem;
@@ -218,6 +220,8 @@ body::before {
     align-items: center;
     justify-content: center;
     text-align: center;
+    text-decoration: none; /* Removes underline */
+    color: inherit;
 }
 
 .card::before {
@@ -229,12 +233,16 @@ body::before {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: 0.5s;
+    text-decoration: none; /* Removes underline */
+    color: inherit;
 }
 
 .card i {
     font-size: 2rem;
     color: #030e12;
     margin-right: 0;
+    text-decoration: none; /* Removes underline */
+    color: inherit;
 }
 
 a {
@@ -246,6 +254,8 @@ a {
     font-size: 1.5rem;
     color: #030e12;
     margin-top: 0;
+    text-decoration: none; /* Removes underline */
+    color: inherit;
 }
 
 h2 {
@@ -262,6 +272,8 @@ p {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     background: #5bcdf62b;
+    text-decoration: none; /* Removes underline */
+    color: inherit;
 }
 
 .section-title {
