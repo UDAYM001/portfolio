@@ -248,6 +248,7 @@ body::before {
 a {
     text-decoration: none;
     color: #030e12;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .card h3 {
@@ -353,6 +354,7 @@ p {
 a {
     text-decoration: none;
     color: inherit;
+    -webkit-tap-highlight-color: transparent;
   }
 
 .menu-item:nth-child(1) {
