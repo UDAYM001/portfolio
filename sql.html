@@ -1,297 +1,343 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Database Expert</title>
   <style>
-    body {
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --primary-light: #818cf8;
+      --background: #0f172a;
+      --text: #f8fafc;
+      --accent: #10b981;
+      --card-bg: #1e293b;
+    }
+    
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+      line-height: 1.6;
       min-height: 100vh;
-      background: #0f172a;
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-family: 'Arial', sans-serif;
       overflow-x: hidden;
-      position: relative;
     }
-
-    .background {
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 24px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Background effects */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(79, 70, 229, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 70, 229, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+    }
+    
+    .bg-gradient {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 10%, rgba(79, 70, 229, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.15) 0%, transparent 30%);
+      z-index: 0;
+    }
+    
+    .bg-particles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      overflow: hidden;
     }
-
-    a {
-    text-decoration: none; /* Removes underline */
-    color: inherit; /* Keeps text color the same */
-}
-
-a:visited {
-    color: inherit; /* Removes purple visited link color */
-}
-
-a:focus, a:active {
-    color: inherit; /* Prevents blue color when clicking */
-    outline: none; /* Removes default focus outline */
-    box-shadow: none; /* Ensures no shadow effect */
-}
-
-a:focus-visible {
-    outline: none; /* Removes focus outline for accessibility */
-}
-
-a {
-    -webkit-tap-highlight-color: transparent;
-}
-
-
-    /* Circuit pattern background */
-    .circuit-container {
+    
+    .particle {
       position: absolute;
+      border-radius: 50%;
+      background: var(--primary-light);
+      opacity: 0.3;
+      animation: float 5s infinite alternate;
+    }
+    
+    /* Header styles */
+    header {
+      padding: 24px 0;
       width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 30%),
-        radial-gradient(circle at 20% 80%, rgba(2, 132, 199, 0.15) 0%, transparent 30%);
-      filter: blur(1px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-
-    .circuit-line {
-      position: absolute;
-      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.2), transparent);
-      height: 1px;
-      width: 100%;
-      animation: circuit-pulse 3s infinite;
-    }
-
-    /* Digital rain effect */
-    .digital-rain {
-      position: absolute;
-      color: rgba(56, 189, 248, 0.15);
-      font-family: monospace;
-      font-size: 14px;
-      line-height: 1;
-      white-space: nowrap;
-      user-select: none;
-    }
-
-    /* Back Button Style */
+    
     .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: rgba(56, 189, 248, 0.2);
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      color: #38bdf8;
-      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: rgba(79, 70, 229, 0.1);
+      color: var(--primary-light);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.2s ease;
       cursor: pointer;
-      z-index: 10;
-      transition: all 0.3s ease;
     }
-
+    
     .back-button:hover {
-      background: rgba(56, 189, 248, 0.3);
-      transform: scale(1.05);
+      background-color: rgba(79, 70, 229, 0.2);
+      transform: translateY(-2px);
     }
-
-    @keyframes circuit-pulse {
-      0% { transform: translateX(-100%); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateX(100%); opacity: 0; }
+    
+    /* Main content */
+    .hero {
+      text-align: center;
+      padding: 80px 0 40px;
     }
-
-    /* Hexagon grid */
-    .hexagon-grid {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(
-        circle at center,
-        rgba(56, 189, 248, 0.1) 2px,
-        transparent 2px
-      );
-      background-size: 30px 30px;
-      animation: grid-float 20s linear infinite;
+    
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--primary-light), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
     }
-
-    @keyframes grid-float {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-20px) rotate(1deg); }
-    }
-
-    .floating-heading {
-      color: #38bdf8;
-      font-size: 3em;
-      margin-top: 100px;
-      position: relative;
-      z-index: 1;
-      animation: float 3s ease-in-out infinite;
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-    }
-
-    .typing-text {
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 3px solid #38bdf8;
-      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #38bdf8 }
-    }
-
-    .card {
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 30px;
-      margin: 50px;
+    
+    .subtitle {
+      font-size: 1.25rem;
+      color: rgba(248, 250, 252, 0.8);
       max-width: 600px;
-      color: #fff;
-      box-shadow: 0 8px 32px 0 rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.1);
-      z-index: 1;
+      margin: 0 auto;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      padding: 40px;
+      margin: 60px 0;
+      width: 100%;
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(79, 70, 229, 0.1);
     }
-
+    
     .card::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
+      left: -100%;
+      width: 200%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, #38bdf8, transparent);
-      animation: border-glow 2s linear infinite;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      animation: shimmer 4s infinite;
     }
-
-    @keyframes border-glow {
+    
+    .card-header {
+      margin-bottom: 24px;
+      position: relative;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      color: var(--primary-light);
+      margin-bottom: 16px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .card-content {
+      margin-bottom: 32px;
+    }
+    
+    .expertise-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    
+    .expertise-item {
+      background: rgba(79, 70, 229, 0.1);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      color: var(--primary-light);
+      font-size: 0.9rem;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+    
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin: 32px 0 16px;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    }
+    
+    .cta-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+    }
+    
+    @keyframes shimmer {
       0% { transform: translateX(-100%); }
       100% { transform: translateX(100%); }
     }
-
-    .card h2 {
-      color: #38bdf8;
-      margin-bottom: 20px;
+    
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
     }
-
-    .card p {
-      line-height: 1.6;
-      margin-bottom: 15px;
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .card {
+        padding: 24px;
+      }
     }
-
-    .highlight {
-      color: #fbbf24;
-      font-weight: bold;
-    }
-
-    h3 {
-        color: #3dac27;
-    }
-
-    button {
-      background-color:rgba(56, 189, 248, 0.2); /* Green background */
-      color: white; /* White text */
-      border: none; /* No border */
-      padding: 12px 20px; /* Button padding */
-      text-align: center; /* Centered text */
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      color: #38bdf8;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 10;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background: rgba(56, 189, 248, 0.3);
-      transform: scale(1.05);
-    }
-
-    button:active {
-      background-color: #1ec3ec5b; /* Even darker green when clicked */
-    }
-
   </style>
 </head>
 <body>
-  <button class="back-button" onclick="window.location.href ='index.html'">← Back</button>
-
-  <div class="background">
-    <div class="circuit-container">
-      <div class="hexagon-grid"></div>
-    </div>
-    <script>
-      // Create circuit lines
-      function createCircuitLines() {
-        const container = document.querySelector('.circuit-container');
-        for (let i = 0; i < 10; i++) {
-          const line = document.createElement('div');
-          line.className = 'circuit-line';
-          line.style.top = `${Math.random() * 100}%`;
-          line.style.animationDelay = `${Math.random() * 3}s`;
-          container.appendChild(line);
-        }
-      }
-
-      // Create digital rain
-      function createDigitalRain() {
-        const container = document.querySelector('.circuit-container');
-        const chars = '01';
-        for (let i = 0; i < 20; i++) {
-          const rain = document.createElement('div');
-          rain.className = 'digital-rain';
-          rain.style.left = `${Math.random() * 100}%`;
-          rain.style.animationDelay = `${Math.random() * 2}s`;
-          rain.textContent = Array.from({length: 20}, () => 
-            chars[Math.floor(Math.random() * chars.length)]
-          ).join('');
-          container.appendChild(rain);
-        }
-      }
-
-      createCircuitLines();
-      createDigitalRain();
-
-      document.querySelector('.copy-button').addEventListener('click', function () {
-      const textToCopy = document.querySelector('.card-text').innerText;
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('Text copied to clipboard!');
-      });
-    });
+  <div class="bg-grid"></div>
+  <div class="bg-gradient"></div>
+  <div class="bg-particles" id="particles"></div>
+  
+  <div class="container">
+    <header>
+      <button class="back-button" onclick="window.location.href='index.html'">
+        ← Back to Home
+      </button>
+    </header>
     
-    </script>
+    <main>
+      <section class="hero">
+        <h1>SQL Database Expert</h1>
+        <p class="subtitle">Transforming data into insights through advanced SQL expertise</p>
+      </section>
+      
+      <section class="card">
+        <div class="card-header">
+          <h2>SQL Expertise</h2>
+        </div>
+        
+        <div class="card-content">
+          <p>I have a strong command of <span class="highlight">SQL (Structured Query Language)</span>, enabling me to effectively interact with and manage relational databases.</p>
+          
+          <p>My expertise includes writing complex queries for data retrieval and analysis, designing and optimizing database schemas, and using advanced techniques such as joins, subqueries, and indexing to improve query performance.</p>
+          
+          <p>I have hands-on experience with popular database systems and am skilled in implementing stored procedures, views, and triggers to streamline database operations. Additionally, I've worked on ETL (Extract, Transform, Load) processes to integrate and transform data from various sources while ensuring data integrity.</p>
+          
+          <div class="expertise-list">
+            <div class="expertise-item">MySQL</div>
+            <div class="expertise-item">PostgreSQL</div>
+            <div class="expertise-item">Microsoft SQL Server</div>
+            <div class="expertise-item">Firebase</div>
+            <div class="expertise-item">Oracle Database</div>
+            <div class="expertise-item">SQLite</div>
+          </div>
+          
+          <h3>Ready to enhance your SQL skills?</h3>
+          <a href="https://www.w3schools.com/sql/" class="cta-button">Start Learning SQL</a>
+        </div>
+      </section>
+    </main>
   </div>
-
-  <h1 class="floating-heading typing-text">SQL Database Expert </h1>
-
-  <div class="card">
-    <h2>SQL Expertise</h2>
-    <p>I have a strong command of <span class="highlight">SQL (Structured Query Language),</span> enabling me to effectively interact with and manage relational databases. </p>
-    <p>• I have a strong command of SQL (Structured Query Language), which allows me to effectively interact with and manage relational databases. My expertise includes writing complex queries for data retrieval and analysis, designing and optimizing database schemas, and using advanced techniques such as joins, subqueries, and indexing to improve query performance. I have hands-on experience with popular database systems like MySQL, PostgreSQL, and SQL Server, and I am skilled in implementing stored procedures, views, and triggers to streamline database operations. Additionally, I have worked on ETL (Extract, Transform, Load) processes to integrate and transform data from various sources while ensuring data integrity through the use of constraints, keys, and normalization. My passion lies in leveraging SQL to analyze large datasets, build scalable databases, and extract meaningful insights to support informed decision-making.</p>
-    <p>Expert in working with various SQL databases including <span class="highlight">MySQL</span>, <span class="highlight">Firebase</span>, and <span class="highlight">Microsoft SQL Server</span>.</p>
-    <br><br>
-    <h3>Click here to learn SQL</h3>
-    <button class="learn-button" onclick="window.location.href = 'https://www.w3schools.com/sql/'">Click here</button>
-  </div>
+  
+  <script>
+    // Create particles
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random properties
+        const size = Math.random() * 4 + 2;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 5;
+        const duration = Math.random() * 5 +
+        5;
+        
+        // Apply styles
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(particle);
+      }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+    });
+  </script>
 </body>
 </html>
