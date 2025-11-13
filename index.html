@@ -1,175 +1,863 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Portfolio - Developer</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Portfolio + Chat Support</title>
+  <meta name="description" content="A sleek 3D-animated developer portfolio with built-in chat support." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  
+  <style>
+      .hero-overlay {
+      pointer-events: none;
+    }
+
+    /* Re-enable interactions for clickable fields */
+    .hero-overlay a,
+    .hero-overlay button,
+    .hero-overlay input,
+    .hero-overlay textarea {
+      pointer-events: auto;
+    }
+    :root { --brand: #7c3aed; --brand-2: #06b6d4; --glow: 0 0 40px rgba(124,58,237,.35), 0 0 80px rgba(6,182,212,.25); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji'; }
+
+
+    /* Fancy gradient background for header/hero */
+    .gradient-bg {
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.25), transparent 40%),
+                  radial-gradient(1000px 500px at 100% 0%, rgba(6,182,212,.25), transparent 40%),
+                  linear-gradient(180deg, rgba(2,6,23,1) 0%, rgba(2,6,23,.9) 40%, rgba(2,6,23,1) 100%);
+    }
+
+    /* Animated accent ring */
+    @keyframes pulse-glow { 0%, 100% { box-shadow: var(--glow); transform: scale(1); } 50% { box-shadow: 0 0 60px rgba(124,58,237,.45), 0 0 100px rgba(6,182,212,.35); transform: scale(1.03);} }
+    .ring-glow { animation: pulse-glow 3.5s ease-in-out infinite; }
+
+    /* 3D cards tilt small perspective */
+    .tilt { transform-style: preserve-3d; transform: perspective(1000px) rotateX(var(--rx,0)) rotateY(var(--ry,0)); transition: transform .25s ease, box-shadow .25s ease; }
+    .tilt:hover { box-shadow: 0 10px 40px rgba(2,6,23,.4); }
+
+    /* Hide scrollbar in chat message list (keep scrolling) */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .tilt, .ring-glow { animation: none !important; transition: none !important; }
+    }
+    /* Make Spline full-screen background */
+    #hero-3d {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -10;
+      pointer-events: auto; /* Let cursor pass through */
+    }
+
+    #hero-3d spline-viewer {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Allow hero text to be clickable */
+    .hero-overlay {
+      pointer-events: none;
+    }
+
+    .hero-overlay * {
+    pointer-events: none; /* default OFF */
+  }
+
+  /* Make ONLY links and buttons interactive */
+  .hero-overlay a,
+  .hero-overlay button,
+  .hero-overlay input,
+  .hero-overlay textarea,
+  .hero-overlay select {
+    pointer-events: auto;
+  }
+
+  .reveal-spotlight {
+    position: relative;
+    overflow: hidden;
+    --x: 0px;
+    --y: 0px;
+  }
+
+  .reveal-inner {
+    padding: 24px; /* same as p-6 */
+  }
+
+  .reveal-mask {
+    mask-image: radial-gradient(
+      circle 0px at var(--x) var(--y),
+      black 0%,
+      transparent 60%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle 0px at var(--x) var(--y),
+      black 0%,
+      transparent 60%
+    );
+    transition: mask-image 0.1s linear, -webkit-mask-image 0.1s linear;
+  }
+
+  .reveal-spotlight:hover .reveal-mask {
+    mask-image: radial-gradient(
+      circle 150px at var(--x) var(--y),
+      black 0%,
+      transparent 85%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle 150px at var(--x) var(--y),
+      black 0%,
+      transparent 85%
+    );
+  }
+    #mobile-warning {
+    position: fixed;
+    inset: 0;
+    background: #0a192f;
+    color: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    z-index: 9999999;
+  }
+
+  </style>
 </head>
 
-<body>
-    <div class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="profile-img">
-                <img src="images/uday.jpg" alt="Your Profile">
-            </div>
-            <div class="hero-content">
-                <h1 id="typing-text"></h1>
-                <h2>D E V E L O P E R</h2>
-                <button class="resume-btn">
-                    <a href="pdfs/UDAY.pdf" download style="text-decoration: none; color: inherit;">
-                        Download Resume
-                    </a>
-                </button>
-            </div>
-        </section>
+<!-- Left Social (inline styles + working SVG icons) -->
+<aside 
+  style="
+    position: fixed;
+    left: 30px;
+    bottom: 0;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 0 12px;  /* ← Auto expands for icons */
+  "
+>
 
-        <!-- Skills Section -->
-        <section class="section">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="cards-container">
-                <div class="card">
-                    <a href="web.html" class="cards-container">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Web Development</h3>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="app.html" class="cards-container">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>App Development</h3>
-                    </a>   
-                </div>
-                <div class="card">
-                    <a href="python.html" class="cards-container">
-                    <i class="fas fa-code"></i>
-                    <h3>Python</h3>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="sql.html" class="cards-container">
-                    <i class="fas fa-database"></i>
-                    <h3>SQL</h3>
-                    </a>
-                </div>
-            </div>
-        </section>
+  <a href="#"
+   style="
+     color: #8892b0;
+     width: 36px;
+     height: 36px;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     transition: all 0.15s ease;
+   "
+   onmouseover="this.style.color='#b026ff'; this.style.transform='translateY(-3px)'"
+   onmouseout="this.style.color='#8892b0'; this.style.transform='translateY(0)'"
+>
+  <!-- New GitHub Icon -->
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+    <path 
+      d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.29 6.84 9.64.5.1.68-.23.68-.5v-1.78c-2.78.62-3.37-1.38-3.37-1.38-.46-1.2-1.14-1.52-1.14-1.52-.93-.66.07-.65.07-.65 1.03.07 1.58 1.08 1.58 1.08.91 1.6 2.38 1.13 2.96.86.09-.67.36-1.13.65-1.39-2.22-.26-4.56-1.15-4.56-5.12 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.33.1-2.77 0 0 .84-.27 2.75 1.05A9.2 9.2 0 0112 7.6c.85 0 1.71.12 2.51.34 1.9-1.32 2.74-1.05 2.74-1.05.56 1.44.21 2.51.1 2.77.65.72 1.03 1.64 1.03 2.77 0 3.98-2.34 4.85-4.57 5.11.37.33.7.97.7 1.96v2.9c0 .28.18.61.69.5A10.25 10.25 0 0022 12.2C22 6.58 17.52 2 12 2z"
+    />
+  </svg>
+</a>
 
-        <!-- Projects Section -->
-        <section class="section">
-            <h2 class="section-title">Projects</h2>
-            <div class="cards-container">
-                <div class="card">
-                    <a href="card.html" class="cards-container">
-                    <h3>Stress Detection Using IT Industries</h3>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://webchat-43588.web.app/" class="cards-container">
-                    <h3>Chat_Room</h3>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://csv-converter-tool4118.netlify.app/" class="cards-container">
-                    <h3>PDF Data Extraction with Python</h3>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://delicate-squirrel-6c925b.netlify.app/" class="cards-container">
-                    <h3>Attandance Management</h3>
-                    </a>
-                </div>
-            </div>
-        </section>
 
-        <!-- Education Section -->
-        <section class="section">
-            <h2 class="section-title">Education</h2>
-            <div class="cards-container">
-                <a href="https://vignandegreecollege.ac.in/" class="cards-container">
-                <div class="card">
-                    <h3>Vignan Degree & PG College</h3>
-                    <p>Bachelor's in Computer Applications</p>
-                    <p>2024</p>
-                </div>
-                </a>
-                <a href="https://school.careers360.com/schools/narayana-junior-college-tenali" class="cards-container">
-                <div class="card">
-                    <h3>Narayana Junior College</h3>
-                    <p>MPC</p>
-                    <p>2021</p>
-                </div>
-              </a>
-                <a href="http://sacredheartsemschool.com" class="cards-container">
-                    <div class="card">
-                        <h3>Sacred Hearts English Medium School</h3>
-                        <p>10th</p>
-                        <p>2019</p>
-                    </div>
-                </a>
-            </div>
-            <div>
-                <button class="button" onclick="window.location.href='https://internship.aicte-india.org/'">Internships</button>
-            </div>
-        </section>
+  <!-- LinkedIn -->
+  <a href="#"
+     style="
+       color: #8892b0;
+       width: 36px;
+       height: 36px;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       transition: all 0.15s ease;
+     "
+    onmouseover="this.querySelector('svg path').style.fill='#b026ff'; this.style.transform='translateY(-3px)'"
+    onmouseout="this.querySelector('svg path').style.fill='#8892b0'; this.style.transform='translateY(0)'"
+  >
+    <svg width="22" height="22" fill="#8892b0" viewBox="0 0 16 16">
+      <path d="M1.146 1.146a1.5 1.5 0 112.121 2.122A1.5 1.5 0 011.146 1.146zM.5 5h3v11h-3V5zm7.75 0h2.9v1.528h.04c.404-.765 1.39-1.57 2.86-1.57C16.02 4.958 17 6.364 17 8.872V16h-3v-6.146c0-1.466-.026-3.35-2.036-3.35-2.04 0-2.352 1.588-2.352 3.234V16h-3V5z"/>
+    </svg>
+  </a>
 
-        <!-- Enhanced Circular Menu -->
-        <div class="circular-menu">
-            <div class="menu-button">Contact</div>
-            <div class="menu-items">
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/manchu.uday?igsh=MXhkdmd2MjRvc3I3cA==" class="menu-item">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/instagram-new--v1.png" alt="Instagram">
-                </a>
-                <!-- WhatsApp -->
-                <a href="https://wa.me/qr/W3EJD35INIWRE1" class="menu-item">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/whatsapp--v1.png" alt="WhatsApp">
-                </a>
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/manchu-uday-kiran-73532523a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="menu-item">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/linkedin-circled--v1.png" alt="LinkedIn">
-                </a>
-                <!-- GitHub -->
-                <a href="https://github.com/UDAYM001" class="menu-item">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/github.png" alt="GitHub">
-                </a>
-            </div>
+  <!-- WhatsApp -->
+  <a href="#"
+     style="
+       color: #8892b0;
+       width: 36px;
+       height: 36px;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       transition: all 0.15s ease;
+     "
+    onmouseover="this.querySelector('svg path').style.fill='#b026ff'; this.style.transform='translateY(-3px)'"
+    onmouseout="this.querySelector('svg path').style.fill='#8892b0'; this.style.transform='translateY(0)'"
+  >
+    <svg width="22" height="22" fill="#8892b0" viewBox="0 0 24 24">
+      <path d="M20.52 3.48A11.83 11.83 0 0012 0a11.83 11.83 0 00-8.52 3.48A11.83 11.83 0 000 12c0 2.09.54 4.12 1.57 5.92L0 24l6.23-1.6A11.88 11.88 0 0012 24a11.83 11.83 0 008.52-3.48A11.83 11.83 0 0024 12c0-3.18-1.24-6.17-3.48-8.52zM12 22a9.9 9.9 0 01-5.06-1.38l-.36-.21-3.7.95.99-3.55-.23-.37A9.9 9.9 0 012 12a10 10 0 0110-10 10 10 0 0110 10 10 10 0 01-10 10zm5.1-7.23c-.28-.14-1.65-.81-1.9-.9-.25-.1-.44-.14-.62.14-.18.28-.71.9-.87 1.08-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.37-.82-.73-1.37-1.64-1.53-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.1-.18.05-.35-.02-.48-.07-.14-.62-1.49-.85-2.05-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.35-.25.28-.96.93-.96 2.28 0 1.35.99 2.65 1.13 2.83.14.18 1.95 3.07 4.75 4.3.66.28 1.18.45 1.58.58.66.21 1.25.18 1.72.11.53-.08 1.65-.67 1.88-1.31.23-.64.23-1.18.16-1.31-.07-.14-.25-.22-.53-.36z"/>
+    </svg>
+  </a>
+
+  <!-- Instagram -->
+  <a href="#"
+     style="
+       color: #8892b0;
+       width: 36px;
+       height: 36px;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       transition: all 0.15s ease;
+     "
+    onmouseover="this.querySelector('svg path').style.fill='#b026ff'; this.style.transform='translateY(-3px)'"
+    onmouseout="this.querySelector('svg path').style.fill='#8892b0'; this.style.transform='translateY(0)'"
+  >
+    <svg width="22" height="22" fill="#8892b0" viewBox="0 0 24 24">
+      <path d="M7.75 2A5.75 5.75 0 002 7.75v8.5A5.75 5.75 0 007.75 22h8.5A5.75 5.75 0 0022 16.25v-8.5A5.75 5.75 0 0016.25 2h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm6.5-.88a1.12 1.12 0 11-2.24 0 1.12 1.12 0 012.24 0z"/>
+    </svg>
+  </a>
+
+  <!-- Vertical line -->
+  <div 
+    style="
+      width: 1px;
+      height: 100px;
+      background: #8892b0;
+      opacity: 0.5;
+      margin-top: 8px;
+    "
+  ></div>
+</aside>
+
+<!-- Right Email (correct vertical alignment + clean rotation) -->
+<aside
+  style="
+    position: fixed;
+    right: 30px;
+    top: 0;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  "
+>
+  <!-- Vertical line (top → bottom) -->
+  <div
+    style="
+      width: 1px;
+      height: 120px;
+      background: #8892b0;
+      opacity: 0.5;
+    "
+  ></div>
+
+  <!-- Email -->
+  <a
+    href='mailto:udaymanchu001@gmail.com'
+    style="
+      font-family: 'Fira Code', monospace;
+      color: #8892b0;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      transform: rotate(360deg);
+      writing-mode: vertical-rl;
+      transition: transform 0.15s ease, color 0.15s ease;
+    "
+    onmouseover="this.style.color='#b026ff'; this.style.transform='rotate(360deg) translateY(-2px)'"
+    onmouseout="this.style.color='#8892b0'; this.style.transform='rotate(360deg) translateY(0)'"
+  >
+    udaymanchu001@gmail.com
+  </a>
+</aside>
+
+<body class="bg-slate-950 text-slate-100">
+  <div id="mobile-warning">
+    Please open this website on a desktop or laptop for the best experience.
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="fixed inset-x-0 top-0 z-50">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/60 px-4 py-3 backdrop-blur">
+        <a href="#home" class="group inline-flex items-center gap-3">
+          <span class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full ring-glow">
+            <span class="absolute inset-0 bg-gradient-to-br from-violet-500 to-cyan-400 opacity-80"></span>
+            <span class="relative text-xs font-black text-white">M</span>
+          </span>
+          <span class="text-sm font-semibold tracking-wide text-white/90 group-hover:text-white">Uday...!</span>
+        </a>
+        <nav class="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
+          <a class="hover:text-white" href="#about">About</a>
+          <a class="hover:text-white" href="#projects">Projects</a>
+          <a class="hover:text-white" href="#skills">Skills</a>
+          <a class="hover:text-white" href="#contact">Contact</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <button id="resume-btn" class="rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:brightness-110" herf="pdfs/UDAY.pdf">Download Resume</button>
         </div>
+      </div>
     </div>
-    <script>
-            const text = "U D A Y K I R A N"; // Change this to your desired text
-        let index = 0;
-        const speed = 100; // Speed of typing in milliseconds
-        const typingText = document.getElementById("typing-text");
+  </header>
+    <section id="home" class="relative isolate pt-28 sm:pt-32">
+    <div id="hero-3d">
+      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.11.2/build/spline-viewer.js"></script>
 
-        function typeEffect() {
-            if (index < text.length) {
-                typingText.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeEffect, speed);
-            } else {
-                typingText.style.borderRight = "none"; // Remove cursor effect after typing
-            }
-        }
+      <spline-viewer url="https://prod.spline.design/rQ90jwyTk4BkKAlU/scene.splinecode">
+      </spline-viewer>
+    </div>
 
-        window.onload = () => {
-            setTimeout(typeEffect, 500); // Delay before typing starts
-        };
 
-        document.querySelector('.copy-button').addEventListener('click', function () {
-      const textToCopy = document.querySelector('.card-text').innerText;
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('Text copied to clipboard!');
+    <div class="hero-overlay max-w-7xl px-4 pb-20 sm:px-6 lg:px-36">
+
+      <div class="w-[80%] text-left px-6 pt-14">
+        <div class="hero-overlay text-violet-400 font-mono text-sm mb-8">Hello, my name is</div>
+
+        <h1 id="typingName"
+          class="hero-overlay whitespace-nowrap text-6xl sm:text-7xl md:text-8xl font-extrabold leading-tight text-white mb-8">
+        </h1>
+
+
+        <h2 class="hero-overlay text-4xl sm:text-5xl font-semibold text-slate-700 mb-8">
+          I love to develop new things!
+        </h2>
+
+        <p class="hero-overlay max-w-2xl text-slate-300 text-base sm:text-lg pt-8">
+          I'm a <strong class="text-violet-400">Prompt Engineer</strong> who builds AI-driven POCs 
+          and automation tools that reduce manual work and speed up workflows.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+    <!-- ABOUT -->
+    <section id="about" class="relative py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        
+      <div class="mb-10 flex items-end justify-between">
+        <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">About</h2>
+        <a href="#contact" class="text-sm text-cyan-300 hover:text-cyan-200">Let’s work together →</a>
+      </div>
+
+      <!-- ONE full-width container -->
+      <div class="grid grid-cols-1">
+        <div class="rounded-3xl border border-white/10 bg-white/5 reveal-spotlight w-[1200px] mx-auto" id="spot-about">
+        <div class="reveal-mask">
+          <div class="reveal-inner p-20">
+            
+            <h3 class="text-3xl font-semibold text-white">What I am</h3>
+
+              <p class="mt-5 text-lg text-slate-300 leading-relaxed">
+                I am a graduate student who completed my Bachelor of Computer Applications from Vignan Degree & PG College.
+                <br><br>I build AI-powered automation tools using Python, Playwright, and large language models. My work focuses on turning manual workflows into fast, accurate, and fully automated systems.
+                <br><br>I develop practical, scalable tools that improve efficiency and reduce human dependency in real-world processes.
+                <br><br>I specialize in creating end-to-end automation systems, integrating GenAI into applications, and building desktop tools using WinForms, Python, and modern AI APIs. My goal is to combine automation + intelligence to deliver reliable, production-ready solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PROJECTS -->
+  <section id="projects" class="relative py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 flex items-end justify-between">
+        <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Featured Projects</h2>
+        <a href="#contact" class="text-sm text-cyan-300 hover:text-cyan-200">Need something similar? →</a>
+      </div>
+      <div id="projects-grid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="relative py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 flex items-end justify-between">
+        <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Skills</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h3 class="font-semibold text-white">Frontend</h3>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full bg-white/10 px-3 py-1">HTML</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">CSS/Tailwind</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">JavaScript/TypeScript</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">React</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">Three.js</span>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h3 class="font-semibold text-white">Backend</h3>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full bg-white/10 px-3 py-1">Node</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">Express</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">REST</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">GraphQL</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">WebSockets</span>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h3 class="font-semibold text-white">Tooling</h3>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full bg-white/10 px-3 py-1">Vite</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">Vitest/Jest</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">Playwright</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">CI/CD</span>
+            <span class="rounded-full bg-white/10 px-3 py-1">Docker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="relative pb-28 pt-10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 flex items-end justify-between">
+        <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Contact</h2>
+        <p class="text-sm text-slate-300">I try to reply within 24 hours.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
+        <form id="contact-form" class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <label class="text-sm">Full name
+              <input required name="name" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="Jane Doe"/>
+            </label>
+            <label class="text-sm">Email
+              <input required type="email" name="email" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="jane@company.com"/>
+            </label>
+          </div>
+          <label class="mt-4 block text-sm">Message
+            <textarea required name="message" rows="5" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="Tell me about your project..."></textarea>
+          </label>
+          <div class="mt-5 flex items-center justify-between">
+            <div class="text-xs text-slate-400">No spam, ever. Your info is safe.</div>
+            <button class="rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:brightness-110">Send</button>
+          </div>
+        </form>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h3 class="text-lg font-semibold text-white">Prefer chat?</h3>
+          <p class="mt-2 text-sm text-slate-300">Use the assistant at the bottom-right for quick questions, portfolio highlights, and links. It saves our conversation locally.</p>
+          <div class="mt-4 space-y-3 text-sm">
+            <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Typically replies instantly</div>
+            <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-cyan-400"></span> Can search projects and skills</div>
+            <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-violet-400"></span> Shares resume link on request</div>
+          </div>
+          <div class="mt-6">
+            <a href="mailto:you@example.com" class="text-sm text-cyan-300 hover:text-cyan-200">you@example.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
+      © <span id="year"></span> Your Name. Built with love, Three.js, and Tailwind.
+    </div>
+  </footer>
+
+  <!-- CHAT WIDGET -->
+  <button id="chat-toggle" aria-label="Open chat" class="fixed bottom-6 right-6 z-[60] inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-400 text-slate-900 shadow-2xl outline-none ring-2 ring-white/20 transition hover:scale-105">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7"><path d="M2 12c0-4.418 4.03-8 9-8s9 3.582 9 8-4.03 8-9 8c-1.07 0-2.094-.152-3.05-.433-.37-.11-.766-.09-1.116.063L3.7 20.7a1 1 0 0 1-1.4-1.2l.98-2.293c.138-.324.105-.694-.088-.984C2.439 14.91 2 13.503 2 12Z"/></svg>
+  </button>
+
+  <div id="chat-panel" class="fixed bottom-24 right-6 z-[60] hidden w-[92vw] max-w-md overflow-hidden rounded-2xl border border-white/10 bg-slate-900/95 shadow-2xl backdrop-blur">
+    <div class="flex items-center justify-between border-b border-white/10 bg-white/5 px-4 py-3">
+      <div class="flex items-center gap-3">
+        <span class="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl">
+          <span class="absolute inset-0 bg-gradient-to-br from-violet-500 to-cyan-400 opacity-70"></span>
+          <span class="relative text-[10px] font-black text-white">AI</span>
+        </span>
+        <div>
+          <div class="text-sm font-semibold text-white">Assistant</div>
+          <div class="text-[10px] text-emerald-300">Online</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="clear-chat" class="rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300 hover:bg-white/10">Clear</button>
+        <button id="close-chat" class="rounded-lg border border-white/10 bg-white/5 p-1 text-slate-300 hover:bg-white/10" aria-label="Close chat">✕</button>
+      </div>
+    </div>
+    <div id="chat-messages" class="no-scrollbar h-[55vh] space-y-3 overflow-y-auto bg-gradient-to-b from-slate-900/60 to-slate-950 px-4 py-4 text-[13px]"></div>
+    <div class="border-t border-white/10 bg-white/5 p-3">
+      <div id="suggestions" class="mb-2 flex flex-wrap gap-2"></div>
+      <div class="flex items-end gap-2">
+        <textarea id="chat-input" rows="1" placeholder="Ask about projects, skills, resume..." class="min-h-[42px] max-h-36 flex-1 resize-y rounded-xl border border-white/10 bg-slate-900/70 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
+        <button id="chat-send" class="h-[42px] rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-4 text-sm font-semibold text-slate-950 hover:brightness-110">Send</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // =============================
+    // Utilities and global state
+    // =============================
+    const qs = (s, el=document) => el.querySelector(s);
+    const qsa = (s, el=document) => Array.from(el.querySelectorAll(s));
+
+    // Theme toggle with localStorage
+    const themeToggle = () => {
+      const isDark = document.documentElement.classList.toggle('light');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    };
+    const initTheme = () => {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') document.documentElement.classList.add('light');
+    };
+
+    // Smooth anchor highlighting
+    const initScrollSpy = () => {
+      const links = qsa('header nav a');
+      const sections = links.map(a => qs(a.getAttribute('href'))).filter(Boolean);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          const i = sections.indexOf(e.target);
+          if (i >= 0 && e.isIntersecting) {
+            links.forEach(l => l.classList.remove('text-white'));
+            links[i].classList.add('text-white');
+          }
+        });
+      }, { rootMargin: '-50% 0% -50% 0%', threshold: [0, 1] });
+      sections.forEach(s => io.observe(s));
+    };
+
+    // Footer year
+    qs('#year').textContent = new Date().getFullYear();
+
+    // =============================
+    // Projects data and rendering
+    // =============================
+    const PROJECTS = [
+      { id: 'p-visualizer', title: 'Automation_Dotnet_Tool', tags: ['Dotnet','C#','Python'], desc: 'This tool is like a macro recorder + PDF processor for automating repetitive UI workflows involving PDFs.', link: 'https://github.com/UDAYM001/Automation_Dotnet_Tool', img: 'images/neon-1.png' },
+      { id: 'p-commerce', title: 'Mail_automation', tags: ['Python','smtplib','MIMEText'], desc: 'A user can send the same message to more than 1,000 users at the same time.', link: 'https://github.com/UDAYM001/Mail_automation', img: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop' },
+      { id: 'p-analytics', title: 'Excel_Comparation ', tags: ['Dotnet','C#','Python'], desc: 'Windows Forms desktop application manage a master database, detect new add-ons, and download the latest add-on files efficiently.', link: 'https://github.com/UDAYM001/Excel_Comparation', img: 'images/neon-1.png' },
+      { id: 'p-collab', title: 'ivr_tool', tags: ['CRDT','WebRTC','Node'], desc: 'A website to convert the text to ivr related tool', link: 'ivr-tool.netlify.app', img: 'images/neon-3.png' },
+      { id: 'p-landing', title: 'FillPdf', tags: ['html','js','typescript'], desc: 'A Pdf filling website. fill pdf more then 1000 less than a minute based on the requirement', link: 'https://github.com/UDAYM001/FillPdf', img: 'images/neon-4.png' },
+      { id: 'p-insights', title: 'Stress Detection using python', tags: ['LLM','Python','FastAPI','openCv'], desc: 'It is a OpenCv project tarined with real models.', link: '#', img: 'images/neon-5.png' },
+    ];
+
+    function renderProjects() {
+      const grid = qs('#projects-grid');
+      grid.innerHTML = '';
+      PROJECTS.forEach(p => {
+        const card = document.createElement('a');
+        card.href = p.link || '#';
+        card.className = 'tilt group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5';
+        card.setAttribute('data-tilt','');
+        card.innerHTML = `
+          <div class="relative h-44 w-full overflow-hidden">
+            <img src="${p.img}" alt="${p.title}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+          </div>
+          <div class="relative flex flex-1 flex-col gap-2 p-5">
+            <h3 class="text-lg font-semibold text-white">${p.title}</h3>
+            <p class="text-sm text-slate-300">${p.desc}</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-[11px]">
+              ${p.tags.map(t => `<span class='rounded-full bg-white/10 px-2 py-1 text-slate-200'>${t}</span>`).join('')}
+            </div>
+            <div class="mt-auto flex items-center gap-2 pt-3 text-xs text-cyan-300">View details <span>→</span></div>
+          </div>`;
+        grid.appendChild(card);
       });
+    }
+
+    // Simple tilt effect
+    function initTilt() {
+      qsa('[data-tilt]').forEach(card => {
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          const rx = -((e.clientY - r.top) / r.height - 0.5) * 8; // rotateX
+          const ry = ((e.clientX - r.left) / r.width - 0.5) * 8;    // rotateY
+          card.style.setProperty('--rx', rx + 'deg');
+          card.style.setProperty('--ry', ry + 'deg');
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.removeProperty('--rx');
+          card.style.removeProperty('--ry');
+        });
+      });
+    }
+
+    // =============================
+    // Contact form (demo)
+    // =============================
+    qs('#contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+      alert(`Thanks ${data.name}! I received your message and will reply at ${data.email}.`);
+      e.currentTarget.reset();
     });
 
-    </script>
-</body>
+  qs('#resume-btn').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = 'pdfs/UDAY.pdf';
+    a.download = 'UDAY.pdf';   // forces download instead of opening
+    a.click();
+  });
 
+
+    // =============================
+    // Chat assistant (rule-based)
+    // =============================
+    const chat = {
+      open: false,
+      el: {
+        toggle: qs('#chat-toggle'),
+        panel: qs('#chat-panel'),
+        close: qs('#close-chat'),
+        clear: qs('#clear-chat'),
+        list: qs('#chat-messages'),
+        input: qs('#chat-input'),
+        send: qs('#chat-send'),
+        sugg: qs('#suggestions'),
+      },
+      memoryKey: 'chat-history-v1'
+    };
+
+    function saveHistory() {
+      const items = qsa('.msg', chat.el.list).map(el => ({ role: el.dataset.role, html: el.innerHTML }));
+      localStorage.setItem(chat.memoryKey, JSON.stringify(items).slice(0, 100000)); // cap size
+    }
+    function loadHistory() {
+      const raw = localStorage.getItem(chat.memoryKey);
+      if (!raw) return false;
+      try {
+        const items = JSON.parse(raw);
+        chat.el.list.innerHTML = '';
+        items.forEach(m => {
+          const div = document.createElement('div');
+          div.className = `msg flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`;
+          div.dataset.role = m.role;
+          div.innerHTML = m.html;
+          chat.el.list.appendChild(div);
+        });
+        chat.el.list.scrollTop = chat.el.list.scrollHeight;
+        return true;
+      } catch {}
+      return false;
+    }
+
+    function addMsg(role, content) {
+      const wrap = document.createElement('div');
+      wrap.className = `msg flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
+      wrap.dataset.role = role;
+      const bubble = document.createElement('div');
+      bubble.className = `max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 ${role==='user' ? 'bg-white text-slate-900' : 'bg-white/10 text-slate-100 border border-white/10'}`;
+      bubble.innerHTML = content;
+      wrap.appendChild(bubble);
+      chat.el.list.appendChild(wrap);
+      chat.el.list.scrollTop = chat.el.list.scrollHeight;
+      saveHistory();
+    }
+
+    function typing(on=true) {
+      if (on) {
+        const t = document.createElement('div');
+        t.id = 'typing'; t.className = 'flex justify-start';
+        t.innerHTML = `<div class="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-slate-300">Typing<span class="animate-pulse">...</span></div>`;
+        chat.el.list.appendChild(t);
+        chat.el.list.scrollTop = chat.el.list.scrollHeight;
+      } else {
+        const t = qs('#typing'); if (t) t.remove();
+      }
+    }
+
+    function suggestions(list=[]) {
+      chat.el.sugg.innerHTML = '';
+      list.forEach(txt => {
+        const b = document.createElement('button');
+        b.className = 'rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200 hover:bg-white/10';
+        b.textContent = txt;
+        b.addEventListener('click', () => { chat.el.input.value = txt; chatSend(); });
+        chat.el.sugg.appendChild(b);
+      });
+    }
+
+    function openChat() {
+      chat.el.panel.classList.remove('hidden');
+      chat.open = true;
+      if (!loadHistory()) {
+        addMsg('assistant', `Hi! I\'m your portfolio assistant. I can:\n• list projects and skills\n• share a resume download\n• help you contact me\n\nTry: "Show projects", "What\'s your stack?", or "How can we work together?"`);
+        suggestions(['Show projects','What\'s your stack?','Share resume','How to contact you?']);
+      } else {
+        suggestions(['Show projects','Search projects: 3D','Share resume']);
+      }
+    }
+
+    function closeChat() { chat.el.panel.classList.add('hidden'); chat.open = false; }
+
+    chat.el.toggle.addEventListener('click', () => chat.open ? closeChat() : openChat());
+    chat.el.close.addEventListener('click', closeChat);
+    chat.el.clear.addEventListener('click', () => { localStorage.removeItem(chat.memoryKey); chat.el.list.innerHTML=''; suggestions(['Show projects','What\'s your stack?','Share resume']); });
+
+    function chatSend() {
+      const text = chat.el.input.value.trim();
+      if (!text) return;
+      addMsg('user', text);
+      chat.el.input.value = '';
+      typing(true);
+      setTimeout(() => { typing(false); bot(text); }, 400 + Math.random()*400);
+    }
+    chat.el.send.addEventListener('click', chatSend);
+    chat.el.input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chatSend(); }
+    });
+
+    function bot(u) {
+      const msg = u.toLowerCase();
+      const say = (html) => addMsg('assistant', html);
+
+      // intents
+      if (/^(hi|hey|hello|yo)\b/.test(msg)) {
+        say('Hello! Want to see my projects, skills, or grab my resume?');
+        suggestions(['Show projects','What\'s your stack?','Share resume']);
+        return;
+      }
+
+      if (/(resume|cv)/.test(msg)) {
+        say('Here you go — click to download my resume.');
+        say('<a class="text-cyan-300 underline" href="#" onclick="document.getElementById(\'resume-btn\').click();return false;">Download resume</a>');
+        suggestions(['Show projects','How to contact you?']);
+        return;
+      }
+
+      if (/(contact|email|reach|hire|work together)/.test(msg)) {
+        say('You can reach me at <a class="text-cyan-300 underline" href="mailto:you@example.com">you@example.com</a> or the form below. I\'m also happy to hop on a quick call.');
+        say('<a class="text-cyan-300 underline" href="#contact">Jump to contact section</a>');
+        suggestions(['Share resume','Show projects']);
+        return;
+      }
+
+      if (/(skills|stack|tech|technology)/.test(msg)) {
+        say('My core stack: React, TypeScript, Node, and Three.js. I also work with GraphQL, WebSockets, Docker, and testing (Jest/Vitest/Playwright).');
+        say('Anything specific you\'re looking for?');
+        suggestions(['Three.js work','Realtime features','Design systems']);
+        return;
+      }
+
+      if (/(project|portfolio|work|show)/.test(msg)) {
+        const items = PROJECTS.slice(0, 6).map(p => `• <b>${p.title}</b> — ${p.desc}`).join('<br>');
+        say(`Here are a few highlights:<br>${items}`);
+        say('<a class="text-cyan-300 underline" href="#projects">Open projects section</a>');
+        suggestions(['Search projects: 3D','Search projects: dashboard','How to contact you?']);
+        return;
+      }
+
+      const searchMatch = msg.match(/search (?:projects|project)\s*[:\-]?\s*(.+)/);
+      if (searchMatch) {
+        const keyword = searchMatch[1].trim().toLowerCase();
+        const found = PROJECTS.filter(p => [p.title, p.desc, ...(p.tags||[])].join(' ').toLowerCase().includes(keyword));
+        if (found.length) {
+          say(`Found ${found.length} project(s) matching "${keyword}":<br>` + found.map(p => `• <b>${p.title}</b> — ${p.desc}`).join('<br>'));
+          say('<a class="text-cyan-300 underline" href="#projects">Open projects section</a>');
+        } else {
+          say(`I couldn\'t find any projects for "${keyword}". Try another term?`);
+        }
+        suggestions(['Search projects: realtime','Search projects: commerce']);
+        return;
+      }
+
+      if (/(time|schedule|call|meeting)/.test(msg)) {
+        say('Happy to schedule! Share a time via email or drop a message in the form — I\'ll confirm shortly.');
+        suggestions(['How to contact you?','Share resume']);
+        return;
+      }
+
+      // default
+      say('Got it! I can help with projects, skills, resume, or contacting me. Try "Show projects" or "Share resume".');
+      suggestions(['Show projects','What\'s your stack?','Share resume']);
+    }
+
+    // =============================
+    // Init on DOM ready
+    // =============================
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+
+      const themeBtn = qs('#theme-toggle');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', themeToggle);
+      }
+
+      renderProjects();
+      initTilt();
+    });
+
+    const text = "Manchu Uday Kiran.";
+    let index = 0;
+
+    function typing() {
+      if (index < text.length) {
+        document.getElementById("typingName").textContent += text.charAt(index);
+        index++;
+        setTimeout(typing, 120); // typing speed
+      }
+    }
+
+    window.addEventListener("load", typing);
+
+    // Spotlight reveal logic
+    const card = document.getElementById("spot-about");
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--x", `${x}px`);
+      card.style.setProperty("--y", `${y}px`);
+    });
+
+     function isMobile() {
+        return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent);
+      }
+
+      if (isMobile()) {
+        document.getElementById("mobile-warning").style.display = "flex";
+
+        // Hide everything else
+        document.querySelector("header")?.style.display = "none";
+        document.querySelector("#home")?.style.display = "none";
+        document.querySelector("#about")?.style.display = "none";
+        document.querySelector("#projects")?.style.display = "none";
+        document.querySelector("#skills")?.style.display = "none";
+        document.querySelector("#contact")?.style.display = "none";
+        document.querySelector("footer")?.style.display = "none";
+        document.querySelector("#chat-toggle")?.style.display = "none";
+      }
+
+  </script>
+</body>
 </html>
