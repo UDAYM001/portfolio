@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Manchu Uday Kiran">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#020617"/>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#g)"/>
+  <!-- U + K monogram -->
+  <path d="M17 18v13.5c0 4.2 3.1 7.2 7.4 7.2s7.4-3 7.4-7.2V18"
+        fill="none" stroke="#020617" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M38 18v22M38 29.5 50 18M38 29.5 50.5 40"
+        fill="none" stroke="#020617" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

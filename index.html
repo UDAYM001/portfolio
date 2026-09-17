@@ -3,14 +3,69 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Uday.portfolio</title>
-  <meta name="description" content="A sleek 3D-animated developer portfolio with built-in chat support." />
+  <title>Manchu Uday Kiran — Prompt Engineer &amp; Automation Developer</title>
+  <meta name="description" content="Portfolio of Manchu Uday Kiran, a prompt engineer who builds AI-driven POCs and automation tools with Python, Playwright, .NET and LLMs." />
+  <meta name="author" content="Manchu Uday Kiran" />
+  <meta name="theme-color" content="#020617" />
+  <link rel="canonical" href="https://udaym001.github.io/portfolio/" />
+
+  <!-- Icons -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="images/og-cover.png" />
+
+  <!-- Social sharing (LinkedIn / X / WhatsApp unfurls) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Manchu Uday Kiran" />
+  <meta property="og:title" content="Manchu Uday Kiran — Prompt Engineer &amp; Automation Developer" />
+  <meta property="og:description" content="I build AI-driven POCs and automation tools that cut manual work and speed up real-world workflows." />
+  <meta property="og:url" content="https://udaym001.github.io/portfolio/" />
+  <meta property="og:image" content="https://udaym001.github.io/portfolio/images/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Manchu Uday Kiran — Prompt Engineer & Automation Developer" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Manchu Uday Kiran — Prompt Engineer &amp; Automation Developer" />
+  <meta name="twitter:description" content="I build AI-driven POCs and automation tools that cut manual work and speed up real-world workflows." />
+  <meta name="twitter:image" content="https://udaym001.github.io/portfolio/images/og-cover.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS v4 via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Critical styles: paint correctly even before Tailwind loads -->
+  <style>
+    html { background: #020617; color-scheme: dark; }
+    body { background: transparent; color: #f1f5f9; margin: 0; }
+    section[id] { scroll-margin-top: 96px; }
+  </style>
+
+  <!-- Apply the saved theme before first paint so there is no light/dark flash -->
+  <script>
+    try {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.style.background = '#f6f7fb';
+      }
+    } catch (e) {}
+  </script>
+
+  <!-- Structured data so Google can index this as a person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Manchu Uday Kiran",
+    "jobTitle": "Prompt Engineer & Automation Developer",
+    "url": "https://udaym001.github.io/portfolio/",
+    "email": "mailto:udaymanchu001@gmail.com",
+    "image": "https://udaym001.github.io/portfolio/images/uday.jpg",
+    "sameAs": ["https://github.com/UDAYM001"],
+    "knowsAbout": ["Python", "Playwright", "Prompt Engineering", "LLM Integration", "C#", ".NET", "WinForms", "Process Automation", "OpenCV"]
+  }
+  </script>
   
   <style>
       .hero-overlay {
@@ -27,6 +82,51 @@
     :root { --brand: #7c3aed; --brand-2: #06b6d4; --glow: 0 0 40px rgba(124,58,237,.35), 0 0 80px rgba(6,182,212,.25); }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji'; }
+
+    /* ---------- Accessibility ---------- */
+    :focus-visible {
+      outline: 2px solid var(--brand-2);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .skip-link {
+      position: absolute; left: 12px; top: -60px; z-index: 99999;
+      background: var(--brand); color: #fff; padding: 10px 16px;
+      border-radius: 10px; font-size: 14px; font-weight: 600;
+      transition: top .2s ease;
+    }
+    .skip-link:focus { top: 12px; }
+
+    /* ---------- Light theme (driven by the .light class on <html>) ---------- */
+    html.light { background: #f6f7fb; color-scheme: light; }
+    html.light body { color: #0f172a; }
+    html.light .gradient-bg {
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.12), transparent 40%),
+                  radial-gradient(1000px 500px at 100% 0%, rgba(6,182,212,.12), transparent 40%),
+                  linear-gradient(180deg, #f6f7fb 0%, #eef1f8 100%);
+    }
+    html.light .text-white,
+    html.light .text-white\/90 { color: #0b1220 !important; }
+    html.light .text-slate-100 { color: #1e293b !important; }
+    html.light .text-slate-300 { color: #475569 !important; }
+    html.light .text-slate-400 { color: #64748b !important; }
+    html.light .text-slate-950 { color: #ffffff !important; }
+    html.light .bg-slate-950 { background-color: #f6f7fb !important; }
+    html.light .bg-slate-900\/60,
+    html.light .bg-slate-900\/95 { background-color: rgba(255,255,255,.88) !important; }
+    html.light .bg-slate-900\/70 { background-color: rgba(255,255,255,.92) !important; }
+    html.light .bg-white\/5 { background-color: rgba(15,23,42,.04) !important; }
+    html.light .bg-white\/10 { background-color: rgba(15,23,42,.08) !important; }
+    html.light .border-white\/10 { border-color: rgba(15,23,42,.12) !important; }
+    html.light .border-white\/20 { border-color: rgba(15,23,42,.16) !important; }
+    html.light .placeholder-slate-500::placeholder { color: #94a3b8 !important; }
+    /* The 3D hero scene is a dark render — keep it readable in light mode */
+    html.light #hero-3d { opacity: .55; }
+    html.light #hero-3d spline-viewer { filter: invert(0); }
 
 
     /* Fancy gradient background for header/hero */
@@ -52,21 +152,76 @@
     @media (prefers-reduced-motion: reduce) {
       .tilt, .ring-glow { animation: none !important; transition: none !important; }
     }
-    /* Make Spline full-screen background */
+    /* Make Spline full-screen background.
+       Kept at z-index:-10 so page content always paints above it.
+       It only works because body has a transparent background and the
+       dark base colour lives on <html> (see critical styles in <head>). */
     #hero-3d {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
       z-index: -10;
-      pointer-events: auto; /* Let cursor pass through */
+      pointer-events: auto; /* let the visitor drag/rotate the 3D scene */
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(124,58,237,.35), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(6,182,212,.30), transparent 55%);
     }
 
     #hero-3d spline-viewer {
       width: 100%;
       height: 100%;
+      display: block;
       object-fit: cover;
     }
+
+    /* ---------- Small screens ----------
+       The Spline scene is several megabytes of WebGL, so on phones we skip it
+       and keep the gradient instead. Content stays fully readable. */
+    @media (max-width: 768px) {
+      #hero-3d spline-viewer { display: none; }
+      .side-rail { display: none !important; }
+      .hero-name { white-space: normal !important; font-size: 2.6rem !important; line-height: 1.05 !important; }
+      .about-panel { padding: 1.5rem !important; }
+      .about-card { width: 100% !important; }
+    }
+
+    @media (max-width: 1023px) {
+      .side-rail { display: none !important; }
+    }
+
+    /* Social rail (used to be inline onmouseover handlers) */
+    .social-link {
+      color: #8892b0;
+      width: 36px; height: 36px;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: color .15s ease, transform .15s ease;
+    }
+    .social-link svg path { fill: currentColor; transition: fill .15s ease; }
+    .social-link:hover, .social-link:focus-visible { color: #b026ff; transform: translateY(-3px); }
+    html.light .social-link { color: #475569; }
+    html.light .social-link:hover, html.light .social-link:focus-visible { color: #7c3aed; }
+
+    .rail-line { width: 1px; background: #8892b0; opacity: .5; }
+    html.light .rail-line { background: #94a3b8; }
+    .email-rail {
+      font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: #8892b0; font-size: 18px; letter-spacing: .12em;
+      text-decoration: none; writing-mode: vertical-rl;
+      transition: color .15s ease, transform .15s ease;
+    }
+    .email-rail:hover, .email-rail:focus-visible { color: #b026ff; transform: translateY(-2px); }
+    html.light .email-rail { color: #475569; }
+    html.light .email-rail:hover { color: #7c3aed; }
+
+    /* Contact form feedback */
+    .form-status { font-size: .8125rem; min-height: 1.25rem; }
+    .form-status[data-state="ok"] { color: #6ee7b7; }
+    .form-status[data-state="err"] { color: #fca5a5; }
+    .form-status[data-state="busy"] { color: #93c5fd; }
+    html.light .form-status[data-state="ok"] { color: #047857; }
+    html.light .form-status[data-state="err"] { color: #b91c1c; }
+    html.light .form-status[data-state="busy"] { color: #1d4ed8; }
+    [disabled] { opacity: .6; cursor: not-allowed; }
 
     /* Allow hero text to be clickable */
     .hero-overlay {
@@ -127,8 +282,8 @@
   </style>
 </head>
 
-<!-- Left Social (inline styles + working SVG icons) -->
-<aside 
+<!-- Left Social rail -->
+<aside class="side-rail"
   style="
     position: fixed;
     left: 30px;
@@ -138,107 +293,42 @@
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    padding: 0 12px;  /* ← Auto expands for icons */
+    padding: 0 12px;
   "
 >
+  <a class="social-link" id="social-github" href="https://github.com/UDAYM001"
+     target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
+    <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.29 6.84 9.64.5.1.68-.23.68-.5v-1.78c-2.78.62-3.37-1.38-3.37-1.38-.46-1.2-1.14-1.52-1.14-1.52-.93-.66.07-.65.07-.65 1.03.07 1.58 1.08 1.58 1.08.91 1.6 2.38 1.13 2.96.86.09-.67.36-1.13.65-1.39-2.22-.26-4.56-1.15-4.56-5.12 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.33.1-2.77 0 0 .84-.27 2.75 1.05A9.2 9.2 0 0112 7.6c.85 0 1.71.12 2.51.34 1.9-1.32 2.74-1.05 2.74-1.05.56 1.44.21 2.51.1 2.77.65.72 1.03 1.64 1.03 2.77 0 3.98-2.34 4.85-4.57 5.11.37.33.7.97.7 1.96v2.9c0 .28.18.61.69.5A10.25 10.25 0 0022 12.2C22 6.58 17.52 2 12 2z"/>
+    </svg>
+  </a>
 
-  <a href="#"
-   style="
-     color: #8892b0;
-     width: 36px;
-     height: 36px;
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-     cursor: pointer;
-     transition: all 0.15s ease;
-   "
-   onmouseover="this.style.color='#b026ff'; this.style.transform='translateY(-3px)'"
-   onmouseout="this.style.color='#8892b0'; this.style.transform='translateY(0)'"
->
-  <!-- New GitHub Icon -->
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-    <path 
-      d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.29 6.84 9.64.5.1.68-.23.68-.5v-1.78c-2.78.62-3.37-1.38-3.37-1.38-.46-1.2-1.14-1.52-1.14-1.52-.93-.66.07-.65.07-.65 1.03.07 1.58 1.08 1.58 1.08.91 1.6 2.38 1.13 2.96.86.09-.67.36-1.13.65-1.39-2.22-.26-4.56-1.15-4.56-5.12 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.33.1-2.77 0 0 .84-.27 2.75 1.05A9.2 9.2 0 0112 7.6c.85 0 1.71.12 2.51.34 1.9-1.32 2.74-1.05 2.74-1.05.56 1.44.21 2.51.1 2.77.65.72 1.03 1.64 1.03 2.77 0 3.98-2.34 4.85-4.57 5.11.37.33.7.97.7 1.96v2.9c0 .28.18.61.69.5A10.25 10.25 0 0022 12.2C22 6.58 17.52 2 12 2z"
-    />
-  </svg>
-</a>
-
-
-  <!-- LinkedIn -->
-  <a href="#"
-     style="
-       color: #8892b0;
-       width: 36px;
-       height: 36px;
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       cursor: pointer;
-       transition: all 0.15s ease;
-     "
-    onmouseover="this.querySelector('svg path').style.fill='#b026ff'; this.style.transform='translateY(-3px)'"
-    onmouseout="this.querySelector('svg path').style.fill='#8892b0'; this.style.transform='translateY(0)'"
-  >
-    <svg width="22" height="22" fill="#8892b0" viewBox="0 0 16 16">
+  <a class="social-link" id="social-linkedin" href="#" hidden
+     target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+    <svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true">
       <path d="M1.146 1.146a1.5 1.5 0 112.121 2.122A1.5 1.5 0 011.146 1.146zM.5 5h3v11h-3V5zm7.75 0h2.9v1.528h.04c.404-.765 1.39-1.57 2.86-1.57C16.02 4.958 17 6.364 17 8.872V16h-3v-6.146c0-1.466-.026-3.35-2.036-3.35-2.04 0-2.352 1.588-2.352 3.234V16h-3V5z"/>
     </svg>
   </a>
 
-  <!-- WhatsApp -->
-  <a href="#"
-     style="
-       color: #8892b0;
-       width: 36px;
-       height: 36px;
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       cursor: pointer;
-       transition: all 0.15s ease;
-     "
-    onmouseover="this.querySelector('svg path').style.fill='#b026ff'; this.style.transform='translateY(-3px)'"
-    onmouseout="this.querySelector('svg path').style.fill='#8892b0'; this.style.transform='translateY(0)'"
-  >
-    <svg width="22" height="22" fill="#8892b0" viewBox="0 0 24 24">
+  <a class="social-link" id="social-whatsapp" href="#" hidden
+     target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M20.52 3.48A11.83 11.83 0 0012 0a11.83 11.83 0 00-8.52 3.48A11.83 11.83 0 000 12c0 2.09.54 4.12 1.57 5.92L0 24l6.23-1.6A11.88 11.88 0 0012 24a11.83 11.83 0 008.52-3.48A11.83 11.83 0 0024 12c0-3.18-1.24-6.17-3.48-8.52zM12 22a9.9 9.9 0 01-5.06-1.38l-.36-.21-3.7.95.99-3.55-.23-.37A9.9 9.9 0 012 12a10 10 0 0110-10 10 10 0 0110 10 10 10 0 01-10 10zm5.1-7.23c-.28-.14-1.65-.81-1.9-.9-.25-.1-.44-.14-.62.14-.18.28-.71.9-.87 1.08-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.37-.82-.73-1.37-1.64-1.53-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.1-.18.05-.35-.02-.48-.07-.14-.62-1.49-.85-2.05-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.35-.25.28-.96.93-.96 2.28 0 1.35.99 2.65 1.13 2.83.14.18 1.95 3.07 4.75 4.3.66.28 1.18.45 1.58.58.66.21 1.25.18 1.72.11.53-.08 1.65-.67 1.88-1.31.23-.64.23-1.18.16-1.31-.07-.14-.25-.22-.53-.36z"/>
     </svg>
   </a>
 
-  <!-- Instagram -->
-  <a href="#"
-     style="
-       color: #8892b0;
-       width: 36px;
-       height: 36px;
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       cursor: pointer;
-       transition: all 0.15s ease;
-     "
-    onmouseover="this.querySelector('svg path').style.fill='#b026ff'; this.style.transform='translateY(-3px)'"
-    onmouseout="this.querySelector('svg path').style.fill='#8892b0'; this.style.transform='translateY(0)'"
-  >
-    <svg width="22" height="22" fill="#8892b0" viewBox="0 0 24 24">
+  <a class="social-link" id="social-instagram" href="#" hidden
+     target="_blank" rel="noopener noreferrer" aria-label="Instagram profile" title="Instagram">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M7.75 2A5.75 5.75 0 002 7.75v8.5A5.75 5.75 0 007.75 22h8.5A5.75 5.75 0 0022 16.25v-8.5A5.75 5.75 0 0016.25 2h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm6.5-.88a1.12 1.12 0 11-2.24 0 1.12 1.12 0 012.24 0z"/>
     </svg>
   </a>
 
-  <!-- Vertical line -->
-  <div 
-    style="
-      width: 1px;
-      height: 100px;
-      background: #8892b0;
-      opacity: 0.5;
-      margin-top: 8px;
-    "
-  ></div>
+  <div class="rail-line" style="height: 100px; margin-top: 8px;"></div>
 </aside>
 
-<!-- Right Email (correct vertical alignment + clean rotation) -->
-<aside
+<!-- Right Email rail -->
+<aside class="side-rail"
   style="
     position: fixed;
     right: 30px;
@@ -250,102 +340,75 @@
     gap: 14px;
   "
 >
-  <!-- Vertical line (top → bottom) -->
-  <div
-    style="
-      width: 1px;
-      height: 120px;
-      background: #8892b0;
-      opacity: 0.5;
-    "
-  ></div>
+  <div class="rail-line" style="height: 120px;"></div>
 
-  <!-- Email -->
-  <a
-    href='mailto:udaymanchu001@gmail.com'
-    style="
-      font-family: 'Fira Code', monospace;
-      color: #8892b0;
-      font-size: 18px;
-      letter-spacing: 0.12em;
-      text-decoration: none;
-      transform: rotate(360deg);
-      writing-mode: vertical-rl;
-      transition: transform 0.15s ease, color 0.15s ease;
-    "
-    onmouseover="this.style.color='#b026ff'; this.style.transform='rotate(360deg) translateY(-2px)'"
-    onmouseout="this.style.color='#8892b0'; this.style.transform='rotate(360deg) translateY(0)'"
-  >
-    udaymanchu001@gmail.com
-  </a>
+  <a class="email-rail" href="mailto:udaymanchu001@gmail.com">udaymanchu001@gmail.com</a>
 </aside>
 
-<body class="bg-slate-950 text-slate-100">
+<body class="text-slate-100">
 
-  <!-- MOBILE ONLY OVERLAY -->
-  <style>
-    #mobile-overlay {
-      position: fixed;
-      inset: 0;
-      background: #0a192f;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999999;
-      padding: 20px;
-      text-align: center;
-      color: white;
-      font-family: 'Inter';
-    }
-    #mobile-overlay .box {
-      max-width: 600px;
-      background: rgba(255,255,255,0.05);
-      padding: 28px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    #mobile-overlay h2 {
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-    #mobile-overlay p {
-      font-size: 15px;
-      color: #cbd5e1;
-    }
-  </style>
+  <a class="skip-link" href="#about">Skip to content</a>
 
-  <div id="mobile-overlay">
-    <div class="box">
-      <h2>Please open this website on a desktop</h2>
-      <p>This 3D portfolio requires a larger screen for the best interactive experience.</p>
-    </div>
-  </div>
+  <!-- The old "please open on a desktop" wall is gone: phones now get the
+       full page with a lighter hero (no WebGL) instead of a dead end. -->
 
   <!-- NAVBAR -->
   <header class="fixed inset-x-0 top-0 z-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/60 px-4 py-3 backdrop-blur">
-        <a href="#home" class="group inline-flex items-center gap-3">
+        <a href="#home" class="group inline-flex items-center gap-3" aria-label="Manchu Uday Kiran — home">
           <span class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full ring-glow">
             <span class="absolute inset-0 bg-gradient-to-br from-violet-500 to-cyan-400 opacity-80"></span>
             <span class="relative text-xs font-black text-white">M</span>
           </span>
           <span class="text-sm font-semibold tracking-wide text-white/90 group-hover:text-white">Uday...!</span>
         </a>
-        <nav class="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
+
+        <nav data-primary class="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex" aria-label="Main">
           <a class="hover:text-white" href="#about">About</a>
           <a class="hover:text-white" href="#projects">Projects</a>
           <a class="hover:text-white" href="#skills">Skills</a>
           <a class="hover:text-white" href="#contact">Contact</a>
         </nav>
-        <div class="flex items-center gap-3">
-          <button id="resume-btn" class="rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:brightness-110" herf="pdfs/UDAY.pdf">Download Resume</button>
+
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle" type="button"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
+            aria-label="Switch to light theme" aria-pressed="false" title="Toggle theme">
+            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+              <path d="M21.64 13a1 1 0 0 0-1.05-.14 8.05 8.05 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Z"/>
+            </svg>
+            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hidden h-4 w-4" aria-hidden="true">
+              <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1Zm0-18a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V2a1 1 0 0 1 1-1ZM4.22 4.22a1 1 0 0 1 1.42 0l1.41 1.42a1 1 0 1 1-1.41 1.41L4.22 5.64a1 1 0 0 1 0-1.42Zm12.73 12.73a1 1 0 0 1 1.42 0l1.41 1.41a1 1 0 0 1-1.41 1.42l-1.42-1.42a1 1 0 0 1 0-1.41ZM2 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2H3a1 1 0 0 1-1-1Zm17 0a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2h-2a1 1 0 0 1-1-1ZM4.22 19.78a1 1 0 0 1 0-1.42l1.42-1.41a1 1 0 1 1 1.41 1.41l-1.41 1.42a1 1 0 0 1-1.42 0ZM16.95 7.05a1 1 0 0 1 0-1.41l1.42-1.42a1 1 0 1 1 1.41 1.42l-1.41 1.41a1 1 0 0 1-1.42 0ZM12 19a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Z"/>
+            </svg>
+          </button>
+
+          <button id="resume-btn" type="button"
+            class="rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:brightness-110">
+            Download Resume
+          </button>
+
+          <button id="menu-toggle" type="button"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10 md:hidden"
+            aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/>
+            </svg>
+          </button>
         </div>
       </div>
+
+      <!-- Mobile navigation -->
+      <nav id="mobile-menu" class="mt-2 hidden rounded-2xl border border-white/10 bg-slate-900/95 p-2 backdrop-blur md:hidden" aria-label="Mobile">
+        <a class="block rounded-xl px-4 py-3 text-sm text-slate-200 hover:bg-white/10" href="#about">About</a>
+        <a class="block rounded-xl px-4 py-3 text-sm text-slate-200 hover:bg-white/10" href="#projects">Projects</a>
+        <a class="block rounded-xl px-4 py-3 text-sm text-slate-200 hover:bg-white/10" href="#skills">Skills</a>
+        <a class="block rounded-xl px-4 py-3 text-sm text-slate-200 hover:bg-white/10" href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
     <section id="home" class="relative isolate pt-28 sm:pt-32">
-    <div id="hero-3d">
+    <div id="hero-3d" aria-hidden="true">
       <script type="module" src="https://unpkg.com/@splinetool/viewer@1.11.2/build/spline-viewer.js"></script>
 
       <spline-viewer url="https://prod.spline.design/rQ90jwyTk4BkKAlU/scene.splinecode">
@@ -355,15 +418,18 @@
 
     <div class="hero-overlay max-w-7xl px-4 pb-20 sm:px-6 lg:px-36">
 
-      <div class="w-[80%] text-left px-6 pt-14">
+      <div class="w-full max-w-3xl text-left px-6 pt-14">
         <div class="hero-overlay text-violet-400 font-mono text-sm mb-8">Hello, my name is</div>
 
+        <!-- Text is present in the HTML for SEO / no-JS, and the typing
+             animation re-types it on load. -->
         <h1 id="typingName"
-          class="hero-overlay whitespace-nowrap text-6xl sm:text-7xl md:text-8xl font-extrabold leading-tight text-white mb-8">
+          class="hero-overlay hero-name whitespace-nowrap text-6xl sm:text-7xl md:text-8xl font-extrabold leading-tight text-white mb-8">
+          Manchu Uday Kiran.
         </h1>
 
 
-        <h2 class="hero-overlay text-4xl sm:text-5xl font-semibold text-slate-700 mb-8">
+        <h2 class="hero-overlay text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-300 mb-8">
           I love to develop new things!
         </h2>
 
@@ -388,13 +454,21 @@
 
       <!-- ONE full-width container -->
       <div class="grid grid-cols-1">
-        <div class="rounded-3xl border border-white/10 bg-white/5 reveal-spotlight w-[1200px] mx-auto" id="spot-about">
+        <div class="rounded-3xl border border-white/10 bg-white/5 reveal-spotlight about-card w-full max-w-[1200px] mx-auto" id="spot-about">
         <div class="reveal-mask">
-          <div class="reveal-inner p-20">
-            
-            <h3 class="text-3xl font-semibold text-white">What I am</h3>
+          <div class="reveal-inner p-6 sm:p-10 lg:p-20 about-panel">
 
-              <p class="mt-5 text-lg text-slate-300 leading-relaxed">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-7">
+              <img src="images/uday.jpg" alt="Portrait of Manchu Uday Kiran" width="112" height="112"
+                   loading="lazy" decoding="async"
+                   class="h-24 w-24 shrink-0 rounded-2xl object-cover object-top ring-2 ring-violet-500/40 sm:h-28 sm:w-28"/>
+              <div>
+                <h3 class="text-2xl sm:text-3xl font-semibold text-white">What I am</h3>
+                <p class="mt-1 text-sm font-medium text-cyan-300">Prompt Engineer &amp; Automation Developer</p>
+              </div>
+            </div>
+
+              <p class="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed">
                 I am a graduate student who completed my Bachelor of Computer Applications from Vignan Degree & PG College.
                 <br><br>I build AI-powered automation tools using Python, Playwright, and large language models. My work focuses on turning manual workflows into fast, accurate, and fully automated systems.
                 <br><br>I develop practical, scalable tools that improve efficiency and reduce human dependency in real-world processes.
@@ -471,21 +545,27 @@
       </div>
 
       <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
-        <form id="contact-form" class="rounded-3xl border border-white/10 bg-white/5 p-6">
+        <form id="contact-form" class="rounded-3xl border border-white/10 bg-white/5 p-6" novalidate>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <label class="text-sm">Full name
-              <input required name="name" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="Jane Doe"/>
+              <input id="contact-name" required name="name" autocomplete="name" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="Jane Doe"/>
             </label>
             <label class="text-sm">Email
-              <input required type="email" name="email" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="jane@company.com"/>
+              <input id="contact-email" required type="email" name="email" autocomplete="email" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="jane@company.com"/>
             </label>
           </div>
           <label class="mt-4 block text-sm">Message
-            <textarea required name="message" rows="5" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="Tell me about your project..."></textarea>
+            <textarea id="contact-message" required name="message" rows="5" class="mt-1 w-full rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" placeholder="Tell me about your project..."></textarea>
           </label>
-          <div class="mt-5 flex items-center justify-between">
-            <div class="text-xs text-slate-400">No spam, ever. Your info is safe.</div>
-            <button class="rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:brightness-110">Send</button>
+
+          <!-- Honeypot: real people never see or fill this -->
+          <div class="sr-only" aria-hidden="true">
+            <label>Company <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"/></label>
+          </div>
+
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <p class="form-status text-slate-400" id="form-status" role="status" aria-live="polite">No spam, ever. Your info is safe.</p>
+            <button id="contact-submit" type="submit" class="rounded-xl bg-gradient-to-r from-violet-500 to-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:brightness-110">Send</button>
           </div>
         </form>
 
@@ -498,7 +578,7 @@
             <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-violet-400"></span> Shares resume link on request</div>
           </div>
           <div class="mt-6">
-            <a href="mailto:udaymanchu001@gmail.com" class="text-sm text-cyan-300 hover:text-cyan-200">udaymanchu001@gmail.com.com</a>
+            <a href="mailto:udaymanchu001@gmail.com" class="text-sm text-cyan-300 hover:text-cyan-200">udaymanchu001@gmail.com</a>
           </div>
         </div>
       </div>
@@ -506,8 +586,15 @@
   </section>
 
   <footer class="border-t border-white/10 py-8">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
-      © <span id="year"></span> Your Name. Built with love, Three.js, and Tailwind.
+    <div class="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 text-center text-xs text-slate-400 sm:px-6 lg:px-8">
+      <p>© <span id="year">2026</span> Manchu Uday Kiran. Built with Tailwind CSS, Spline and vanilla JavaScript.</p>
+      <p class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+        <a class="text-cyan-300 hover:text-cyan-200" href="https://github.com/UDAYM001" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span aria-hidden="true">·</span>
+        <a class="text-cyan-300 hover:text-cyan-200" href="mailto:udaymanchu001@gmail.com">Email</a>
+        <span aria-hidden="true">·</span>
+        <button id="resume-btn-footer" type="button" class="text-cyan-300 hover:text-cyan-200">Resume (PDF)</button>
+      </p>
     </div>
   </footer>
 
@@ -516,7 +603,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7"><path d="M2 12c0-4.418 4.03-8 9-8s9 3.582 9 8-4.03 8-9 8c-1.07 0-2.094-.152-3.05-.433-.37-.11-.766-.09-1.116.063L3.7 20.7a1 1 0 0 1-1.4-1.2l.98-2.293c.138-.324.105-.694-.088-.984C2.439 14.91 2 13.503 2 12Z"/></svg>
   </button>
 
-  <div id="chat-panel" class="fixed bottom-24 right-6 z-[60] hidden w-[92vw] max-w-md overflow-hidden rounded-2xl border border-white/10 bg-slate-900/95 shadow-2xl backdrop-blur">
+  <div id="chat-panel" role="dialog" aria-label="Portfolio assistant" class="fixed bottom-24 right-6 z-[60] hidden w-[92vw] max-w-md overflow-hidden rounded-2xl border border-white/10 bg-slate-900/95 shadow-2xl backdrop-blur">
     <div class="flex items-center justify-between border-b border-white/10 bg-white/5 px-4 py-3">
       <div class="flex items-center gap-3">
         <span class="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl">
@@ -525,7 +612,7 @@
         </span>
         <div>
           <div class="text-sm font-semibold text-white">Assistant</div>
-          <div class="text-[10px] text-emerald-300">Online</div>
+          <div class="text-[10px] text-emerald-300"><span id="chat-mode">Online</span><span class="text-slate-400"> · </span><span class="text-slate-400">Shift + Enter for a new line</span></div>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -533,7 +620,7 @@
         <button id="close-chat" class="rounded-lg border border-white/10 bg-white/5 p-1 text-slate-300 hover:bg-white/10" aria-label="Close chat">✕</button>
       </div>
     </div>
-    <div id="chat-messages" class="no-scrollbar h-[55vh] space-y-3 overflow-y-auto bg-gradient-to-b from-slate-900/60 to-slate-950 px-4 py-4 text-[13px]"></div>
+    <div id="chat-messages" role="log" aria-live="polite" aria-label="Conversation" class="no-scrollbar h-[55vh] space-y-3 overflow-y-auto bg-gradient-to-b from-slate-900/60 to-slate-950 px-4 py-4 text-[13px]"></div>
     <div class="border-t border-white/10 bg-white/5 p-3">
       <div id="suggestions" class="mb-2 flex flex-wrap gap-2"></div>
       <div class="flex items-end gap-2">
@@ -545,97 +632,222 @@
 
 
   <script>
-    // =============================
-    // Utilities and global state
-    // =============================
-      const isMobile =
-        /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-        || window.innerWidth <= 768;
+  (() => {
+    'use strict';
 
-      if (isMobile) {
-        const overlay = document.getElementById("mobile-overlay");
-        if (overlay) {
-          overlay.style.display = "flex";
-          document.documentElement.style.overflow = "hidden";
-          document.body.style.overflow = "hidden";
-        }
-      }
-    const qs = (s, el=document) => el.querySelector(s);
-    const qsa = (s, el=document) => Array.from(el.querySelectorAll(s));
+    // =====================================================================
+    // 1. CONFIG — the only place you should need to edit
+    // =====================================================================
+    const CONFIG = {
+      name:   'Manchu Uday Kiran',
+      email:  'udaymanchu001@gmail.com',
+      resume: 'pdfs/UDAY.pdf',
 
-    // Theme toggle with localStorage
-    const themeToggle = () => {
-      const isDark = document.documentElement.classList.toggle('light');
-      localStorage.setItem('theme', isDark ? 'light' : 'dark');
-    };
-    const initTheme = () => {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'light') document.documentElement.classList.add('light');
-    };
+      // Social rail. Any entry left as '' is hidden automatically,
+      // so you never ship a dead link again.
+      social: {
+        github:    'https://github.com/UDAYM001',
+        linkedin:  '',   // e.g. 'https://www.linkedin.com/in/your-handle'
+        whatsapp:  '',   // e.g. 'https://wa.me/919999999999'
+        instagram: ''    // e.g. 'https://www.instagram.com/your-handle'
+      },
 
-    // Smooth anchor highlighting
-    const initScrollSpy = () => {
-      const links = qsa('header nav a');
-      const sections = links.map(a => qs(a.getAttribute('href'))).filter(Boolean);
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          const i = sections.indexOf(e.target);
-          if (i >= 0 && e.isIntersecting) {
-            links.forEach(l => l.classList.remove('text-white'));
-            links[i].classList.add('text-white');
-          }
-        });
-      }, { rootMargin: '-50% 0% -50% 0%', threshold: [0, 1] });
-      sections.forEach(s => io.observe(s));
+      // Contact form. Paste a Formspree / Getform / Basin endpoint here and
+      // messages land in your inbox. Left empty, the form opens the visitor's
+      // mail app pre-filled instead — still delivers, no backend needed.
+      contactEndpoint: '',
+
+      // AI assistant backend (see server/worker.js). Left empty, the page
+      // auto-detects a same-origin /api/chat function and silently falls back
+      // to the built-in offline answer engine if none is deployed.
+      chatEndpoint: ''
     };
 
-    // Footer year
-    qs('#year').textContent = new Date().getFullYear();
-
-    // =============================
-    // Projects data and rendering
-    // =============================
+    // =====================================================================
+    // 2. Projects data
+    // =====================================================================
     const PROJECTS = [
-      { id: 'p-visualizer', title: 'Automation_Dotnet_Tool', tags: ['Dotnet','C#','Python'], desc: 'This tool is like a macro recorder + PDF processor for automating repetitive UI workflows involving PDFs.', link: 'https://github.com/UDAYM001/Automation_Dotnet_Tool', img: 'images/neon-1.png' },
-      { id: 'p-commerce', title: 'Mail_automation', tags: ['Python','smtplib','MIMEText'], desc: 'A user can send the same message to more than 1,000 users at the same time.', link: 'https://github.com/UDAYM001/Mail_automation', img: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop' },
-      { id: 'p-analytics', title: 'Excel_Comparation ', tags: ['Dotnet','C#','Python'], desc: 'Windows Forms desktop application manage a master database, detect new add-ons, and download the latest add-on files efficiently.', link: 'https://github.com/UDAYM001/Excel_Comparation', img: 'images/neon-2.png' },
-      { id: 'p-collab', title: 'ivr_tool', tags: ['CRDT','WebRTC','Node'], desc: 'A website to convert the text to ivr related tool', link: 'ivr-tool.netlify.app', img: 'images/neon-3.png' },
-      { id: 'p-landing', title: 'FillPdf', tags: ['html','js','typescript'], desc: 'A Pdf filling website. fill pdf more then 1000 less than a minute based on the requirement', link: 'https://github.com/UDAYM001/FillPdf', img: 'images/neon-4.png' },
-      { id: 'p-insights', title: 'Stress Detection using python', tags: ['LLM','Python','FastAPI','openCv'], desc: 'It is a OpenCv project tarined with real models.', link: '#', img: 'images/neon-5.png' },
+      {
+        id: 'p-automation-dotnet',
+        title: 'Automation_Dotnet_Tool',
+        tags: ['C#', '.NET', 'Python'],
+        desc: 'A macro recorder plus PDF processor that automates repetitive UI workflows end to end.',
+        link: 'https://github.com/UDAYM001/Automation_Dotnet_Tool',
+        img: 'images/neon-1.png'
+      },
+      {
+        id: 'p-mail',
+        title: 'Mail_automation',
+        tags: ['Python', 'smtplib', 'MIMEText'],
+        desc: 'Sends one message to more than 1,000 recipients at once.',
+        link: 'https://github.com/UDAYM001/Mail_automation',
+        img: 'images/neon-3.png'
+      },
+      {
+        id: 'p-excel',
+        title: 'Excel_Comparation',
+        tags: ['C#', '.NET', 'WinForms'],
+        desc: 'Windows Forms app that maintains a master database, detects new add-ons and downloads them efficiently.',
+        link: 'https://github.com/UDAYM001/Excel_Comparation',
+        img: 'images/neon-2.png'
+      },
+      {
+        id: 'p-ivr',
+        title: 'ivr_tool',
+        tags: ['JavaScript', 'Web', 'Text-to-IVR'],
+        desc: 'A web tool that converts plain text into IVR call flows.',
+        link: 'https://ivr-tool.netlify.app',
+        img: 'images/neon-6.png'
+      },
+      {
+        id: 'p-fillpdf',
+        title: 'FillPdf',
+        tags: ['HTML', 'JavaScript', 'TypeScript'],
+        desc: 'Fills more than 1,000 PDFs in under a minute from a single template.',
+        link: 'https://github.com/UDAYM001/FillPdf',
+        img: 'images/neon-4.png'
+      },
+      {
+        id: 'p-stress',
+        title: 'Stress Detection using Python',
+        tags: ['LLM', 'Python', 'FastAPI', 'OpenCV'],
+        desc: 'Computer-vision project trained on real datasets to detect stress signals.',
+        link: 'https://github.com/UDAYM001',
+        img: 'images/neon-5.png'
+      }
     ];
 
+    // =====================================================================
+    // 3. Small helpers
+    // =====================================================================
+    const qs  = (s, el = document) => el.querySelector(s);
+    const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+    const $ = id => document.getElementById(id);
+
+    const escapeHtml = (str) => String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+    // Tiny markdown renderer — input is escaped FIRST, so AI output and
+    // anything a visitor types can never inject markup.
+    const renderRich = (text) => escapeHtml(text)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+?)`/g, '<code class="rounded bg-black/30 px-1 py-0.5 text-[12px]">$1</code>')
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a class="text-cyan-300 underline" href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+      .replace(/\n/g, '<br>');
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // =====================================================================
+    // 4. Theme (the toggle used to do nothing: nothing styled .light)
+    // =====================================================================
+    const setTheme = (mode) => {
+      const light = mode === 'light';
+      document.documentElement.classList.toggle('light', light);
+      localStorage.setItem('theme', mode);
+      const btn = $('theme-toggle');
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(light));
+        btn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+      }
+      const moon = $('icon-moon'), sun = $('icon-sun');
+      if (moon) moon.classList.toggle('hidden', light);
+      if (sun)  sun.classList.toggle('hidden', !light);
+      const meta = qs('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', light ? '#f6f7fb' : '#020617');
+    };
+
+    // =====================================================================
+    // 5. Navigation: scroll spy, mobile menu, smooth anchors
+    // =====================================================================
+    function initScrollSpy() {
+      const links = qsa('header nav[data-primary] a');
+      const sections = links.map(a => qs(a.getAttribute('href'))).filter(Boolean);
+      if (!sections.length || !('IntersectionObserver' in window)) return;
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const i = sections.indexOf(e.target);
+          if (i < 0) return;
+          links.forEach(l => {
+            l.classList.remove('text-white');
+            l.removeAttribute('aria-current');
+          });
+          links[i].classList.add('text-white');
+          links[i].setAttribute('aria-current', 'true');
+        });
+      }, { rootMargin: '-50% 0% -50% 0%', threshold: [0, 1] });
+      sections.forEach(sec => io.observe(sec));
+    }
+
+    function initMobileMenu() {
+      const btn = $('menu-toggle'), menu = $('mobile-menu');
+      if (!btn || !menu) return;
+      const close = () => {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      };
+      btn.addEventListener('click', () => {
+        const open = menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(!open));
+      });
+      qsa('a', menu).forEach(a => a.addEventListener('click', close));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    }
+
+    // =====================================================================
+    // 6. Social rail — render from CONFIG, hide what isn't configured
+    // =====================================================================
+    function initSocial() {
+      Object.entries(CONFIG.social).forEach(([key, url]) => {
+        const el = $('social-' + key);
+        if (!el) return;
+        if (url) { el.href = url; el.hidden = false; }
+        else     { el.hidden = true; }
+      });
+    }
+
+    // =====================================================================
+    // 7. Projects
+    // =====================================================================
     function renderProjects() {
-      const grid = qs('#projects-grid');
+      const grid = $('projects-grid');
+      if (!grid) return;
       grid.innerHTML = '';
       PROJECTS.forEach(p => {
+        const external = /^https?:/i.test(p.link || '');
         const card = document.createElement('a');
         card.href = p.link || '#';
+        if (external) { card.target = '_blank'; card.rel = 'noopener noreferrer'; }
         card.className = 'tilt group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5';
-        card.setAttribute('data-tilt','');
+        card.setAttribute('data-tilt', '');
+        card.setAttribute('aria-label', p.title + ' — opens project');
         card.innerHTML = `
           <div class="relative h-44 w-full overflow-hidden">
-            <img src="${p.img}" alt="${p.title}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
+            <img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.title)} preview" loading="lazy" decoding="async" width="1200" height="600" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
             <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
           </div>
           <div class="relative flex flex-1 flex-col gap-2 p-5">
-            <h3 class="text-lg font-semibold text-white">${p.title}</h3>
-            <p class="text-sm text-slate-300">${p.desc}</p>
+            <h3 class="text-lg font-semibold text-white">${escapeHtml(p.title)}</h3>
+            <p class="text-sm text-slate-300">${escapeHtml(p.desc)}</p>
             <div class="mt-2 flex flex-wrap gap-2 text-[11px]">
-              ${p.tags.map(t => `<span class='rounded-full bg-white/10 px-2 py-1 text-slate-200'>${t}</span>`).join('')}
+              ${p.tags.map(t => `<span class="rounded-full bg-white/10 px-2 py-1 text-slate-200">${escapeHtml(t)}</span>`).join('')}
             </div>
-            <div class="mt-auto flex items-center gap-2 pt-3 text-xs text-cyan-300">View details <span>→</span></div>
+            <div class="mt-auto flex items-center gap-2 pt-3 text-xs text-cyan-300">View details <span aria-hidden="true">→</span></div>
           </div>`;
         grid.appendChild(card);
       });
     }
 
-    // Simple tilt effect
     function initTilt() {
+      if (prefersReducedMotion) return;   // respect the user's OS setting
       qsa('[data-tilt]').forEach(card => {
         card.addEventListener('pointermove', (e) => {
           const r = card.getBoundingClientRect();
-          const rx = -((e.clientY - r.top) / r.height - 0.5) * 8; // rotateX
-          const ry = ((e.clientX - r.left) / r.width - 0.5) * 8;    // rotateY
+          const rx = -((e.clientY - r.top) / r.height - 0.5) * 8;
+          const ry =  ((e.clientX - r.left) / r.width  - 0.5) * 8;
           card.style.setProperty('--rx', rx + 'deg');
           card.style.setProperty('--ry', ry + 'deg');
         });
@@ -646,94 +858,186 @@
       });
     }
 
-    // =============================
-    // Contact form (demo)
-    // =============================
-    qs('#contact-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-      alert(`Thanks ${data.name}! I received your message and will reply at ${data.email}.`);
-      e.currentTarget.reset();
-    });
+    // =====================================================================
+    // 8. Resume download
+    // =====================================================================
+    function initResume() {
+      const trigger = () => {
+        const a = document.createElement('a');
+        a.href = CONFIG.resume;
+        a.download = CONFIG.resume.split('/').pop();
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      };
+      ['resume-btn', 'resume-btn-footer'].forEach(id => {
+        const btn = $(id);
+        if (btn) btn.addEventListener('click', trigger);
+      });
+    }
 
-  qs('#resume-btn').addEventListener('click', () => {
-    const a = document.createElement('a');
-    a.href = 'pdfs/UDAY.pdf';
-    a.download = 'UDAY.pdf';   // forces download instead of opening
-    a.click();
-  });
+    // =====================================================================
+    // 9. Contact form — was a dead alert(), now actually sends
+    // =====================================================================
+    function initContactForm() {
+      const form = $('contact-form');
+      if (!form) return;
+      const status = $('form-status');
+      const submit = $('contact-submit');
+      const say = (msg, state) => {
+        status.textContent = msg;
+        status.dataset.state = state || '';
+      };
 
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
 
-    // =============================
-    // Chat assistant (rule-based)
-    // =============================
+        // Honeypot: silently accept and drop obvious bots
+        if (data._gotcha) { say('Thanks! Your message is on its way.', 'ok'); form.reset(); return; }
+        if (!data.name || !data.email || !data.message) { say('Please fill in every field.', 'err'); return; }
+
+        // A) Endpoint configured -> real delivery
+        if (CONFIG.contactEndpoint) {
+          submit.disabled = true;
+          say('Sending…', 'busy');
+          try {
+            const res = await fetch(CONFIG.contactEndpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ ...data, _subject: `Portfolio enquiry from ${data.name}` })
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            form.reset();
+            say(`Thanks ${data.name}! I received your message and will reply within 24 hours.`, 'ok');
+          } catch (err) {
+            say(`Couldn't send automatically — please email ${CONFIG.email} directly.`, 'err');
+          } finally {
+            submit.disabled = false;
+          }
+          return;
+        }
+
+        // B) No endpoint -> open the visitor's mail app, pre-filled
+        const subject = encodeURIComponent(`Portfolio enquiry from ${data.name}`);
+        const body = encodeURIComponent(`${data.message}\n\n— ${data.name}\n${data.email}`);
+        window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+        say(`Opening your mail app… if nothing happens, email ${CONFIG.email}.`, 'ok');
+      });
+    }
+
+    // =====================================================================
+    // 10. Chat assistant
+    //     Real AI when a backend is reachable, offline engine otherwise.
+    // =====================================================================
+    const OFFLINE_KB = [
+      {
+        keys: ['project', 'portfolio', 'work', 'built', 'show', 'made', 'demo'],
+        reply: () => 'Here is what I have built:\n' +
+          PROJECTS.map(p => `• **${p.title}** — ${p.desc}`).join('\n') +
+          '\n\nAsk me about any one of them for detail.',
+        chips: ['Tell me about FillPdf', 'How to contact you?']
+      },
+      {
+        keys: ['skills', 'stack', 'tech', 'technology', 'know', 'tools'],
+        weight: 2,
+        reply: () => '**Automation & AI:** Python, Playwright, OpenCV, LLM APIs, prompt engineering\n' +
+          '**Apps:** C#, .NET, WinForms, FastAPI, PHP\n' +
+          '**Web:** JavaScript, TypeScript, HTML, Tailwind CSS\n' +
+          '**Data:** Excel automation, PDF processing\n\nWhat are you building?',
+        chips: ['Show projects', 'Share resume']
+      },
+      {
+        keys: ['resume', 'cv', 'download'],
+        reply: () => 'You can grab my resume from the button in the header, or [download it here](pdfs/UDAY.pdf).',
+        chips: ['Show projects', 'How to contact you?']
+      },
+      {
+        keys: ['contact', 'email', 'reach', 'hire', 'work together', 'available', 'freelance'],
+        reply: () => `The fastest way is **${CONFIG.email}**, or use the form on this page — I reply within 24 hours.`,
+        chips: ['Share resume', 'Show projects']
+      },
+      {
+        keys: ['automation', 'playwright', 'pdf', 'excel', 'macro'],
+        weight: 3,
+        reply: () => 'Automation is my main focus — turning manual, repetitive workflows into fast, reliable tools. ' +
+          '**Automation_Dotnet_Tool** records and replays UI workflows with PDF handling, and **FillPdf** fills 1,000+ PDFs in under a minute.',
+        chips: ['Show projects', 'How to contact you?']
+      },
+      {
+        keys: ['ai', 'llm', 'prompt', 'genai', 'machine learning'],
+        weight: 3,
+        reply: () => 'I work as a **prompt engineer**: designing prompts and pipelines so LLMs solve real business tasks, ' +
+          'plus integrating them into desktop and web apps through Python and modern AI APIs.',
+        chips: ['Show projects', 'What is your stack?']
+      },
+      {
+        keys: ['education', 'college', 'study', 'degree', 'bca', 'background'],
+        reply: () => 'I completed my **Bachelor of Computer Applications** at Vignan Degree & PG College, ' +
+          'and learned most of my engineering by shipping real automation tools.',
+        chips: ['Show projects', 'Share resume']
+      },
+      {
+        keys: ['hello', 'hi', 'hey', 'yo', 'greetings'],
+        reply: () => 'Hello! Ask me about my projects, my stack, or how to get in touch.',
+        chips: ['Show projects', "What's your stack?", 'Share resume']
+      }
+    ];
+
     const chat = {
       open: false,
-      el: {
-        toggle: qs('#chat-toggle'),
-        panel: qs('#chat-panel'),
-        close: qs('#close-chat'),
-        clear: qs('#clear-chat'),
-        list: qs('#chat-messages'),
-        input: qs('#chat-input'),
-        send: qs('#chat-send'),
-        sugg: qs('#suggestions'),
-      },
-      memoryKey: 'chat-history-v1'
+      log: [],                 // [{role, content}]
+      memoryKey: 'chat-history-v2',
+      endpoint: null,          // resolved backend, or null for offline
+      probing: false,
+      el: {}
     };
 
-    function saveHistory() {
-      const items = qsa('.msg', chat.el.list).map(el => ({ role: el.dataset.role, html: el.innerHTML }));
-      localStorage.setItem(chat.memoryKey, JSON.stringify(items).slice(0, 100000)); // cap size
-    }
-    function loadHistory() {
-      const raw = localStorage.getItem(chat.memoryKey);
-      if (!raw) return false;
-      try {
-        const items = JSON.parse(raw);
-        chat.el.list.innerHTML = '';
-        items.forEach(m => {
-          const div = document.createElement('div');
-          div.className = `msg flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`;
-          div.dataset.role = m.role;
-          div.innerHTML = m.html;
-          chat.el.list.appendChild(div);
-        });
-        chat.el.list.scrollTop = chat.el.list.scrollHeight;
-        return true;
-      } catch {}
-      return false;
+    function chatEls() {
+      chat.el = {
+        toggle: $('chat-toggle'), panel: $('chat-panel'), close: $('close-chat'),
+        clear: $('clear-chat'), list: $('chat-messages'), input: $('chat-input'),
+        send: $('chat-send'), sugg: $('suggestions'), mode: $('chat-mode')
+      };
     }
 
-    function addMsg(role, content) {
+    const saveHistory = () => {
+      try {
+        localStorage.setItem(chat.memoryKey, JSON.stringify(chat.log.slice(-40)).slice(0, 100000));
+      } catch (_) { /* storage full or blocked — chat still works */ }
+    };
+
+    function addMsg(role, content, { rich = true } = {}) {
       const wrap = document.createElement('div');
       wrap.className = `msg flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
       wrap.dataset.role = role;
       const bubble = document.createElement('div');
-      bubble.className = `max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 ${role==='user' ? 'bg-white text-slate-900' : 'bg-white/10 text-slate-100 border border-white/10'}`;
-      bubble.innerHTML = content;
+      bubble.className = `max-w-[85%] whitespace-pre-wrap break-words rounded-2xl px-3 py-2 ${
+        role === 'user' ? 'bg-white text-slate-900' : 'bg-white/10 text-slate-100 border border-white/10'}`;
+      bubble.innerHTML = rich ? renderRich(content) : escapeHtml(content);
       wrap.appendChild(bubble);
       chat.el.list.appendChild(wrap);
       chat.el.list.scrollTop = chat.el.list.scrollHeight;
-      saveHistory();
+      return wrap;
     }
 
-    function typing(on=true) {
-      if (on) {
-        const t = document.createElement('div');
-        t.id = 'typing'; t.className = 'flex justify-start';
-        t.innerHTML = `<div class="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-slate-300">Typing<span class="animate-pulse">...</span></div>`;
-        chat.el.list.appendChild(t);
-        chat.el.list.scrollTop = chat.el.list.scrollHeight;
-      } else {
-        const t = qs('#typing'); if (t) t.remove();
-      }
+    function typing(on = true) {
+      const existing = $('typing');
+      if (!on) { if (existing) existing.remove(); return; }
+      if (existing) return;
+      const t = document.createElement('div');
+      t.id = 'typing';
+      t.className = 'flex justify-start';
+      t.innerHTML = '<div class="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-slate-300">Typing<span class="animate-pulse">...</span></div>';
+      chat.el.list.appendChild(t);
+      chat.el.list.scrollTop = chat.el.list.scrollHeight;
     }
 
-    function suggestions(list=[]) {
+    function suggestions(list = []) {
       chat.el.sugg.innerHTML = '';
-      list.forEach(txt => {
+      list.slice(0, 3).forEach(txt => {
         const b = document.createElement('button');
+        b.type = 'button';
         b.className = 'rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200 hover:bg-white/10';
         b.textContent = txt;
         b.addEventListener('click', () => { chat.el.input.value = txt; chatSend(); });
@@ -741,140 +1045,276 @@
       });
     }
 
+    // --- Backend discovery -------------------------------------------------
+    function endpointCandidates() {
+      const list = [];
+      if (CONFIG.chatEndpoint) list.push(CONFIG.chatEndpoint);
+      list.push('/api/chat');                 // Cloudflare Pages / Netlify / Vercel
+      return list;
+    }
+
+    async function resolveBackend() {
+      if (chat.endpoint !== null || chat.probing) return chat.endpoint;
+      chat.probing = true;
+      for (const url of endpointCandidates()) {
+        try {
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 4000);
+          const res = await fetch(url, { method: 'GET', signal: ctrl.signal });
+          clearTimeout(timer);
+          if (!res.ok) continue;
+          const data = await res.json().catch(() => ({}));
+          if (data && data.ok && data.ai) {
+            chat.endpoint = url;
+            if (chat.el.mode) chat.el.mode.textContent = 'AI · online';
+            chat.probing = false;
+            return url;
+          }
+        } catch (_) { /* try the next candidate */ }
+      }
+      chat.endpoint = null;
+      if (chat.el.mode) chat.el.mode.textContent = 'Offline answers';
+      chat.probing = false;
+      return null;
+    }
+
+    async function askBackend(text) {
+      const url = await resolveBackend();
+      if (!url) return null;
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 20000);
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: ctrl.signal,
+          body: JSON.stringify({
+            messages: chat.log.slice(-8),
+            context: {
+              name: CONFIG.name,
+              email: CONFIG.email,
+              resume: CONFIG.resume,
+              projects: PROJECTS.map(p => ({ title: p.title, desc: p.desc, tags: p.tags, link: p.link }))
+            }
+          })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        return (data && typeof data.reply === 'string' && data.reply.trim()) ? data.reply.trim() : null;
+      } catch (_) {
+        return null;   // caller falls back to the offline engine
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    function offlineAnswer(text) {
+      const msg = text.toLowerCase();
+
+      // Word-boundary matching. Plain substring matching caused real misfires:
+      // "hi" matched inside "chitradurga", and "ai" inside "email".
+      const matches = (key) => new RegExp(
+        '(?:^|[^a-z0-9])' + key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?:$|[^a-z0-9])'
+      ).test(msg);
+
+      // Longer keys are more specific, and technical intents carry extra
+      // weight so "do you do LLM work" beats the generic word "work".
+      const scored = OFFLINE_KB
+        .map(item => ({
+          item,
+          score: item.keys.reduce((n, k) => n + (matches(k) ? k.length * (item.weight || 1) : 0), 0)
+        }))
+        .sort((a, b) => b.score - a.score);
+
+      // Direct project-name lookup beats generic intents.
+      // Exact phrase first, then token overlap so "stress detection" finds
+      // "Stress Detection using Python" without matching on filler words.
+      const STOPWORDS = new Set(['using', 'the', 'and', 'for', 'with', 'of', 'a']);
+      const words = (s) => s.toLowerCase().replace(/[_-]/g, ' ')
+        .split(/[^a-z0-9]+/).filter(w => w && !STOPWORDS.has(w));
+
+      let named = PROJECTS.find(p => msg.includes(p.title.toLowerCase().replace(/_/g, ' ')) ||
+                                     msg.includes(p.title.toLowerCase())) || null;
+
+      if (!named) {
+        const msgWords = new Set(words(msg));
+        let bestHits = 0;
+        PROJECTS.forEach(p => {
+          const titleWords = words(p.title);
+          const hits = titleWords.filter(w => msgWords.has(w)).length;
+          // Require the full title for single-word names, 2 words otherwise
+          if (hits >= Math.min(2, titleWords.length) && hits > bestHits) {
+            bestHits = hits;
+            named = p;
+          }
+        });
+      }
+
+      if (named) {
+        return {
+          reply: `**${named.title}**\n${named.desc}\n\nStack: ${named.tags.join(', ')}\n[Open the repository](${named.link})`,
+          chips: ['Show projects', 'How to contact you?']
+        };
+      }
+
+      if (scored[0] && scored[0].score > 0) {
+        return { reply: scored[0].item.reply(), chips: scored[0].item.chips };
+      }
+
+      return {
+        reply: 'I can help with my **projects**, my **stack**, my **resume**, or getting in **contact**. ' +
+               `For anything else, email me at ${CONFIG.email}.`,
+        chips: ['Show projects', "What's your stack?", 'Share resume']
+      };
+    }
+
     function openChat() {
       chat.el.panel.classList.remove('hidden');
       chat.open = true;
-      if (!loadHistory()) {
-        addMsg('assistant', `Hi! I\'m your portfolio assistant. I can:\n• list projects and skills\n• share a resume download\n• help you contact me\n\nTry: "Show projects", "What\'s your stack?", or "How can we work together?"`);
-        suggestions(['Show projects','What\'s your stack?','Share resume','How to contact you?']);
+      chat.el.input.focus();
+
+      let restored = false;
+      try {
+        const raw = localStorage.getItem(chat.memoryKey);
+        if (raw) {
+          const items = JSON.parse(raw);
+          if (Array.isArray(items) && items.length) {
+            chat.log = items;
+            chat.el.list.innerHTML = '';
+            items.forEach(m => addMsg(m.role, m.content));
+            restored = true;
+          }
+        }
+      } catch (_) {}
+
+      if (restored) {
+        suggestions(['Show projects', 'Share resume', 'How to contact you?']);
       } else {
-        suggestions(['Show projects','Search projects: 3D','Share resume']);
+        addMsg('assistant',
+          `Hi! I'm ${CONFIG.name.split(' ').slice(-2).join(' ')}'s portfolio assistant.\n` +
+          'I can walk you through projects, skills, or how to get in touch.');
+        suggestions(['Show projects', "What's your stack?", 'Share resume']);
       }
+      resolveBackend();   // warm up the AI backend in the background
     }
 
-    function closeChat() { chat.el.panel.classList.add('hidden'); chat.open = false; }
+    const closeChat = () => { chat.el.panel.classList.add('hidden'); chat.open = false; };
 
-    chat.el.toggle.addEventListener('click', () => chat.open ? closeChat() : openChat());
-    chat.el.close.addEventListener('click', closeChat);
-    chat.el.clear.addEventListener('click', () => { localStorage.removeItem(chat.memoryKey); chat.el.list.innerHTML=''; suggestions(['Show projects','What\'s your stack?','Share resume']); });
-
-    function chatSend() {
+    async function chatSend() {
       const text = chat.el.input.value.trim();
       if (!text) return;
       addMsg('user', text);
+      chat.log.push({ role: 'user', content: text });
       chat.el.input.value = '';
+      chat.el.input.style.height = '';
+      suggestions([]);
       typing(true);
-      setTimeout(() => { typing(false); bot(text); }, 400 + Math.random()*400);
+
+      let reply = await askBackend(text);
+
+      if (!reply) {
+        // Offline engine — keep a human-feeling delay
+        await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+        const local = offlineAnswer(text);
+        reply = local.reply;
+        typing(false);
+        addMsg('assistant', reply);
+        chat.log.push({ role: 'assistant', content: reply });
+        suggestions(local.chips);
+        saveHistory();
+        return;
+      }
+
+      typing(false);
+      addMsg('assistant', reply);
+      chat.log.push({ role: 'assistant', content: reply });
+      suggestions(['Show projects', 'How to contact you?']);
+      saveHistory();
     }
-    chat.el.send.addEventListener('click', chatSend);
-    chat.el.input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chatSend(); }
-    });
 
-    function bot(u) {
-      const msg = u.toLowerCase();
-      const say = (html) => addMsg('assistant', html);
+    function initChat() {
+      chatEls();
+      if (!chat.el.toggle) return;
 
-      // intents
-      if (/^(hi|hey|hello|yo)\b/.test(msg)) {
-        say('Hello! Want to see my projects, skills, or grab my resume?');
-        suggestions(['Show projects','What\'s your stack?','Share resume']);
-        return;
-      }
+      chat.el.toggle.addEventListener('click', () => chat.open ? closeChat() : openChat());
+      chat.el.close.addEventListener('click', closeChat);
+      chat.el.send.addEventListener('click', chatSend);
+      chat.el.clear.addEventListener('click', () => {
+        localStorage.removeItem(chat.memoryKey);
+        chat.log = [];
+        chat.el.list.innerHTML = '';
+        suggestions(['Show projects', "What's your stack?", 'Share resume']);
+      });
+      chat.el.input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chatSend(); }
+      });
+      chat.el.input.addEventListener('input', (e) => {
+        e.target.style.height = 'auto';
+        e.target.style.height = Math.min(e.target.scrollHeight, 144) + 'px';
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chat.open) closeChat();
+      });
+    }
 
-      if (/(resume|cv)/.test(msg)) {
-        say('Here you go — click to download my resume.');
-        say('<a class="text-cyan-300 underline" href="#" onclick="document.getElementById(\'resume-btn\').click();return false;">Download resume</a>');
-        suggestions(['Show projects','How to contact you?']);
-        return;
-      }
-
-      if (/(contact|email|reach|hire|work together)/.test(msg)) {
-        say('You can reach me at <a class="text-cyan-300 underline" href="mailto:you@example.com">you@example.com</a> or the form below. I\'m also happy to hop on a quick call.');
-        say('<a class="text-cyan-300 underline" href="#contact">Jump to contact section</a>');
-        suggestions(['Share resume','Show projects']);
-        return;
-      }
-
-      if (/(skills|stack|tech|technology)/.test(msg)) {
-        say('My core stack: React, TypeScript, Node, and Three.js. I also work with GraphQL, WebSockets, Docker, and testing (Jest/Vitest/Playwright).');
-        say('Anything specific you\'re looking for?');
-        suggestions(['Three.js work','Realtime features','Design systems']);
-        return;
-      }
-
-      if (/(project|portfolio|work|show)/.test(msg)) {
-        const items = PROJECTS.slice(0, 6).map(p => `• <b>${p.title}</b> — ${p.desc}`).join('<br>');
-        say(`Here are a few highlights:<br>${items}`);
-        say('<a class="text-cyan-300 underline" href="#projects">Open projects section</a>');
-        suggestions(['Search projects: 3D','Search projects: dashboard','How to contact you?']);
-        return;
-      }
-
-      const searchMatch = msg.match(/search (?:projects|project)\s*[:\-]?\s*(.+)/);
-      if (searchMatch) {
-        const keyword = searchMatch[1].trim().toLowerCase();
-        const found = PROJECTS.filter(p => [p.title, p.desc, ...(p.tags||[])].join(' ').toLowerCase().includes(keyword));
-        if (found.length) {
-          say(`Found ${found.length} project(s) matching "${keyword}":<br>` + found.map(p => `• <b>${p.title}</b> — ${p.desc}`).join('<br>'));
-          say('<a class="text-cyan-300 underline" href="#projects">Open projects section</a>');
-        } else {
-          say(`I couldn\'t find any projects for "${keyword}". Try another term?`);
+    // =====================================================================
+    // 11. Hero typing animation (now with a no-JS fallback in the markup)
+    // =====================================================================
+    function initTyping() {
+      const el = $('typingName');
+      if (!el) return;
+      const full = el.textContent.trim();
+      if (prefersReducedMotion) return;      // leave the static text in place
+      el.textContent = '';
+      let i = 0;
+      (function step() {
+        if (i < full.length) {
+          el.textContent += full.charAt(i++);
+          setTimeout(step, 90);
         }
-        suggestions(['Search projects: realtime','Search projects: commerce']);
-        return;
-      }
-
-      if (/(time|schedule|call|meeting)/.test(msg)) {
-        say('Happy to schedule! Share a time via email or drop a message in the form — I\'ll confirm shortly.');
-        suggestions(['How to contact you?','Share resume']);
-        return;
-      }
-
-      // default
-      say('Got it! I can help with projects, skills, resume, or contacting me. Try "Show projects" or "Share resume".');
-      suggestions(['Show projects','What\'s your stack?','Share resume']);
+      })();
     }
 
-    // =============================
-    // Init on DOM ready
-    // =============================
-    document.addEventListener('DOMContentLoaded', () => {
-      initTheme();
+    // =====================================================================
+    // 12. About-section spotlight
+    // =====================================================================
+    function initSpotlight() {
+      const card = $('spot-about');
+      if (!card || prefersReducedMotion) return;
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+      });
+    }
 
-      const themeBtn = qs('#theme-toggle');
+    // =====================================================================
+    // 13. Boot
+    // =====================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore the saved theme (also done pre-paint in <head> to avoid a flash)
+      setTheme(localStorage.getItem('theme') === 'light' ? 'light' : 'dark');
+      const themeBtn = $('theme-toggle');
       if (themeBtn) {
-        themeBtn.addEventListener('click', themeToggle);
+        themeBtn.addEventListener('click', () => {
+          setTheme(document.documentElement.classList.contains('light') ? 'dark' : 'light');
+        });
       }
 
+      $('year').textContent = new Date().getFullYear();
+
+      initSocial();
       renderProjects();
       initTilt();
+      initScrollSpy();
+      initMobileMenu();
+      initResume();
+      initContactForm();
+      initChat();
+      initTyping();
+      initSpotlight();
     });
-
-    const text = "Manchu Uday Kiran.";
-    let index = 0;
-
-    function typing() {
-      if (index < text.length) {
-        document.getElementById("typingName").textContent += text.charAt(index);
-        index++;
-        setTimeout(typing, 120); // typing speed
-      }
-    }
-
-    window.addEventListener("load", typing);
-
-    // Spotlight reveal logic
-    const card = document.getElementById("spot-about");
-
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty("--x", `${x}px`);
-      card.style.setProperty("--y", `${y}px`);
-    });
-
+  })();
   </script>
 </body>
 </html>
