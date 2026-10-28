@@ -152,10 +152,21 @@
     .fade { opacity: 0; transform: translateY(18px); transition: opacity .9s ease var(--d, 0s), transform 1s var(--ease) var(--d, 0s); }
     .is-in .fade { opacity: 1; transform: none; }
 
-    /* ---------- About: the portrait is drawn in stars ---------- */
-    .about__grid { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 72px; align-items: start; }
-    .about__portrait { margin: 0; display: grid; gap: 18px; }
-    #portrait-stars { display: block; width: 100%; aspect-ratio: 380 / 460; max-width: 100%; }
+    /* ---------- About ---------- */
+    .about__grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 64px; align-items: start; }
+    .about__portrait { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+    .about__ring {
+      width: 220px; height: 220px; border-radius: 50%; position: relative;
+      display: grid; place-items: center; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 0 0 10px rgba(255,255,255,.025), 0 0 60px rgb(var(--glow) / .12);
+      background: radial-gradient(circle at 50% 30%, rgba(255,255,255,.08), rgba(255,255,255,.015) 70%);
+    }
+    .about__ring img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; filter: grayscale(1) contrast(1.05); transition: filter .6s ease; }
+    .about__ring:hover img { filter: none; }
+    .about__ring b { display: none; font-weight: 600; font-size: 3rem; letter-spacing: .04em; color: var(--ink); }
+    .no-img .about__ring img { display: none; }
+    .no-img .about__ring b { display: block; }
     .about__portrait figcaption { color: var(--silver); font-size: .95rem; line-height: 1.5; }
     .about__portrait figcaption strong { display: block; color: var(--ink); font-weight: 600; font-size: 1.05rem; margin-bottom: 2px; }
     .about__text { display: grid; gap: 22px; max-width: 60ch; font-size: 1.1rem; }
@@ -307,7 +318,8 @@
       .is-in .orb { transform: translate(0, 0) scale(1); }
       .orb__par { transform: none !important; }
       .about__grid { grid-template-columns: 1fr; gap: 44px; }
-      .about__portrait { max-width: 340px; }
+      .about__portrait { align-items: flex-start; text-align: left; }
+      .about__ring { width: 160px; height: 160px; }
     }
     @media (max-width: 700px) {
       body { font-size: 16px; }
@@ -352,8 +364,11 @@
       <div class="wrap">
         <h2 class="title">About</h2>
         <div class="about__grid">
-          <figure class="about__portrait fade" style="--d: .1s">
-            <canvas id="portrait-stars" role="img" aria-label="Portrait of Manchu Uday Kiran, drawn in stars"></canvas>
+          <figure class="about__portrait fade" id="portrait" style="--d: .1s">
+            <div class="about__ring">
+              <img src="images/uday.jpg" alt="Portrait of Manchu Uday Kiran" width="220" height="220" loading="lazy" decoding="async" />
+              <b aria-hidden="true">UK</b>
+            </div>
             <figcaption><strong>Manchu Uday Kiran</strong>Prompt engineer &amp; automation developer</figcaption>
           </figure>
           <div class="about__text">
@@ -456,7 +471,6 @@
     const CONFIG = {
       name: 'Manchu Uday Kiran',
       nameLines: ['UDAY KIRAN', 'MANCHU'],   // top line, bottom line of the title card
-      portrait: 'images/uday.jpg',           // drawn in stars in About. Plain background works best.
       email: 'udaymanchu001@gmail.com',
       resume: 'pdfs/UDAY.pdf',
       linkedin: '',                           // e.g. 'https://www.linkedin.com/in/your-handle'
@@ -549,9 +563,8 @@
 
     // =====================================================================
     // 3. Star field — silver five-point stars on black. In 'text' mode the
-    //    targets are sampled from the name, in 'image' mode from a photo.
-    //    `pt` (0..1) pulls every star from its drift to its target; at 1 it
-    //    holds still.
+    //    targets are sampled from the name. `pt` (0..1) pulls every star from
+    //    its drift to its target; at 1 it holds still.
     // =====================================================================
     const F0 = .04, FS = .46, FD = .50;   // formation: start, stagger spread, per-star duration (ends at 1.0)
     const DISPLAY_STACK = '"Styrene B", "Archivo", "Helvetica Neue", Arial, sans-serif';
@@ -595,41 +608,24 @@
       return c;
     }
 
-    // A generic head-and-shoulders shape, used when the portrait file is missing.
-    function makeSilhouette(W, H) {
-      const c = document.createElement('canvas'); c.width = W; c.height = H;
-      const g = c.getContext('2d');
-      g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
-      const cx = W / 2;
-      const body = g.createLinearGradient(0, H * .55, 0, H);
-      body.addColorStop(0, '#f2f2f2'); body.addColorStop(1, '#7a7a7a');
-      g.fillStyle = body;
-      g.beginPath();
-      g.moveTo(cx - W * .46, H);
-      g.quadraticCurveTo(cx - W * .46, H * .66, cx - W * .18, H * .6);
-      g.lineTo(cx - W * .08, H * .54); g.lineTo(cx + W * .08, H * .54); g.lineTo(cx + W * .18, H * .6);
-      g.quadraticCurveTo(cx + W * .46, H * .66, cx + W * .46, H);
-      g.closePath(); g.fill();
-      const head = g.createRadialGradient(cx - W * .05, H * .3, W * .02, cx, H * .34, W * .2);
-      head.addColorStop(0, '#ffffff'); head.addColorStop(1, '#8c8c8c');
-      g.fillStyle = head;
-      g.beginPath(); g.ellipse(cx, H * .34, W * .16, H * .17, 0, 0, Math.PI * 2); g.fill();
-      g.fillStyle = '#9a9a9a'; g.fillRect(cx - W * .06, H * .48, W * .12, H * .08);
-      return c;
-    }
-
     class StarField {
       constructor(canvas, opts) {
         this.cv = canvas;
         this.ctx = canvas.getContext('2d');
-        this.o = Object.assign({ mode: null, ambient: 140, dim: 1, maxTargets: 2600, flareScale: 1, gap: 5 }, opts);
+        this.o = Object.assign({ mode: null, ambient: 140, dim: 1, maxTargets: 2600, flareScale: 1 }, opts);
         this.t = 0; this.p = 0; this.pt = 0;
         this.mx = 0; this.my = 0;           // pointer, -0.5..0.5 of the canvas (drift parallax only)
         this.par = [];
-        this.image = null;                  // 'image' mode source (img or canvas)
         this.layout = null;
         this.hasLS = 'letterSpacing' in this.ctx;
-        this.sp = { dot: makeSprite(64, 'dot'), star: makeSprite(96, 'star'), flare: makeSprite(192, 'flare') };
+        // Stars are drawn from pre-rotated copies (16 angles) so the hot loop never sets a transform.
+        const spin = (base, n) => Array.from({ length: n }, (_, i) => {
+          const c = document.createElement('canvas'); c.width = c.height = base.width;
+          const g = c.getContext('2d'), h = base.width / 2;
+          g.translate(h, h); g.rotate(i / n * Math.PI * 2); g.drawImage(base, -h, -h);
+          return c;
+        });
+        this.sp = { dot: makeSprite(64, 'dot'), star: spin(makeSprite(96, 'star'), 16), flare: spin(makeSprite(192, 'flare'), 16) };
         this.dirty = true;
       }
 
@@ -646,10 +642,6 @@
 
       targets() {
         if (this.o.mode === 'text') { this.layout = this.measure(); return this.sampleText(this.layout); }
-        if (this.o.mode === 'image') {
-          try { return this.sampleImage(this.image || makeSilhouette(this.W, this.H)); }
-          catch (e) { return this.sampleImage(makeSilhouette(this.W, this.H)); }   // e.g. a cross-origin photo
-        }
         return [];
       }
 
@@ -713,7 +705,7 @@
       font(fs) { return `800 ${fs}px ${DISPLAY_STACK}`; }
 
       measure() {
-        const g = this.ctx, { W, H } = this, LS = .04;
+        const g = this.ctx, { W, H } = this, LS = .005;
         const widthAt = (text, fs) => {
           g.font = this.font(fs);
           if (this.hasLS) g.letterSpacing = (fs * LS).toFixed(2) + 'px';
@@ -722,9 +714,9 @@
           return w;
         };
         const [a, b] = CONFIG.nameLines;
-        let fs = 100 * (W * .9) / Math.max(widthAt(a, 100), widthAt(b, 100));
-        fs = Math.min(fs, H * .26);
-        const half = Math.max(fs * .9, H * .12);
+        let fs = 100 * (W * .94) / Math.max(widthAt(a, 100), widthAt(b, 100));
+        fs = Math.min(fs, H * .3);
+        const half = fs * .58;                               // tight: the two lines nearly touch
         return { fs, ls: this.hasLS ? fs * LS : 0, lines: [{ text: a, y: H * .5 - half }, { text: b, y: H * .5 + half }] };
       }
 
@@ -759,53 +751,6 @@
           const v = cand[k]; cand[k] = cand[i]; cand[i] = v;
           pts.push({ x: v % W + Math.random() - .5, y: (v / W | 0) + Math.random() - .5 });
         }
-        return pts;
-      }
-
-      // ---- image mode ------------------------------------------------------
-      // Brighter areas of the photo get more and bigger stars; edges always get
-      // one. The background tone is estimated from the picture's border and
-      // removed, so a plain backdrop stays black. A dark subject on a light
-      // backdrop is read as a silhouette.
-      sampleImage(src) {
-        const { W, H } = this;
-        const oc = document.createElement('canvas');
-        oc.width = W; oc.height = H;
-        const g = oc.getContext('2d', { willReadFrequently: true });
-        g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
-        const iw = src.naturalWidth || src.width, ih = src.naturalHeight || src.height;
-        const sc = Math.max(W / iw, H / ih), dw = iw * sc, dh = ih * sc;
-        g.drawImage(src, (W - dw) / 2, 0, dw, dh);           // cover, anchored to the top (faces live there)
-        const d = g.getImageData(0, 0, W, H).data;
-        const n = W * H, lum = new Float32Array(n), blur = new Float32Array(n);
-        for (let i = 0, j = 0; i < n; i++, j += 4) lum[i] = (d[j] * .299 + d[j + 1] * .587 + d[j + 2] * .114) / 255;
-        for (let y = 0; y < H; y++) {                          // small box blur, keeps grain out of the edges
-          for (let x = 0; x < W; x++) {
-            let s = 0, c = 0;
-            for (let yy = Math.max(0, y - 2); yy <= Math.min(H - 1, y + 2); yy++)
-              for (let xx = Math.max(0, x - 2); xx <= Math.min(W - 1, x + 2); xx++) { s += lum[yy * W + xx]; c++; }
-            blur[y * W + x] = s / c;
-          }
-        }
-        let bs = 0, bc = 0;
-        for (let x = 0; x < W; x++) { bs += blur[x] + blur[(H - 1) * W + x]; bc += 2; }
-        for (let y = 0; y < H; y++) { bs += blur[y * W] + blur[y * W + W - 1]; bc += 2; }
-        const bg = bs / bc;
-        let cs = 0, cc = 0;
-        for (let y = H * .3 | 0; y < H * .7; y++) for (let x = W * .35 | 0; x < W * .65; x++) { cs += blur[y * W + x]; cc++; }
-        const bright = cs / cc >= bg;                           // is the subject lighter than the backdrop?
-        const wt = i => bright ? clamp((blur[i] - bg) / (1 - bg + .05), 0, 1) : clamp((bg - blur[i]) / (bg + .05), 0, 1);
-        const gap = this.o.gap, pts = [], j = gap * .4;
-        for (let y = gap; y < H - gap; y += gap) {
-          for (let x = gap; x < W - gap; x += gap) {
-            const i = y * W + x, w = wt(i);
-            const e = Math.hypot(wt(i + 2) - wt(i - 2), wt(i + 2 * W) - wt(i - 2 * W));
-            if (e > .16 || (w > .18 && Math.random() < w * w * .9 + .04)) {
-              pts.push({ x: x + (Math.random() - .5) * j, y: y + (Math.random() - .5) * j, w: Math.max(w, Math.min(1, e * 1.5)) });
-            }
-          }
-        }
-        while (pts.length > this.o.maxTargets) pts.splice(Math.random() * pts.length | 0, 1);
         return pts;
       }
 
@@ -847,7 +792,7 @@
           const twk = REDUCED ? .9 : lerp(.62 + .38 * Math.sin(t * q.tw + q.tp), .92, f);
           a *= twk * this.o.dim * lerp(.45 + .55 * clamp(zz, 0, 1.2) / 1.2, 1, f);
           if (a <= .01) continue;
-          const size = q.s * zz * (1 - .25 * f);
+          const size = q.s * zz * (q.k === 0 ? 1 + .15 * f : 1 - .25 * f);
 
           if (q.k > 0 && q.z > .8 && f < .9) {              // soft upward motion trail
             const len = q.vy * .28 * zz * drift;
@@ -862,11 +807,10 @@
             if (q.z > 1.35 && f < .5) { ctx.globalAlpha = a * .4; ctx.drawImage(dot, x - size, y - size, size * 2, size * 2); }
             else ctx.drawImage(dot, x - size / 2, y - size / 2, size, size);
           } else {
-            const sp = q.k === 1 ? star : flare;
-            const rot = q.rot + t * q.rs * drift, cs = Math.cos(rot), sn = Math.sin(rot), D = this.dpr;
-            ctx.setTransform(D * cs, D * sn, -D * sn, D * cs, x * D, y * D);
-            ctx.drawImage(sp, -size / 2, -size / 2, size, size);
-            ctx.setTransform(D, 0, 0, D, 0, 0);
+            const set = q.k === 1 ? star : flare;
+            const rot = q.rot + t * q.rs * drift;
+            const sp = set[((rot / 6.2832) * 16 | 0) % 16 + 16 & 15];
+            ctx.drawImage(sp, x - size / 2, y - size / 2, size, size);
           }
         }
         if (nTrails) { ctx.globalAlpha = .14; ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(225,235,255,1)'; ctx.stroke(trails); }
@@ -882,7 +826,7 @@
     const intro = $('intro'), stage = $('stage');
     const hello = $('hello'), role = $('role'), hint = $('hint');
     const sky = new StarField($('sky'), { ambient: narrow() ? 60 : 140, dim: .55, flareScale: .7 });
-    const hero = new StarField($('stars'), { mode: 'text', ambient: narrow() ? 60 : 110, maxTargets: narrow() ? 2600 : 6000 });
+    const hero = new StarField($('stars'), { mode: 'text', ambient: narrow() ? 60 : 110, maxTargets: narrow() ? 3000 : 9000 });
     let introVisible = true;
 
     function placeCopy() {
@@ -949,32 +893,7 @@
     }
 
     // =====================================================================
-    // 5. About: the portrait gathers out of stars when it scrolls into view
-    // =====================================================================
-    const portrait = new StarField($('portrait-stars'), { mode: 'image', ambient: 36, dim: .95, maxTargets: narrow() ? 1500 : 2600, gap: narrow() ? 4 : 5 });
-
-    function initPortrait() {
-      let visible = false, started = 0;
-      portrait.resize();
-      const img = new Image();
-      img.addEventListener('load', () => { portrait.image = img; portrait.retarget(); });
-      img.src = CONFIG.portrait;                                   // on error the silhouette stays
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(es => es.forEach(e => {
-          visible = e.isIntersecting;
-          if (visible && !started) started = performance.now();
-        }), { threshold: [0, .4] }).observe(portrait.cv);
-      } else { visible = true; started = performance.now(); }
-      tickers.push(dt => {
-        if (!visible || document.hidden) return;
-        portrait.pt = REDUCED || !started ? (started ? 1 : 0) : clamp((performance.now() - started) / 4200, 0, 1);
-        if (REDUCED && !portrait.dirty) return;
-        portrait.frame(dt);
-      });
-    }
-
-    // =====================================================================
-    // 6. Scroll reveals
+    // 5. Scroll reveals
     // =====================================================================
     function initReveal() {
       const els = qsa('[data-reveal]');
@@ -986,7 +905,7 @@
     }
 
     // =====================================================================
-    // 7. Skills constellation: floating orbs joined by lines that draw in
+    // 6. Skills constellation: floating orbs joined by lines that draw in
     // =====================================================================
     function initConstellation() {
       const field = $('constellation'), svg = $('lines'), section = $('skills');
@@ -1059,7 +978,7 @@
     }
 
     // =====================================================================
-    // 8. Selected work: rows, plus a preview that follows the pointer
+    // 7. Selected work: rows, plus a preview that follows the pointer
     // =====================================================================
     function initWork() {
       const list = $('work');
@@ -1113,7 +1032,7 @@
     }
 
     // =====================================================================
-    // 9. Contact form — real delivery with an endpoint, mail app without one
+    // 8. Contact form — real delivery with an endpoint, mail app without one
     // =====================================================================
     function initContact() {
       const form = $('contact-form'), status = $('form-status'), submit = $('contact-submit');
@@ -1147,12 +1066,16 @@
     }
 
     // =====================================================================
-    // 10. Boot
+    // 9. Boot
     // =====================================================================
     function initMisc() {
       $('year').textContent = new Date().getFullYear();
       const li = $('social-linkedin');
       if (CONFIG.linkedin) { li.href = CONFIG.linkedin; li.hidden = false; }
+      const fig = $('portrait'), img = fig.querySelector('img');
+      const noImg = () => fig.classList.add('no-img');
+      img.addEventListener('error', noImg);
+      if (img.complete && img.naturalWidth === 0) noImg();
 
       let lastW = window.innerWidth, lastH = window.innerHeight, timer = 0;
       window.addEventListener('resize', () => {
@@ -1161,7 +1084,7 @@
           // Ignore the mobile address bar showing and hiding; rebuild only for real size changes.
           if (window.innerWidth !== lastW || Math.abs(window.innerHeight - lastH) > 160) {
             lastW = window.innerWidth; lastH = window.innerHeight;
-            hero.resize(); sky.resize(); portrait.resize(); placeCopy(); updateIntro();
+            hero.resize(); sky.resize(); placeCopy(); updateIntro();
           }
         }, 180);
       });
@@ -1178,7 +1101,6 @@
     }
 
     initIntro();
-    initPortrait();
     initReveal();
     initConstellation();
     initWork();
