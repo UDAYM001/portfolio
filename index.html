@@ -27,7 +27,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
   {
@@ -44,8 +44,9 @@
   </script>
 
   <style>
-    /* Layout: one long scroll. A pinned title-card intro (stars form the name as you scroll),
-       then About, Skills, Selected work and an end card, all on true black. */
+    /* Layout: one long scroll. A pinned title card first (stars gather into the name as you
+       scroll, then the name rides up with the page), then About with a star-formed portrait,
+       Skills, Selected work and an end card, all on true black. */
     :root {
       --bg: #000000;                 /* true black, as briefed */
       --ink: #f3f4f8;                /* silver-white text */
@@ -53,8 +54,10 @@
       --dim: #6b7183;                /* tertiary text */
       --line: rgba(255, 255, 255, .12);
       --glow: 214 226 255;           /* cool-blue star glow, used as rgb(var(--glow) / a) */
-      --display: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
-      --body: 'Jost', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+      /* Claude's site is set in Styrene B (a licensed face). Archivo is the closest open face
+         to it; "Styrene B" stays first in the stack for anyone who has it installed. */
+      --display: 'Styrene B', 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+      --body: 'Styrene B', 'Archivo', 'Helvetica Neue', Arial, sans-serif;
       --ease: cubic-bezier(.22, .8, .26, 1);
       --wrap: 1120px;
       --gutter-l: max(20px, env(safe-area-inset-left, 0px));
@@ -94,7 +97,7 @@
     main { position: relative; z-index: 1; }
 
     /* ---------- Intro: pinned stage, scroll drives the star formation ---------- */
-    .intro { position: relative; height: 340vh; }
+    .intro { position: relative; height: 300vh; }
     .intro__stage {
       position: sticky; top: 0;
       height: 100vh; height: 100svh;
@@ -103,21 +106,20 @@
     #stars { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .intro__hello, .intro__role {
       position: absolute; left: var(--gutter-l); right: var(--gutter-r);
-      margin: 0; text-align: center; color: var(--silver);
+      margin: 0; text-align: center; color: var(--silver); font-weight: 400;
       opacity: 0; pointer-events: none; will-change: opacity, transform;
     }
-    .intro__hello { font-size: clamp(.85rem, 1.3vw, 1.05rem); letter-spacing: .34em; top: 30%; }
-    .intro__role  { font-size: clamp(.95rem, 1.6vw, 1.25rem); letter-spacing: .22em; top: 60%; }
-    .intro__hello { transition: opacity .9s ease; }
+    .intro__hello { font-size: clamp(.85rem, 1.3vw, 1.05rem); letter-spacing: .34em; top: 22%; transition: opacity .9s ease; }
+    .intro__role  { font-size: clamp(.9rem, 1.5vw, 1.2rem); letter-spacing: .22em; top: 78%; }
     .intro__hint {
       position: absolute; left: 0; right: 0;
-      bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
       display: flex; flex-direction: column; align-items: center; gap: 12px;
-      color: var(--ink); font-size: .82rem; letter-spacing: .32em; pointer-events: none;
+      color: var(--ink); font-size: .8rem; font-weight: 400; letter-spacing: .32em; pointer-events: none;
       text-shadow: 0 0 14px #000, 0 0 4px #000;
     }
     .intro__hint i {
-      display: block; width: 1px; height: 56px;
+      display: block; width: 1px; height: 48px;
       background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
       background-size: 100% 50%; background-repeat: no-repeat;
       animation: hintLine 2.2s ease-in-out infinite;
@@ -128,8 +130,8 @@
     .section { padding-block: clamp(96px, 14vw, 180px); }
     .wrap { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
     .title {
-      font-family: var(--display); font-weight: 400;
-      font-size: clamp(1.75rem, 3.2vw, 2.4rem); letter-spacing: .14em;
+      font-family: var(--display); font-weight: 600;
+      font-size: clamp(1.6rem, 2.6vw, 2.1rem); letter-spacing: -.01em;
       margin: 0 0 56px; line-height: 1.1;
     }
     .title::after {
@@ -150,32 +152,21 @@
     .fade { opacity: 0; transform: translateY(18px); transition: opacity .9s ease var(--d, 0s), transform 1s var(--ease) var(--d, 0s); }
     .is-in .fade { opacity: 1; transform: none; }
 
-    /* ---------- About ---------- */
-    .about__grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 64px; align-items: start; }
-    .about__portrait { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
-    .about__ring {
-      width: 220px; height: 220px; border-radius: 50%; position: relative;
-      display: grid; place-items: center; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.22);
-      box-shadow: 0 0 0 10px rgba(255,255,255,.025), 0 0 60px rgb(var(--glow) / .12);
-      background: radial-gradient(circle at 50% 30%, rgba(255,255,255,.08), rgba(255,255,255,.015) 70%);
-    }
-    .about__ring img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; filter: grayscale(1) contrast(1.05); transition: filter .6s ease; }
-    .about__ring:hover img { filter: none; }
-    .about__ring b { display: none; font-family: var(--display); font-weight: 400; font-size: 3.2rem; letter-spacing: .1em; color: var(--ink); }
-    .no-img .about__ring img { display: none; }
-    .no-img .about__ring b { display: block; }
-    .about__portrait figcaption { color: var(--silver); font-size: .95rem; line-height: 1.5; letter-spacing: .04em; }
-    .about__portrait figcaption strong { display: block; color: var(--ink); font-weight: 400; font-family: var(--display); letter-spacing: .1em; font-size: 1rem; margin-bottom: 4px; }
-    .about__text { display: grid; gap: 22px; max-width: 62ch; font-size: 1.1rem; }
+    /* ---------- About: the portrait is drawn in stars ---------- */
+    .about__grid { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 72px; align-items: start; }
+    .about__portrait { margin: 0; display: grid; gap: 18px; }
+    #portrait-stars { display: block; width: 100%; aspect-ratio: 380 / 460; max-width: 100%; }
+    .about__portrait figcaption { color: var(--silver); font-size: .95rem; line-height: 1.5; }
+    .about__portrait figcaption strong { display: block; color: var(--ink); font-weight: 600; font-size: 1.05rem; margin-bottom: 2px; }
+    .about__text { display: grid; gap: 22px; max-width: 60ch; font-size: 1.1rem; }
     .about__text p span { color: var(--silver); }
-    .about__text p:first-child span { color: var(--ink); font-size: 1.25rem; font-weight: 300; }
+    .about__text p:first-child span { color: var(--ink); font-size: 1.3rem; font-weight: 400; line-height: 1.4; }
     .about__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; }
 
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
-      min-height: 46px; padding: 0 26px;
-      font: inherit; font-size: .92rem; font-weight: 400; letter-spacing: .14em;
+      min-height: 46px; padding: 0 24px;
+      font: inherit; font-size: .92rem; font-weight: 500; letter-spacing: .08em;
       color: var(--ink); background: transparent;
       border: 1px solid rgba(255,255,255,.35); border-radius: 2px;
       text-decoration: none; cursor: pointer;
@@ -215,11 +206,11 @@
     }
     .orb__disc img, .orb__disc svg { width: 36px; height: 36px; display: block; }
     .orb__disc img { filter: brightness(0) invert(1); opacity: .92; transition: filter .45s ease, opacity .45s ease, transform .45s var(--ease); }
-    .orb__disc b { font-family: var(--display); font-weight: 500; font-size: 1.1rem; letter-spacing: .06em; }
+    .orb__disc b { font-weight: 600; font-size: 1.05rem; letter-spacing: .04em; }
     .orb:hover .orb__disc { border-color: rgba(255,255,255,.5); box-shadow: 0 0 56px rgb(var(--glow) / .32), inset 0 0 0 1px rgba(0,0,0,.5); transform: scale(1.06); }
     .orb:hover .orb__disc img { opacity: 1; transform: scale(1.1); }
     .orb:hover .orb__disc img:not(.mono) { filter: none; }
-    .orb__label { font-size: .86rem; letter-spacing: .08em; color: var(--silver); white-space: nowrap; transition: color .4s ease; }
+    .orb__label { font-size: .86rem; font-weight: 400; letter-spacing: .04em; color: var(--silver); white-space: nowrap; transition: color .4s ease; }
     .orb:hover .orb__label { color: var(--ink); }
 
     /* ---------- Selected work: filmography rows ---------- */
@@ -241,14 +232,14 @@
     }
     .is-in .work__link { opacity: 1; transform: none; }
     .work__title {
-      font-family: var(--display); font-weight: 500; font-size: 1.4rem; letter-spacing: .04em;
+      font-family: var(--display); font-weight: 600; font-size: 1.35rem; letter-spacing: -.01em;
       margin: 0 0 10px; line-height: 1.25; overflow-wrap: anywhere;
       transition: transform .55s var(--ease), text-shadow .55s ease;
     }
     .work__row:hover .work__title { transform: translateX(10px); text-shadow: 0 0 26px rgb(var(--glow) / .65); }
-    .work__tags { margin: 0; color: var(--dim); font-size: .95rem; letter-spacing: .04em; }
+    .work__tags { margin: 0; color: var(--dim); font-size: .95rem; }
     .work__desc { margin: 0 0 16px; color: var(--silver); font-size: 1.08rem; max-width: 56ch; }
-    .work__cta { position: relative; display: inline-block; font-size: .9rem; letter-spacing: .14em; padding-bottom: 3px; }
+    .work__cta { position: relative; display: inline-block; font-size: .88rem; font-weight: 500; letter-spacing: .1em; padding-bottom: 3px; }
     .work__cta::after {
       content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: #fff;
       transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease);
@@ -269,26 +260,26 @@
     /* ---------- End card ---------- */
     .contact { text-align: center; }
     .contact__lead {
-      font-family: var(--display); font-weight: 400;
-      font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.25; letter-spacing: .32em;
-      margin: 0 auto 22px; max-width: 20ch; text-wrap: balance; opacity: 0;
+      font-family: var(--display); font-weight: 600;
+      font-size: clamp(1.7rem, 4.2vw, 3.2rem); line-height: 1.15; letter-spacing: .3em;
+      margin: 0 auto 22px; max-width: 18ch; text-wrap: balance; opacity: 0;
       transition: letter-spacing 1.8s var(--ease), opacity 1.3s ease;
     }
-    .is-in .contact__lead { letter-spacing: .06em; opacity: 1; }
+    .is-in .contact__lead { letter-spacing: -.015em; opacity: 1; }
     .contact__sub { margin: 0 auto 36px; max-width: 52ch; color: var(--silver); font-size: 1.1rem; }
     .contact__mail {
-      display: inline-block; font-size: clamp(1.1rem, 2.6vw, 1.6rem); letter-spacing: .08em;
+      display: inline-block; font-size: clamp(1.1rem, 2.6vw, 1.6rem); font-weight: 400; letter-spacing: .02em;
       text-decoration: none; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,.3);
       transition: border-color .4s ease, text-shadow .4s ease;
     }
     .contact__mail:hover { border-color: #fff; text-shadow: 0 0 28px rgb(var(--glow) / .7); }
     .form { max-width: 580px; margin: 56px auto 0; text-align: left; display: grid; gap: 26px; }
     .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
-    .form label { display: grid; gap: 6px; font-size: .86rem; letter-spacing: .12em; color: var(--silver); }
+    .form label { display: grid; gap: 6px; font-size: .86rem; font-weight: 400; letter-spacing: .08em; color: var(--silver); }
     .form input, .form textarea {
       width: 100%; min-width: 0; background: transparent; color: var(--ink);
       border: 0; border-bottom: 1px solid rgba(255,255,255,.28); border-radius: 0;
-      padding: 10px 0; font: inherit; font-size: 1.05rem; letter-spacing: .02em;
+      padding: 10px 0; font: inherit; font-size: 1.05rem;
       transition: border-color .35s ease, box-shadow .35s ease;
     }
     .form textarea { resize: vertical; min-height: 110px; }
@@ -300,11 +291,11 @@
     .form__status[data-state="err"] { color: #f0c2c2; }
     .form__status[data-state="busy"] { color: var(--silver); }
     .contact__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 36px; margin-top: 56px; }
-    .contact__links a { font-size: .92rem; letter-spacing: .16em; text-decoration: none; color: var(--silver); transition: color .3s ease; }
+    .contact__links a { font-size: .92rem; font-weight: 500; letter-spacing: .1em; text-decoration: none; color: var(--silver); transition: color .3s ease; }
     .contact__links a:hover { color: #fff; }
 
     footer { border-top: 1px solid var(--line); }
-    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 30px; color: var(--dim); font-size: .86rem; letter-spacing: .06em; }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 30px; color: var(--dim); font-size: .86rem; }
     .foot a { color: var(--silver); text-decoration: none; }
     .foot a:hover { color: #fff; }
 
@@ -316,8 +307,7 @@
       .is-in .orb { transform: translate(0, 0) scale(1); }
       .orb__par { transform: none !important; }
       .about__grid { grid-template-columns: 1fr; gap: 44px; }
-      .about__portrait { align-items: flex-start; text-align: left; }
-      .about__ring { width: 160px; height: 160px; }
+      .about__portrait { max-width: 340px; }
     }
     @media (max-width: 700px) {
       body { font-size: 16px; }
@@ -328,7 +318,7 @@
       .orb__disc img, .orb__disc svg { width: 30px; height: 30px; }
       .orb__label { font-size: .8rem; white-space: normal; text-align: center; max-width: 118px; }
       .about__text { font-size: 1.02rem; }
-      .about__text p:first-child span { font-size: 1.15rem; }
+      .about__text p:first-child span { font-size: 1.18rem; }
     }
     @media (hover: none) { .peek { display: none; } }
 
@@ -362,11 +352,8 @@
       <div class="wrap">
         <h2 class="title">About</h2>
         <div class="about__grid">
-          <figure class="about__portrait fade" id="portrait" style="--d: .1s">
-            <div class="about__ring">
-              <img src="images/uday.jpg" alt="Portrait of Manchu Uday Kiran" width="220" height="220" loading="lazy" decoding="async" />
-              <b aria-hidden="true">UK</b>
-            </div>
+          <figure class="about__portrait fade" style="--d: .1s">
+            <canvas id="portrait-stars" role="img" aria-label="Portrait of Manchu Uday Kiran, drawn in stars"></canvas>
             <figcaption><strong>Manchu Uday Kiran</strong>Prompt engineer &amp; automation developer</figcaption>
           </figure>
           <div class="about__text">
@@ -451,11 +438,11 @@
     <style>
       .intro { height: 100vh; }
       .sr-only { position: static !important; width: auto !important; height: auto !important; clip: auto !important; margin: 0 !important; white-space: normal !important; }
-      h1.sr-only { position: absolute !important; left: 0; right: 0; top: 40%; text-align: center; font-family: var(--display); font-size: clamp(2rem, 7vw, 6rem); letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+      h1.sr-only { position: absolute !important; left: 0; right: 0; top: 40%; text-align: center; font-family: var(--display); font-size: clamp(2rem, 7vw, 6rem); letter-spacing: .04em; text-transform: uppercase; font-weight: 800; }
       .intro__hello, .intro__role { opacity: 1 !important; }
       .rise > span, .fade, .orb, .work__link { transform: none !important; opacity: 1 !important; }
       .title::after, .work__row::before { transform: none !important; }
-      .contact__lead { opacity: 1 !important; letter-spacing: .06em !important; }
+      .contact__lead { opacity: 1 !important; letter-spacing: -.015em !important; }
     </style>
   </noscript>
 
@@ -468,8 +455,8 @@
     // =====================================================================
     const CONFIG = {
       name: 'Manchu Uday Kiran',
-      nameCaps: 'MANCHU UDAY KIRAN',
-      nameLines: ['MANCHU', 'UDAY KIRAN'],   // used when one line does not fit
+      nameLines: ['UDAY KIRAN', 'MANCHU'],   // top line, bottom line of the title card
+      portrait: 'images/uday.jpg',           // drawn in stars in About. Plain background works best.
       email: 'udaymanchu001@gmail.com',
       resume: 'pdfs/UDAY.pdf',
       linkedin: '',                           // e.g. 'https://www.linkedin.com/in/your-handle'
@@ -561,12 +548,13 @@
     const tickers = [];   // functions called every animation frame with dt (seconds)
 
     // =====================================================================
-    // 3. Star field — silver five-point stars on black. The intro instance
-    //    also owns the target points sampled from the name and the scroll
-    //    progress that pulls every star to its letter.
+    // 3. Star field — silver five-point stars on black. In 'text' mode the
+    //    targets are sampled from the name, in 'image' mode from a photo.
+    //    `pt` (0..1) pulls every star from its drift to its target; at 1 it
+    //    holds still.
     // =====================================================================
-    const F0 = 0.10, FS = 0.40, FD = 0.30;   // formation: start, stagger spread, per-star duration
-    const DISPLAY_STACK = '"Cinzel", "Trajan Pro", "Times New Roman", serif';
+    const F0 = .04, FS = .46, FD = .50;   // formation: start, stagger spread, per-star duration (ends at 1.0)
+    const DISPLAY_STACK = '"Styrene B", "Archivo", "Helvetica Neue", Arial, sans-serif';
 
     function makeSprite(size, kind) {
       const c = document.createElement('canvas');
@@ -607,15 +595,38 @@
       return c;
     }
 
+    // A generic head-and-shoulders shape, used when the portrait file is missing.
+    function makeSilhouette(W, H) {
+      const c = document.createElement('canvas'); c.width = W; c.height = H;
+      const g = c.getContext('2d');
+      g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+      const cx = W / 2;
+      const body = g.createLinearGradient(0, H * .55, 0, H);
+      body.addColorStop(0, '#f2f2f2'); body.addColorStop(1, '#7a7a7a');
+      g.fillStyle = body;
+      g.beginPath();
+      g.moveTo(cx - W * .46, H);
+      g.quadraticCurveTo(cx - W * .46, H * .66, cx - W * .18, H * .6);
+      g.lineTo(cx - W * .08, H * .54); g.lineTo(cx + W * .08, H * .54); g.lineTo(cx + W * .18, H * .6);
+      g.quadraticCurveTo(cx + W * .46, H * .66, cx + W * .46, H);
+      g.closePath(); g.fill();
+      const head = g.createRadialGradient(cx - W * .05, H * .3, W * .02, cx, H * .34, W * .2);
+      head.addColorStop(0, '#ffffff'); head.addColorStop(1, '#8c8c8c');
+      g.fillStyle = head;
+      g.beginPath(); g.ellipse(cx, H * .34, W * .16, H * .17, 0, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#9a9a9a'; g.fillRect(cx - W * .06, H * .48, W * .12, H * .08);
+      return c;
+    }
+
     class StarField {
       constructor(canvas, opts) {
         this.cv = canvas;
         this.ctx = canvas.getContext('2d');
-        this.o = Object.assign({ formation: false, ambient: 140, dim: 1, maxTargets: 2600, flareScale: 1 }, opts);
+        this.o = Object.assign({ mode: null, ambient: 140, dim: 1, maxTargets: 2600, flareScale: 1, gap: 5 }, opts);
         this.t = 0; this.p = 0; this.pt = 0;
-        this.mx = 0; this.my = 0;           // pointer, -0.5..0.5 of the canvas
-        this.px = -1e4; this.py = -1e4;     // pointer in px, for the repel effect
+        this.mx = 0; this.my = 0;           // pointer, -0.5..0.5 of the canvas (drift parallax only)
         this.par = [];
+        this.image = null;                  // 'image' mode source (img or canvas)
         this.layout = null;
         this.hasLS = 'letterSpacing' in this.ctx;
         this.sp = { dot: makeSprite(64, 'dot'), star: makeSprite(96, 'star'), flare: makeSprite(192, 'flare') };
@@ -633,21 +644,51 @@
         this.build();
       }
 
+      targets() {
+        if (this.o.mode === 'text') { this.layout = this.measure(); return this.sampleText(this.layout); }
+        if (this.o.mode === 'image') {
+          try { return this.sampleImage(this.image || makeSilhouette(this.W, this.H)); }
+          catch (e) { return this.sampleImage(makeSilhouette(this.W, this.H)); }   // e.g. a cross-origin photo
+        }
+        return [];
+      }
+
       build() {
         const par = [];
         for (let i = 0; i < this.o.ambient; i++) par.push(this.mk(null));
-        if (this.o.formation) {
-          this.layout = this.measure();
-          for (const q of this.sample(this.layout)) par.push(this.mk(q));
-        }
+        for (const q of this.targets()) par.push(this.mk(q));
         this.par = par;
         this.dirty = true;
+      }
+
+      // Swap the targets without touching the drift state, so nothing jumps on screen.
+      retarget() {
+        const pts = this.targets();
+        const amb = this.par.filter(q => !q.form), formed = this.par.filter(q => q.form);
+        const n = Math.min(formed.length, pts.length);
+        for (let i = 0; i < n; i++) this.aim(formed[i], pts[i]);
+        for (let i = n; i < pts.length; i++) formed.push(this.mk(pts[i]));
+        formed.length = pts.length;
+        this.par = amb.concat(formed);
+        this.dirty = true;
+      }
+
+      // Drop a share of the formed stars (slow machines).
+      thin(keep) {
+        this.par = this.par.filter(q => !q.form || Math.random() < keep);
+        this.dirty = true;
+      }
+
+      aim(q, target) {
+        q.tx = target.x; q.ty = target.y; q.form = true;
+        q.aw = target.w == null ? 1 : .45 + .55 * target.w;
+        q.st = .7 * Math.random() + .3 * (target.x / this.W);
       }
 
       mk(target) {
         const { W, H } = this, r = Math.random;
         const roll = r();
-        const k = target ? (roll < .8 ? 0 : roll < .985 ? 1 : 2) : (roll < .7 ? 0 : roll < .95 ? 1 : 2);
+        const k = target ? (roll < .82 ? 0 : roll < .99 ? 1 : 2) : (roll < .7 ? 0 : roll < .95 ? 1 : 2);
         const z = k === 2 ? 1.2 + r() * .6 : .4 + r() * 1.2;
         const q = {
           k, z,
@@ -656,22 +697,23 @@
           off: r() * 4000,
           vy: (7 + r() * 20) * (.5 + z * .6),
           wob: 3 + r() * 12, wf: .15 + r() * .45, ph: r() * 6.2832,
-          tx: 0, ty: 0, form: !!target, st: 0,
+          tx: 0, ty: 0, form: false, st: 0, aw: 1,
           amp: (r() < .5 ? -1 : 1) * (30 + r() * 150),
-          rot: r() * 6.2832, rs: (r() - .5) * 1.4,
+          rot: r() * 6.2832, rs: k === 2 ? 0 : (r() - .5) * .8,
           tw: .8 + r() * 2.6, tp: r() * 6.2832,
           s: k === 0 ? 7 + r() * 5 : k === 1 ? 12 + r() * 10 : (36 + r() * 22) * this.o.flareScale,
           th: r() < .3,
           x: 0, y: 0
         };
-        if (target) { q.tx = target.x; q.ty = target.y; q.st = .7 * r() + .3 * (target.x / W); }
+        if (target) { this.aim(q, target); if (target.w != null) q.s *= .7 + .6 * target.w; }
         return q;
       }
 
-      font(fs) { return `700 ${fs}px ${DISPLAY_STACK}`; }
+      // ---- text mode -------------------------------------------------------
+      font(fs) { return `800 ${fs}px ${DISPLAY_STACK}`; }
 
       measure() {
-        const g = this.ctx, { W, H } = this, LS = .06;
+        const g = this.ctx, { W, H } = this, LS = .04;
         const widthAt = (text, fs) => {
           g.font = this.font(fs);
           if (this.hasLS) g.letterSpacing = (fs * LS).toFixed(2) + 'px';
@@ -679,19 +721,11 @@
           if (this.hasLS) g.letterSpacing = '0px';
           return w;
         };
-        const maxW = W * .86;
-        let fs = 100 * maxW / widthAt(CONFIG.nameCaps, 100);
-        fs = Math.min(fs, H * .2, 148);
-        let lines;
-        if (fs >= 54 && W >= 720) {
-          lines = [{ text: CONFIG.nameCaps, y: H * .46 }];
-        } else {
-          const [a, b] = CONFIG.nameLines;
-          fs = 100 * maxW / Math.max(widthAt(a, 100), widthAt(b, 100));
-          fs = Math.min(fs, H * .13, 110);
-          lines = [{ text: a, y: H * .44 - fs * .64 }, { text: b, y: H * .44 + fs * .64 }];
-        }
-        return { fs, ls: this.hasLS ? fs * LS : 0, lines };
+        const [a, b] = CONFIG.nameLines;
+        let fs = 100 * (W * .9) / Math.max(widthAt(a, 100), widthAt(b, 100));
+        fs = Math.min(fs, H * .26);
+        const half = Math.max(fs * .9, H * .12);
+        return { fs, ls: this.hasLS ? fs * LS : 0, lines: [{ text: a, y: H * .5 - half }, { text: b, y: H * .5 + half }] };
       }
 
       drawName(g, L, strokeW) {
@@ -705,38 +739,81 @@
         if (this.hasLS) g.letterSpacing = '0px';
       }
 
-      sample(L) {
+      sampleText(L) {
         const { W, H } = this;
         const oc = document.createElement('canvas');
         oc.width = W; oc.height = H;
         const g = oc.getContext('2d', { willReadFrequently: true });
         g.fillStyle = '#fff'; g.strokeStyle = '#fff'; g.lineJoin = 'round';
-        this.drawName(g, L, Math.max(1.5, L.fs * .03));
+        this.drawName(g, L, Math.max(1, L.fs * .015));
         const d = g.getImageData(0, 0, W, H).data;
-        const collect = gap => {
-          const out = [], j = gap * .35;
-          for (let y = gap >> 1; y < H; y += gap) {
-            const row = y * W;
-            for (let x = gap >> 1; x < W; x += gap) {
-              if (d[(row + x) * 4 + 3] > 110) out.push({ x: x + (Math.random() - .5) * j, y: y + (Math.random() - .5) * j });
-            }
-          }
-          return out;
-        };
-        let gap = 4, pts = collect(gap);
-        if (pts.length > this.o.maxTargets) {
-          gap = Math.ceil(4 * Math.sqrt(pts.length / this.o.maxTargets));
-          pts = collect(gap);
+        // Every 2px of ink is a candidate; a random pick of them (no grid) reads as glitter.
+        const cand = [];
+        for (let y = 1; y < H; y += 2) {
+          const row = y * W;
+          for (let x = 1; x < W; x += 2) if (d[(row + x) * 4 + 3] > 110) cand.push(row + x);
+        }
+        const n = Math.min(cand.length, this.o.maxTargets), pts = [];
+        for (let i = 0; i < n; i++) {                       // partial Fisher–Yates: n random picks
+          const k = i + (Math.random() * (cand.length - i) | 0);
+          const v = cand[k]; cand[k] = cand[i]; cand[i] = v;
+          pts.push({ x: v % W + Math.random() - .5, y: (v / W | 0) + Math.random() - .5 });
         }
         return pts;
       }
 
+      // ---- image mode ------------------------------------------------------
+      // Brighter areas of the photo get more and bigger stars; edges always get
+      // one. The background tone is estimated from the picture's border and
+      // removed, so a plain backdrop stays black. A dark subject on a light
+      // backdrop is read as a silhouette.
+      sampleImage(src) {
+        const { W, H } = this;
+        const oc = document.createElement('canvas');
+        oc.width = W; oc.height = H;
+        const g = oc.getContext('2d', { willReadFrequently: true });
+        g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+        const iw = src.naturalWidth || src.width, ih = src.naturalHeight || src.height;
+        const sc = Math.max(W / iw, H / ih), dw = iw * sc, dh = ih * sc;
+        g.drawImage(src, (W - dw) / 2, 0, dw, dh);           // cover, anchored to the top (faces live there)
+        const d = g.getImageData(0, 0, W, H).data;
+        const n = W * H, lum = new Float32Array(n), blur = new Float32Array(n);
+        for (let i = 0, j = 0; i < n; i++, j += 4) lum[i] = (d[j] * .299 + d[j + 1] * .587 + d[j + 2] * .114) / 255;
+        for (let y = 0; y < H; y++) {                          // small box blur, keeps grain out of the edges
+          for (let x = 0; x < W; x++) {
+            let s = 0, c = 0;
+            for (let yy = Math.max(0, y - 2); yy <= Math.min(H - 1, y + 2); yy++)
+              for (let xx = Math.max(0, x - 2); xx <= Math.min(W - 1, x + 2); xx++) { s += lum[yy * W + xx]; c++; }
+            blur[y * W + x] = s / c;
+          }
+        }
+        let bs = 0, bc = 0;
+        for (let x = 0; x < W; x++) { bs += blur[x] + blur[(H - 1) * W + x]; bc += 2; }
+        for (let y = 0; y < H; y++) { bs += blur[y * W] + blur[y * W + W - 1]; bc += 2; }
+        const bg = bs / bc;
+        let cs = 0, cc = 0;
+        for (let y = H * .3 | 0; y < H * .7; y++) for (let x = W * .35 | 0; x < W * .65; x++) { cs += blur[y * W + x]; cc++; }
+        const bright = cs / cc >= bg;                           // is the subject lighter than the backdrop?
+        const wt = i => bright ? clamp((blur[i] - bg) / (1 - bg + .05), 0, 1) : clamp((bg - blur[i]) / (bg + .05), 0, 1);
+        const gap = this.o.gap, pts = [], j = gap * .4;
+        for (let y = gap; y < H - gap; y += gap) {
+          for (let x = gap; x < W - gap; x += gap) {
+            const i = y * W + x, w = wt(i);
+            const e = Math.hypot(wt(i + 2) - wt(i - 2), wt(i + 2 * W) - wt(i - 2 * W));
+            if (e > .16 || (w > .18 && Math.random() < w * w * .9 + .04)) {
+              pts.push({ x: x + (Math.random() - .5) * j, y: y + (Math.random() - .5) * j, w: Math.max(w, Math.min(1, e * 1.5)) });
+            }
+          }
+        }
+        while (pts.length > this.o.maxTargets) pts.splice(Math.random() * pts.length | 0, 1);
+        return pts;
+      }
+
+      // ---- per frame -------------------------------------------------------
       frame(dt) {
         const { ctx, W, H } = this;
         if (REDUCED) { this.p = this.pt; } else { this.t += dt; this.p += (this.pt - this.p) * Math.min(1, dt * 7); }
         const t = this.t, p = this.p, mx = this.mx, my = this.my;
-        const form = this.o.formation;
-        const ta = form ? smooth(p, .78, .9) : 0;          // crisp name alpha
         const { dot, star, flare } = this.sp;
         const trails = new Path2D(), threads = new Path2D();
         let nTrails = 0, nThreads = 0;
@@ -745,6 +822,7 @@
         for (const q of this.par) {
           let f = 0;
           if (q.form) { f = clamp((p - (F0 + q.st * FS)) / FD, 0, 1); f = f * f * (3 - 2 * f); }
+          const drift = 1 - f;
 
           // free drift: up and away, wrapping back to the bottom
           const span = H + 40 - q.top;
@@ -754,36 +832,29 @@
           let a = clamp((yd - q.top) / 90, 0, 1);         // fade out near the top of its lane
 
           if (f > 0) {
-            // curved path from the drift position to its letter
-            const xt = q.tx + Math.sin(t * .9 + q.ph) * .7, yt = q.ty + Math.cos(t * .8 + q.ph) * .7;
-            const dx = xt - xd, dy = yt - yd, len = Math.hypot(dx, dy) || 1;
+            // curved path from the drift position to its spot; dead still once there
+            const dx = q.tx - xd, dy = q.ty - yd, len = Math.hypot(dx, dy) || 1;
             const c = Math.sin(f * Math.PI) * q.amp;
-            x = lerp(xd, xt, f) + (-dy / len) * c;
-            y = lerp(yd, yt, f) + (dx / len) * c;
-            a = lerp(a, 1, f);
+            x = lerp(xd, q.tx, f) + (-dy / len) * c;
+            y = lerp(yd, q.ty, f) + (dx / len) * c;
+            a = lerp(a, q.aw, f);
           }
           const zz = lerp(q.z, 1, f);
-          x += lerp(mx * 26 * (q.z - .8), mx * 6, f);
-          y += lerp(my * 18 * (q.z - .8), my * 4, f);
-
-          if (f > .9) {                                      // the pointer pushes formed stars aside
-            const rx = x - this.px, ry = y - this.py, d2 = rx * rx + ry * ry;
-            if (d2 < 8100) { const d = Math.sqrt(d2) || 1, k = (1 - d / 90) * 22; x += rx / d * k; y += ry / d * k; }
-          }
+          x += mx * 26 * (q.z - .8) * drift;
+          y += my * 18 * (q.z - .8) * drift;
           q.x = x; q.y = y;
 
-          const twk = REDUCED ? .85 : .62 + .38 * Math.sin(t * q.tw + q.tp);
-          a *= twk * this.o.dim * (.45 + .55 * clamp(zz, 0, 1.2) / 1.2);
-          if (f > 0) a *= 1 - .5 * ta;
+          const twk = REDUCED ? .9 : lerp(.62 + .38 * Math.sin(t * q.tw + q.tp), .92, f);
+          a *= twk * this.o.dim * lerp(.45 + .55 * clamp(zz, 0, 1.2) / 1.2, 1, f);
           if (a <= .01) continue;
-          const size = q.s * zz * (1 - .3 * f);
+          const size = q.s * zz * (1 - .25 * f);
 
-          if (q.k > 0 && f < .9) {                           // upward motion trail
-            const len = q.vy * .6 * zz * (1 - f);
+          if (q.k > 0 && q.z > .8 && f < .9) {              // soft upward motion trail
+            const len = q.vy * .28 * zz * drift;
             trails.moveTo(x, y + size * .15); trails.lineTo(x, y + size * .15 + len); nTrails++;
           }
-          if (q.th && f > .45 && f < .98) {                  // light thread streaming into the letter
-            threads.moveTo(x, y - (14 + 90 * (1 - f))); threads.lineTo(x, y); nThreads++;
+          if (q.th && f > .45 && f < .98) {                  // light thread streaming into place
+            threads.moveTo(x, y - (14 + 90 * drift)); threads.lineTo(x, y); nThreads++;
           }
 
           ctx.globalAlpha = a;
@@ -792,32 +863,16 @@
             else ctx.drawImage(dot, x - size / 2, y - size / 2, size, size);
           } else {
             const sp = q.k === 1 ? star : flare;
-            const rot = q.rot + t * q.rs * (1 - f), cs = Math.cos(rot), sn = Math.sin(rot), D = this.dpr;
+            const rot = q.rot + t * q.rs * drift, cs = Math.cos(rot), sn = Math.sin(rot), D = this.dpr;
             ctx.setTransform(D * cs, D * sn, -D * sn, D * cs, x * D, y * D);
             ctx.drawImage(sp, -size / 2, -size / 2, size, size);
             ctx.setTransform(D, 0, 0, D, 0, 0);
           }
         }
-        if (nTrails) { ctx.globalAlpha = .22; ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(225,235,255,1)'; ctx.stroke(trails); }
+        if (nTrails) { ctx.globalAlpha = .14; ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(225,235,255,1)'; ctx.stroke(trails); }
         if (nThreads) { ctx.globalAlpha = .28; ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(220,232,255,1)'; ctx.stroke(threads); }
         ctx.globalAlpha = 1;
-        if (form && ta > 0) this.drawText(ta, lerp(64, 18, smooth(p, .86, 1)));
         this.dirty = false;
-      }
-
-      drawText(alpha, bloom) {
-        const { ctx } = this, L = this.layout;
-        if (!L) return;
-        const top = L.lines[0].y - L.fs * .6, bottom = L.lines[L.lines.length - 1].y + L.fs * .6;
-        const grad = ctx.createLinearGradient(0, top, 0, bottom);
-        grad.addColorStop(0, '#ffffff'); grad.addColorStop(.5, '#eef1f7'); grad.addColorStop(1, '#b6bdcc');
-        ctx.save();
-        ctx.fillStyle = grad;
-        ctx.globalAlpha = alpha * .9; ctx.shadowColor = 'rgba(214,226,255,.95)'; ctx.shadowBlur = bloom;
-        this.drawName(ctx, L, 0);
-        ctx.globalAlpha = alpha; ctx.shadowBlur = 0;
-        this.drawName(ctx, L, 0);
-        ctx.restore();
       }
     }
 
@@ -826,15 +881,15 @@
     // =====================================================================
     const intro = $('intro'), stage = $('stage');
     const hello = $('hello'), role = $('role'), hint = $('hint');
-    const sky = new StarField($('sky'), { formation: false, ambient: narrow() ? 60 : 140, dim: .55, flareScale: .7 });
-    const hero = new StarField($('stars'), { formation: true, ambient: narrow() ? 60 : 110, maxTargets: narrow() ? 1300 : 2600 });
+    const sky = new StarField($('sky'), { ambient: narrow() ? 60 : 140, dim: .55, flareScale: .7 });
+    const hero = new StarField($('stars'), { mode: 'text', ambient: narrow() ? 60 : 110, maxTargets: narrow() ? 2600 : 6000 });
     let introVisible = true;
 
     function placeCopy() {
       const L = hero.layout; if (!L) return;
-      const top = L.lines[0].y - L.fs * .5, bottom = L.lines[L.lines.length - 1].y + L.fs * .5;
-      hello.style.top = Math.max(16, top - 60) + 'px';
-      role.style.top = (bottom + 34) + 'px';
+      const top = L.lines[0].y - L.fs * .5, bottom = L.lines[1].y + L.fs * .5;
+      hello.style.top = Math.max(16, top - 54) + 'px';
+      role.style.top = (bottom + 30) + 'px';
     }
 
     function updateIntro() {
@@ -845,8 +900,8 @@
       hero.pt = REDUCED ? 1 : p;
       hero.dirty = true;
       introVisible = rect.bottom > -10 && rect.top < vh + 10;
-      const r = REDUCED ? 1 : smooth(p, .84, .95);
-      role.style.opacity = r;  role.style.transform = `translateY(${(1 - r) * 14}px)`;
+      const r = REDUCED ? 1 : smooth(p, .86, .97);
+      role.style.opacity = r; role.style.transform = `translateY(${(1 - r) * 14}px)`;
       hint.style.opacity = 1 - smooth(p, 0, .06);
     }
 
@@ -854,13 +909,10 @@
       const r = stage.getBoundingClientRect();
       hero.mx = clamp((e.clientX - r.left) / r.width - .5, -.5, .5);
       hero.my = clamp((e.clientY - r.top) / r.height - .5, -.5, .5);
-      hero.px = e.clientX - r.left; hero.py = e.clientY - r.top;
       sky.mx = hero.mx * .5; sky.my = hero.my * .5;
     }
 
     function initIntro() {
-      let lastW = window.innerWidth, lastH = window.innerHeight, timer = 0;
-      const rebuild = () => { hero.resize(); sky.resize(); placeCopy(); updateIntro(); };
       sky.resize();
       hero.resize(); placeCopy(); updateIntro();
 
@@ -868,39 +920,61 @@
       setTimeout(() => { hello.style.opacity = 1; }, REDUCED ? 0 : 1100);
 
       // The letters are sampled from whatever face is available at build time. Once the
-      // Cinzel web font arrives, sample again so the stars form the real letterforms.
+      // web font arrives, sample again (targets only, so nothing on screen jumps).
       if (document.fonts) {
-        let rebuilt = false;
-        const cinzelReady = () => { let ok = false; document.fonts.forEach(f => { if (/cinzel/i.test(f.family) && f.status === 'loaded') ok = true; }); return ok; };
-        const tryRebuild = () => { if (!rebuilt && cinzelReady()) { rebuilt = true; hero.resize(); placeCopy(); } };
-        if (document.fonts.load) document.fonts.load('700 100px "Cinzel"').then(tryRebuild).catch(() => {});
-        document.fonts.ready.then(tryRebuild);
-        document.fonts.addEventListener('loadingdone', tryRebuild);
+        let done = false;
+        const ready = () => { let ok = false; document.fonts.forEach(f => { if (/archivo|styrene/i.test(f.family) && f.status === 'loaded') ok = true; }); return ok; };
+        const again = () => { if (!done && ready()) { done = true; hero.retarget(); placeCopy(); } };
+        if (document.fonts.load) document.fonts.load('800 100px "Archivo"').then(again).catch(() => {});
+        document.fonts.ready.then(again);
+        document.fonts.addEventListener('loadingdone', again);
       }
       window.addEventListener('scroll', updateIntro, { passive: true });
-      window.addEventListener('resize', () => {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          // Ignore the mobile address bar showing and hiding; rebuild only for real size changes.
-          if (window.innerWidth !== lastW || Math.abs(window.innerHeight - lastH) > 160) {
-            lastW = window.innerWidth; lastH = window.innerHeight; rebuild();
-          }
-        }, 180);
-      });
       if (FINE) {
         stage.addEventListener('pointermove', onPointer);
-        stage.addEventListener('pointerleave', () => { hero.px = hero.py = -1e4; });
+        stage.addEventListener('pointerleave', () => { hero.mx = hero.my = 0; });
       }
+      // If frames run slow while the title card is drawing, thin the stars once or twice.
+      let slow = 0, thinned = 0;
       tickers.push(dt => {
         if (document.hidden) return;
         if (REDUCED && !hero.dirty && !sky.dirty) return;
-        if (introVisible) hero.frame(dt);
+        if (introVisible) {
+          hero.frame(dt);
+          slow = dt > 1 / 40 ? slow + 1 : Math.max(0, slow - 2);
+          if (slow > 45 && thinned < 2) { hero.thin(.6); thinned++; slow = 0; }
+        }
         sky.frame(dt);
       });
     }
 
     // =====================================================================
-    // 5. Scroll reveals
+    // 5. About: the portrait gathers out of stars when it scrolls into view
+    // =====================================================================
+    const portrait = new StarField($('portrait-stars'), { mode: 'image', ambient: 36, dim: .95, maxTargets: narrow() ? 1500 : 2600, gap: narrow() ? 4 : 5 });
+
+    function initPortrait() {
+      let visible = false, started = 0;
+      portrait.resize();
+      const img = new Image();
+      img.addEventListener('load', () => { portrait.image = img; portrait.retarget(); });
+      img.src = CONFIG.portrait;                                   // on error the silhouette stays
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(es => es.forEach(e => {
+          visible = e.isIntersecting;
+          if (visible && !started) started = performance.now();
+        }), { threshold: [0, .4] }).observe(portrait.cv);
+      } else { visible = true; started = performance.now(); }
+      tickers.push(dt => {
+        if (!visible || document.hidden) return;
+        portrait.pt = REDUCED || !started ? (started ? 1 : 0) : clamp((performance.now() - started) / 4200, 0, 1);
+        if (REDUCED && !portrait.dirty) return;
+        portrait.frame(dt);
+      });
+    }
+
+    // =====================================================================
+    // 6. Scroll reveals
     // =====================================================================
     function initReveal() {
       const els = qsa('[data-reveal]');
@@ -912,7 +986,7 @@
     }
 
     // =====================================================================
-    // 6. Skills constellation: floating orbs joined by lines that draw in
+    // 7. Skills constellation: floating orbs joined by lines that draw in
     // =====================================================================
     function initConstellation() {
       const field = $('constellation'), svg = $('lines'), section = $('skills');
@@ -985,7 +1059,7 @@
     }
 
     // =====================================================================
-    // 7. Selected work: rows, plus a preview that follows the pointer
+    // 8. Selected work: rows, plus a preview that follows the pointer
     // =====================================================================
     function initWork() {
       const list = $('work');
@@ -1012,10 +1086,13 @@
       if (!FINE) return;
       const peek = $('peek'), img = peek.querySelector('img');
       let tx = 0, ty = 0, cx = 0, cy = 0, current = null;
+      const show = () => { if (current && img.complete && img.naturalWidth > 0) peek.classList.add('is-on'); };
       qsa('.work__row', list).forEach(row => {
         row.addEventListener('pointerenter', () => {
           if (row.dataset.noimg) return;
-          current = row; img.src = row.dataset.img; peek.classList.add('is-on');
+          current = row;
+          if (img.getAttribute('src') !== row.dataset.img) img.src = row.dataset.img;   // shown once loaded
+          show();
         });
         row.addEventListener('pointerleave', () => { current = null; peek.classList.remove('is-on'); });
         row.addEventListener('pointermove', e => {
@@ -1023,6 +1100,7 @@
           ty = e.clientY - 96;
         });
       });
+      img.addEventListener('load', show);
       img.addEventListener('error', () => {
         if (current) current.dataset.noimg = '1';
         peek.classList.remove('is-on');
@@ -1035,7 +1113,7 @@
     }
 
     // =====================================================================
-    // 8. Contact form — real delivery with an endpoint, mail app without one
+    // 9. Contact form — real delivery with an endpoint, mail app without one
     // =====================================================================
     function initContact() {
       const form = $('contact-form'), status = $('form-status'), submit = $('contact-submit');
@@ -1069,16 +1147,24 @@
     }
 
     // =====================================================================
-    // 9. Boot
+    // 10. Boot
     // =====================================================================
     function initMisc() {
       $('year').textContent = new Date().getFullYear();
       const li = $('social-linkedin');
       if (CONFIG.linkedin) { li.href = CONFIG.linkedin; li.hidden = false; }
-      const fig = $('portrait'), img = fig.querySelector('img');
-      const noImg = () => fig.classList.add('no-img');
-      img.addEventListener('error', noImg);
-      if (img.complete && img.naturalWidth === 0) noImg();
+
+      let lastW = window.innerWidth, lastH = window.innerHeight, timer = 0;
+      window.addEventListener('resize', () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          // Ignore the mobile address bar showing and hiding; rebuild only for real size changes.
+          if (window.innerWidth !== lastW || Math.abs(window.innerHeight - lastH) > 160) {
+            lastW = window.innerWidth; lastH = window.innerHeight;
+            hero.resize(); sky.resize(); portrait.resize(); placeCopy(); updateIntro();
+          }
+        }, 180);
+      });
     }
 
     function loop() {
@@ -1092,6 +1178,7 @@
     }
 
     initIntro();
+    initPortrait();
     initReveal();
     initConstellation();
     initWork();
