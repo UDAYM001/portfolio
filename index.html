@@ -201,12 +201,8 @@
       transition: transform 1.2s var(--ease) calc(var(--i) * 70ms), opacity 1s ease calc(var(--i) * 70ms);
     }
     .is-in .orb { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    .orb__par { transform: translate(var(--px, 0px), var(--py, 0px)); transition: transform .7s cubic-bezier(.2, .7, .2, 1); }
-    .orb__float {
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      animation: orbFloat var(--float, 7s) ease-in-out var(--fd, 0s) infinite;
-    }
-    @keyframes orbFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+    .orb__par { will-change: transform; }   /* float + parallax are set from script each frame */
+    .orb__float { display: flex; flex-direction: column; align-items: center; gap: 12px; }
     .orb__disc {
       width: 86px; height: 86px; border-radius: 50%;
       display: grid; place-items: center; color: #fff;
@@ -316,7 +312,6 @@
       .constellation__lines { display: none; }
       .orb { position: static; transform: translate(0, 0) scale(.3); }
       .is-in .orb { transform: translate(0, 0) scale(1); }
-      .orb__par { transform: none !important; }
       .about__grid { grid-template-columns: 1fr; gap: 44px; }
       .about__portrait { align-items: flex-start; text-align: left; }
       .about__ring { width: 160px; height: 160px; }
@@ -339,7 +334,7 @@
       .intro { height: 100vh; height: 100svh; }
       .intro__hint { display: none; }
       .rise > span, .fade, .orb, .orb__par, .work__link, .work__row::before, .title::after, .contact__lead { transition: none !important; }
-      .orb__float, .intro__hint i { animation: none !important; }
+      .intro__hint i { animation: none !important; }
     }
   </style>
 </head>
@@ -611,7 +606,7 @@
     class StarField {
       constructor(canvas, opts) {
         this.cv = canvas;
-        this.ctx = canvas.getContext('2d');
+        this.ctx = canvas.getContext('2d', { desynchronized: true });
         this.o = Object.assign({ mode: null, ambient: 140, dim: 1, maxTargets: 2600, flareScale: 1 }, opts);
         this.t = 0; this.p = 0; this.pt = 0;
         this.mx = 0; this.my = 0;           // pointer, -0.5..0.5 of the canvas (drift parallax only)
@@ -625,7 +620,7 @@
           g.translate(h, h); g.rotate(i / n * Math.PI * 2); g.drawImage(base, -h, -h);
           return c;
         });
-        this.sp = { dot: makeSprite(64, 'dot'), star: spin(makeSprite(96, 'star'), 16), flare: spin(makeSprite(192, 'flare'), 16) };
+        this.sp = { dot: makeSprite(48, 'dot'), star: spin(makeSprite(96, 'star'), 16), flare: spin(makeSprite(192, 'flare'), 16) };
         this.dirty = true;
       }
 
@@ -633,7 +628,7 @@
         const r = this.cv.getBoundingClientRect();
         this.W = Math.max(1, Math.round(r.width));
         this.H = Math.max(1, Math.round(r.height));
-        this.dpr = Math.min(window.devicePixelRatio || 1, narrow() ? 1.5 : 2);
+        this.dpr = Math.min(window.devicePixelRatio || 1, narrow() ? 1.25 : 1.5);
         this.cv.width = Math.round(this.W * this.dpr);
         this.cv.height = Math.round(this.H * this.dpr);
         this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
@@ -757,7 +752,7 @@
       // ---- per frame -------------------------------------------------------
       frame(dt) {
         const { ctx, W, H } = this;
-        if (REDUCED) { this.p = this.pt; } else { this.t += dt; this.p += (this.pt - this.p) * Math.min(1, dt * 7); }
+        if (REDUCED) { this.p = this.pt; } else { this.t += dt; this.p += (this.pt - this.p) * Math.min(1, dt * 10); }
         const t = this.t, p = this.p, mx = this.mx, my = this.my;
         const { dot, star, flare } = this.sp;
         const trails = new Path2D(), threads = new Path2D();
@@ -792,7 +787,7 @@
           const twk = REDUCED ? .9 : lerp(.62 + .38 * Math.sin(t * q.tw + q.tp), .92, f);
           a *= twk * this.o.dim * lerp(.45 + .55 * clamp(zz, 0, 1.2) / 1.2, 1, f);
           if (a <= .01) continue;
-          const size = q.s * zz * (q.k === 0 ? 1 + .15 * f : 1 - .25 * f);
+          const size = q.s * zz * (q.k === 0 ? 1 + .35 * f : 1 - .25 * f);
 
           if (q.k > 0 && q.z > .8 && f < .9) {              // soft upward motion trail
             const len = q.vy * .28 * zz * drift;
@@ -825,8 +820,8 @@
     // =====================================================================
     const intro = $('intro'), stage = $('stage');
     const hello = $('hello'), role = $('role'), hint = $('hint');
-    const sky = new StarField($('sky'), { ambient: narrow() ? 60 : 140, dim: .55, flareScale: .7 });
-    const hero = new StarField($('stars'), { mode: 'text', ambient: narrow() ? 60 : 110, maxTargets: narrow() ? 3000 : 9000 });
+    const sky = new StarField($('sky'), { ambient: narrow() ? 40 : 90, dim: .55, flareScale: .7 });
+    const hero = new StarField($('stars'), { mode: 'text', ambient: narrow() ? 40 : 80, maxTargets: narrow() ? 1800 : 5000 });
     let introVisible = true;
 
     function placeCopy() {
@@ -913,8 +908,7 @@
       const orbs = SKILLS.map((s, i) => {
         const el = document.createElement('div');
         el.className = 'orb';
-        el.style.cssText = `--x:${s.x}%;--y:${s.y}%;--i:${i};--float:${(5.5 + ((i * 37) % 40) / 10).toFixed(1)}s;--fd:${(-((i * 53) % 60) / 10).toFixed(1)}s`;
-        el.dataset.depth = (.35 + ((i * 29) % 10) / 12).toFixed(2);
+        el.style.cssText = `--x:${s.x}%;--y:${s.y}%;--i:${i}`;
         const par = document.createElement('div'); par.className = 'orb__par';
         const fl = document.createElement('div'); fl.className = 'orb__float';
         const disc = document.createElement('div'); disc.className = 'orb__disc';
@@ -934,30 +928,44 @@
         }
         const label = document.createElement('span'); label.className = 'orb__label'; label.textContent = s.name;
         fl.append(disc, label); par.appendChild(fl); el.appendChild(par); field.appendChild(el);
-        return el;
+        // per-orb motion: float period/phase, parallax depth, smoothed parallax offset
+        return { el, par, period: 5.5 + ((i * 37) % 40) / 10, phase: (i * 53) % 60 / 10, depth: .35 + ((i * 29) % 10) / 12, px: 0, py: 0, tx: 0, ty: 0 };
       });
       const lines = EDGES.map(([a, b]) => { const l = document.createElementNS(NS, 'line'); svg.appendChild(l); return { l, a, b }; });
 
-      let active = false, draw = 0;
+      // Orb centres come from the layout numbers, never from the DOM, so no frame reads layout.
+      let fw = 0, fh = 0, discR = 43;
+      const measure = () => {
+        const r = field.getBoundingClientRect(); fw = r.width; fh = r.height;
+        discR = orbs[0].el.firstChild.firstChild.firstChild.getBoundingClientRect().width / 2 || 43;
+        svg.setAttribute('viewBox', `0 0 ${fw} ${fh}`);
+      };
+      let active = false, draw = 0, t = 0;
       if ('IntersectionObserver' in window) {
-        new IntersectionObserver(es => es.forEach(e => { active = e.isIntersecting; }), { threshold: 0 }).observe(field);
-      } else active = true;
+        new IntersectionObserver(es => es.forEach(e => { active = e.isIntersecting; if (active) measure(); }), { threshold: 0 }).observe(field);
+      } else { active = true; measure(); }
+      window.addEventListener('resize', () => { if (active) measure(); });
 
       tickers.push(dt => {
-        if (!active || window.innerWidth <= 900) return;
+        if (!active) return;
+        const wide = window.innerWidth > 900;
+        if (!REDUCED) t += dt;
         if (section.classList.contains('is-in')) draw = Math.min(1, draw + dt / (REDUCED ? .01 : 1.8));
-        const fr = field.getBoundingClientRect();
-        svg.setAttribute('viewBox', `0 0 ${fr.width} ${fr.height}`);
-        const c = orbs.map(o => {
-          const r = o.firstChild.firstChild.firstChild.getBoundingClientRect();
-          return { x: r.left + r.width / 2 - fr.left, y: r.top + r.height / 2 - fr.top, r: r.width / 2 };
-        });
+        const c = [];
+        for (let i = 0; i < orbs.length; i++) {
+          const o = orbs[i];
+          o.px += (o.tx - o.px) * Math.min(1, dt * 6); o.py += (o.ty - o.py) * Math.min(1, dt * 6);
+          const fy = REDUCED ? 0 : Math.sin((t / o.period + o.phase) * Math.PI * 2) * -8 - 8;
+          o.par.style.transform = `translate3d(${o.px.toFixed(1)}px, ${(o.py + fy).toFixed(1)}px, 0)`;
+          if (wide) c.push({ x: fw * SKILLS[i].x / 100 + o.px, y: fh * SKILLS[i].y / 100 + o.py + fy });
+        }
+        if (!wide) return;
         for (const { l, a, b } of lines) {
           const A = c[a], B = c[b], dx = B.x - A.x, dy = B.y - A.y, len = Math.hypot(dx, dy) || 1;
-          const ux = dx / len, uy = dy / len, pad = 8;
-          const seg = Math.max(0, len - A.r - B.r - pad * 2);
-          l.setAttribute('x1', (A.x + ux * (A.r + pad)).toFixed(1)); l.setAttribute('y1', (A.y + uy * (A.r + pad)).toFixed(1));
-          l.setAttribute('x2', (B.x - ux * (B.r + pad)).toFixed(1)); l.setAttribute('y2', (B.y - uy * (B.r + pad)).toFixed(1));
+          const ux = dx / len, uy = dy / len, pad = discR + 8;
+          const seg = Math.max(0, len - pad * 2);
+          l.setAttribute('x1', (A.x + ux * pad).toFixed(1)); l.setAttribute('y1', (A.y + uy * pad).toFixed(1));
+          l.setAttribute('x2', (B.x - ux * pad).toFixed(1)); l.setAttribute('y2', (B.y - uy * pad).toFixed(1));
           l.setAttribute('stroke-dasharray', seg.toFixed(1));
           l.setAttribute('stroke-dashoffset', (seg * (1 - draw)).toFixed(1));
         }
@@ -965,15 +973,12 @@
 
       if (FINE && !REDUCED) {
         field.addEventListener('pointermove', e => {
-          const fr = field.getBoundingClientRect();
-          const nx = (e.clientX - fr.left) / fr.width - .5, ny = (e.clientY - fr.top) / fr.height - .5;
-          orbs.forEach(o => {
-            const d = +o.dataset.depth;
-            o.style.setProperty('--px', (nx * 34 * d).toFixed(1) + 'px');
-            o.style.setProperty('--py', (ny * 24 * d).toFixed(1) + 'px');
-          });
+          if (window.innerWidth <= 900) return;
+          const r = field.getBoundingClientRect();
+          const nx = (e.clientX - r.left) / fw - .5, ny = (e.clientY - r.top) / fh - .5;
+          orbs.forEach(o => { o.tx = nx * 34 * o.depth; o.ty = ny * 24 * o.depth; });
         });
-        field.addEventListener('pointerleave', () => orbs.forEach(o => { o.style.setProperty('--px', '0px'); o.style.setProperty('--py', '0px'); }));
+        field.addEventListener('pointerleave', () => orbs.forEach(o => { o.tx = 0; o.ty = 0; }));
       }
     }
 
